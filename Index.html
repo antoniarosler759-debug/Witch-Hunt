@@ -143,7 +143,14 @@ margin-top: 40px;
 <div class="character">
 <p class="char-name">Elizabeth Everhart</p>
 <p class="char-role">DIE HAUSHÄLTERIN</p>
-.becher-container {
+<script>
+function fuerbecherRot(container) {
+    const becher = container.querySelectorAll('.becher-icon');
+    becher.forEach(b => b.classList.toggle('bloody'));
+}
+</script>
+    
+    .becher-container {
     display: flex;
     justify-content: center;
     gap: 20px;
