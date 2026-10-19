@@ -149,6 +149,63 @@
       font-size: 0.8em;
       color: #6b6b6b;
       margin-top: 40px;
+/* Navigationsleiste ganz oben */
+.top-nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: #1e1b29;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #332f4a;
+}
+
+.nav-link {
+  color: #00ff88;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1em;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.nav-link:hover {
+  background-color: #6b0980;
+  color: #ffffff;
+}
+
+/* Galerie Styling */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.gallery-item {
+  background-color: #27233a;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #332f4a;
+  text-align: center;
+}
+
+.gallery-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-caption {
+  padding: 10px;
+  margin: 0;
+  font-size: 0.9em;
+  color: #d1d1d1;
+}
+      
     }
   </style>
 </head>
@@ -249,7 +306,17 @@
       <p class="char-role">AMBERS GROSSER BRUDER</p>
       <p>Der älteste der Park-Geschwister. Er übernimmt eine starke Beschützerrolle für seine jüngeren Schwestern. Da er ein normaler Mensch ohne jede Magie ist, gerät er schnell ins Visier von Samanthas Spott, die ihn regelmäßig als dumm beschimpft. Er bildet zusammen mit seinen Schwestern, Samantha, Theo und Mary die Kern-Gruppe.</p>
     </div>
-
+<!-- Galerie-Bereich -->
+<div id="galerie" class="character">
+  <h2>Galerie</h2>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="st-gray.jpg" alt="Waisenhaus St. Gray" class="gallery-img">
+      <p class="gallery-caption">Waisenhaus St. Gray</p>
+    </div>
+  </div>
+</div>
+    
     <div class="character char-card">
       <p class="char-name">Jacob Mclean</p>
       <p class="char-role">STRENGER POLIZIST & VORGESETZTER</p>
