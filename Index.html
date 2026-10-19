@@ -70,6 +70,31 @@ text-align: center;
 font-size: 0.8em;
 color: #6b6b6b;
 margin-top: 40px;
+<h2>Das Ritual der Hexen (Lore)</h2>
+<div class="character">
+    <p class="char-name">Das Drei-Becher-Ritual</p>
+    <p class="char-role">RITUAL UND BEDINGUNGEN</p>
+    
+    <!-- Drei Becher zum Anklicken -->
+    <div class="becher-container" onclick="fuerbecherRot(this)">
+        <span class="becher-icon">🏆</span>
+        <span class="becher-icon">🏆</span>
+        <span class="becher-icon">🏆</span>
+    </div>
+
+    <p>Das Ritual der drei Becher geht genau drei Nächte lang. Unterm Vollmond entsteht durch einen Fluch der Austausch von Lebensenergie, wobei der Magievorrat die Lebenskraft aufnimmt.</p>
+    
+    <p><strong>Ablauf der drei Nächte:</strong></p>
+    <ul>
+        <li><strong>1. Nacht:</strong> Das Blut der Hexe wird bereitgestellt.</li>
+        <li><strong>2. Nacht:</strong> Das Blut eines/einer Unschuldigen wird bereitgestellt.</li>
+        <li><strong>3. Nacht:</strong> Das Blut des Opfers (das geschnappt wird). Unterm Vollmond findet der Austausch statt.</li>
+    </ul>
+
+    <p><strong>Benötigte Gegenstände:</strong> Drei goldene Becher und ein Magievorrat.</p>
+    <p><strong>Beteiligte Personen:</strong> Ein Kind im Alter von 10–18 Jahren (das Opfer), die Hexe (oder mehrere Hexen), die mehr Lebenszeit ersucht, sowie ein/e Unschuldige/r.</p>
+</div>
+    
 }
 </style>
 </head>
@@ -118,7 +143,32 @@ margin-top: 40px;
 <div class="character">
 <p class="char-name">Elizabeth Everhart</p>
 <p class="char-role">DIE HAUSHÄLTERIN</p>
-<p>Die Angestellte im St. Gray, die im ganzen Haus für ihre extreme Strenge und ungeduldige Eile bekannt ist. Sie zögert nicht, den Kindern harte Strafarbeiten aufzubrummen. Doch hinter der harten Fassade verbirgt sich ein Geheimnis: Sie scheint weitaus mehr über die magischen Zustände zu wissen, als sie zugibt, und steht insgeheim fest auf der Seite der Kinder - auch wenn sie ihre wahren Gefühle niemals offen zeigt.</p>
+.becher-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 15px 0;
+    cursor: pointer;
+}
+
+.becher-icon {
+    font-size: 2.5rem;
+    transition: filter 0.5s ease, transform 0.3s ease;
+    filter: drop-shadow(0 0 5px gold);
+}
+
+.becher-icon.bloody {
+    filter: drop-shadow(0 0 10px red) hue-rotate(320deg) saturate(5);
+    animation: bloodDrip 0.8s ease-in-out forwards;
+}
+
+@keyframes bloodDrip {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2) translateY(3px); }
+    100% { transform: scale(1); }
+}
+    
+    <p>Die Angestellte im St. Gray, die im ganzen Haus für ihre extreme Strenge und ungeduldige Eile bekannt ist. Sie zögert nicht, den Kindern harte Strafarbeiten aufzubrummen. Doch hinter der harten Fassade verbirgt sich ein Geheimnis: Sie scheint weitaus mehr über die magischen Zustände zu wissen, als sie zugibt, und steht insgeheim fest auf der Seite der Kinder - auch wenn sie ihre wahren Gefühle niemals offen zeigt.</p>
 </div>
 <div class="character">
 <p class="char-name">Theo & Mary Norack</p>
