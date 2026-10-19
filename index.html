@@ -1,4 +1,4 @@
-<!DOCTYPE h ist charakterlich extrem kalt, unnahbar und pragmatisch. Sie lässt sich nur auf Amber ein, weil diese ebenfalls eine Hexe ist, und nutzt Ambers Visionstalent gezielt für ihre eigenen Pläne aus. Der g<!DOCTYPE html>
+<!D<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
@@ -175,35 +175,6 @@
       color: #ffffff;
     }
 
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-      gap: 15px;
-      margin-top: 15px;
-    }
-
-    .gallery-item {
-      background-color: #27233a;
-      border-radius: 8px;
-      overflow: hidden;
-      border: 1px solid #332f4a;
-      text-align: center;
-    }
-
-    .gallery-img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .gallery-caption {
-      padding: 10px;
-      margin: 0;
-      font-size: 0.9em;
-      color: #d1d1d1;
-    }
-
     .info-box {
       border: 1px solid #6b0980;
       border-radius: 8px;
@@ -235,17 +206,75 @@
     .info-box-content p:last-child {
       margin-bottom: 0;
     }
+
+    .becher-section {
+      text-align: center;
+      margin-top: 30px;
+      padding: 25px 15px;
+    }
+
+    .becher-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      margin-top: 15px;
+    }
+
+    .becher {
+      font-size: 3.5rem;
+      position: relative;
+      display: inline-block;
+      filter: drop-shadow(0 0 8px #ffd700);
+      transition: transform 0.3s ease;
+    }
+
+    .becher:hover {
+      transform: scale(1.15);
+    }
+
+    .bloody-becher {
+      filter: drop-shadow(0 0 12px #ff0033) saturate(2);
+    }
+
+    .blood-drip {
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 8px;
+      height: 8px;
+      background-color: #ff0033;
+      border-radius: 50%;
+      animation: drip 1.5s infinite ease-in;
+    }
+
+    @keyframes drip {
+      0% {
+        bottom: 5px;
+        opacity: 1;
+        transform: translateX(-50%) scale(0.5);
+      }
+      70% {
+        bottom: -15px;
+        opacity: 0.8;
+        transform: translateX(-50%) scale(1.2);
+      }
+      100% {
+        bottom: -25px;
+        opacity: 0;
+        transform: translateX(-50%) scale(0.8);
+      }
+    }
   </style>
 </head>
-  roße Plot-Twist: Samantha ist die leiblichanthas kühlem und abweisendem Charakter ist diescht gut auf echen, obwohl sie am selben Strang
-  <body>
+<body>
 
 <div class="container" id="home">
 
   <nav class="top-nav">
     <a href="#home" class="nav-link">Home</a>
-    <a href="#galerie" class="nav-link">Galerie</a>
-    <a href="#quiz" class="nav-link">Quiz</a>
+    <a href="#ritual-section" class="nav-link">Lore & Ritual</a>
   </nav>
 
   <h1>Witch-Hunt: Kinder der verlorenen Zeit</h1>
@@ -292,404 +321,8 @@
   
   <div class="char-grid">
     <div class="character char-card">
-      <p class="char-name">Alice Park</p>
-      <p class="char-role">KLEINE SCHWESTER</p>
-      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
-      <p>Das absolute Nesthäkchen der Park-Familie. Im düsteren Waisenhaus ist sie am verletzlichsten. Sie ist der größte emotionale Antrieb für Amber und Finn, die Gefahren der Hexenwelt durchzustehen.</p>
-    </div>
-    <div class="character char-card">
-      <p class="char-name">Bianka & Jeffrey Park</p>
-      <p class="char-role">ELTERN DER PARK-GESCHWISTER</p>
-      <p>Zwei liebevolle Eltern, die ihre Kinder in London großgezogen haben und eines Tages plötzlich verschwunden sind. Beide sind eher ruhiger Natur.</p>
-    </div>
-    
-    <div class="character char-card">
-      <p class="char-name">Amber Park</p>
-      <p class="char-role">HAUPTPROTAGONISTIN</p>
-      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
-      <p>Nach dem plötzlichen Verschwinden ihrer Eltern bricht Ambers Welt zusammen. Im Waisenhaus St. Gray wird sie unfreiwillig in die Welt der Magie hineingezogen. Ihre Fähigkeiten sind rein mentaler Natur: Sie kann keine Auren lesen, besitzt jedoch die Gabe, Visionen zu sehen. Diese Visionen sind so intensiv, dass sie als Nebeneffekt stark darunter schlafwandelt. Sie wehrt sich anfangs dagegen, ihre Hexennatur anzunehmen.</p>
-    </div>
-
-    <div class="character char-card">
-      <p class="char-name">Ann Grays</p>
-      <p class="char-role">DIE DIREKTORIN / ANTAGONISTIN</p>
-      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
-      <p>Die Leiterin des Waisenhauses St. Gray. Sie ist eine mächtige, böse Hexe. Ann ist von Grund auf kaltherzig, arrogant und extrem abgehoben - zudem abgrundtief von einem tiefen Hass auf Kinder erfüllt. Sie weiß anfangs nicht, dass Amber eine Hexe ist, was der Gruppe einen unschätzbaren strategischen Vorteil verschafft.</p>
-    </div>
-
-    <div class="character char-card">
-      <p class="char-name">Caroline Blackthorne</p>
-      <p class="char-role">DIE GROSSE HEXE DER MANIPULATION</p>
-      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
-      <p>Eine mächtige, unberechenbare Hexe, die für eine völlig eigene Partei steht. Sie ist weder auf der Seite von Ann Grays noch auf der Seite der Kinder-Gruppe. Sie fällt optisch sofort durch ihre auffälligen silbernen Haare und ihr ständiges schelmisches Grinsen auf. Ohne einen wirklichen, ersichtlichen Grund entführt sie Finn und verbreitet in der Gruppe pure Angst und Schrecken.</p>
-    </div>
-
-    <div class="character char-card">
-      <p class="char-name">Elizabeth Everhart</p>
-      <p class="char-role">DIE HAUSHÄLTERIN</p>
-      <p>Die Angestellte im St. Gray, die im ganzen Haus für ihre extreme Strenge und ungeduldige Eile bekannt ist. Sie zögert nicht, den Kindern harte Strafarbeiten aufzubrummen. Doch hinter der harten Fassade verbirgt sich ein Geheimnis: Sie scheint weitaus mehr über die magischen Zustände zu wissen, als sie zugibt, und steht insgeheim fest auf der Seite der Kinder - auch wenn sie ihre wahren Gefühle niemals offen zeigt.</p>
-    </div>
-
-    <div class="character char-card">
-      <p class="char-name">Finn Park</p>
-      <p class="char-role">AMBERS GROSSER BRUDER</p>
-      <p>Der älteste der Park-Geschwister. Er übernimmt eine starke Beschützerrolle für seine jüngeren Schwestern. Da er ein normaler Mensch ohne jede Magie ist, gerät er schnell ins Visier von Samanthas Spott, die ihn regelmäßig als dumm beschimpft. Er bildet zusammen mit seinen Schwestern, Samantha, Theo und Mary die Kern-Gruppe.</p>
-    </div>
-
-    <div class="character char-card">
-      <p class="char-name">Jacob Mclean</p>
-      <p class="char-role">STRENGER POLIZIST & VORGESETZTER</p>
-      <p>Ein strenger Polizist, der selbst in brenzligen Momenten die Ruhe bewahrt und sich auch von jungen Hexen wie Samantha nicht einschüchtern lässt. Er ist eher schweigsam, trennt Privat- und Berufsleben strikt und ist aus reiner Leidenschaft Polizist geworden. Für Mason ist er eine wichtige Vaterfigur.</p>
-    </div>
-
-    <div class="character char-card">
-      <p class="char-name">Lennard</p>
-      <p class="char-role">OPFER DES DREI-BECHER-RITUALS</p>
-      <p>Ein schüchterner neunjähriger Junge, der sich früh mit Alice angefreundet hat. Er gehört leider zu den Kindern, die dem Drei-Becher-Ritual zum Opfer gefallen sind. Sein Familienname ist unbekannt, da er schon als Baby beim St. Gray abgegeben wurde.</p>
-    </div>
-
-    <div class="character char-card">
-      <p class="char-name">Mason Cater</p>
-      <p class="char-role">POLIZIST IN AUSBILDUNG</p>
-      <p>Ein früherer Waise und jetziger Polizist in Ausbildung mit einem starken Gerechtigkeitssinn. Schon früh verlor er beide Eltern bei einem Autounfall und kam in ein anderes Waisenhaus, das später wegen gewalttätiger Erzieher geschlossen wurde. Danach musste Mason von einer Gastfamilie zur nächsten. Als junger Polizist will er oft mit dem Kopf durch die Wand. In der Geschichte stellt er aufgrund seiner schlechten Erfahrungen eigene Nachforschungen zum St. Gray an. Er trifft nach dessen Entführung auf Finn und wird misstrauisch, da Finn nach seinem Wiederauftauchen seltsam entspannt wirkt. Masons größtes Vorbild ist sein bester Freund und Vorgesetzter Jacob Mclean.</p>
-    </div>
-
-    <div class="character char-card">
-      <p class="char-name">Samantha Grays</p>
-      <p class="char-role">EIGENSINNIGE MENTORIN</p>
-      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
-      <p>Samantha ist charakterlich extrem kalt, unnahbar und pragmatisch. Sie lässt sich nur auf Amber ein, weil diese ebenfalls eine Hexe ist, und nutzt Ambers Visionstalent gezielt für ihre eigenen Pläne aus. Der große Plot-Twist: Samantha ist die leibliche Nichte der bösen Direktorin Ann Grays. Trotz dieser Verwandtschaft steht sie jedoch auf der Seite der Kinder-Gruppe und will ihnen keinen Schaden zufügen, sondern agiert aktiv gegen ihre Tante.</p>
-    </div>
-
-    <div class="character char-card">
-      <p class="char-name">Theo & Mary Norack</p>
-      <p class="char-role">MITGLIEDER DER GRUPPE</p>
-      <p>Zwei wichtige Jugendliche im Waisenhaus, die fest zur Gruppe rund um die Park-Geschwister gehören. Aufgrund von Samanthas kühlem und abweisendem Charakter ist diese absolut nicht gut auf die beiden zu sprechen, obwohl sie am selben Strang ziehen müssen.</p>
-    </div>
-  </d  <h2 id="ritual-section">Das Ritual der Hexen (Lore)</h2>
-  <div class="character">
-    <p class="char-name">Das Drei-Becher-Ritual</p>
-    <p class="char-role">RITUAL UND BEDINGUNGEN</p>
-    
-    <p>Das Ritual der drei Becher geht genau drei Nächte lang. Unterm Vollmond entsteht durch einen Fluch der Austausch von Lebensenergie, wobei der Magievorrat die Lebenskraft aufnimmt.</p>
-    
-    <p><strong>Ablauf der drei Nächte:</strong></p>
-    <ul>
-      <li><strong>1. Nacht:</strong> Das Blut der Hexe wird bereitgestellt.</li>
-      <li><strong>2. Nacht:</strong> Das Blut eines/einer Unschuldigen wird bereitgestellt.</li>
-      <li><strong>3. Nacht:</strong> Das Blut des Opfers (das geschnappt wird). Unterm Vollmond findet der Austausch statt.</li>
-    </ul>
-
-    <p><strong>Benötigte Gegenstände:</strong> Drei goldene Becher und ein Magievorrat.</p>
-    <p><strong>Beteiligte Personen:</strong> Ein Kind im Alter von 10–18 Jahren (das Opfer), die Hexe (oder mehrere Hexen), die mehr Lebenszeit ersucht, sowie ein/e Unschuldige/r.</p>
-  </div>
-
-  <details class="info-box">
-    <summary class="info-box-title">Malvorrith, was ist das?</summary>
-    <div class="info-box-content">
-      <p>Ein Malvorrith (auch Hexenherz genannt) ist ein magischer Ritualstein, der aus dem Blut, den Knochen und dem Herzen einer Hexe geformt wird. Die Farbe wird durch die Kraft der jeweiligen Hexe entschieden.</p>
-      <p>Durch den Malvorrith sind viele eher unnatürliche Rituale möglich. Dabei ist eines gefährlicher als das andere.</p>
-      <p>Alleine schon die Existenz dieses Steins ist ein Verstoß gegen das natürliche Gesetz. Wer so einen besitzt, wird von der Hexengesellschaft nicht nur verpönt, sondern auch als Mörder abgestempelt. Das Herz einer Hexe zu erschaffen und zu nutzen, wirkt sich schädlich auf den Verstand aus und kann auch bei Ritualen zu Unglücken führen. Wer ihn geschaffen hat, ist bisher noch unbekannt.</p>
-      <p>Wissen tut man nur eines: Von einem Malvorrith hält man sich besser fern.</p>
-    </div>
-  </details>
-
-  <div id="quiz" class="character">
-    <h2>Hexen-Quiz: Bist du eine Hexe?</h2>
-    <div id="quiz-container">
-      <p id="quiz-question" style="font-weight: bold; font-size: 1.1em; color: #ffffff;"></p>
-      <div id="quiz-answers" style="margin-top: 15px; display: flex; flex-direction: column; gap: 10px;"></div>
-      <div id="quiz-message" style="margin-top: 15px; color: #00ff88; font-style: italic;"></div>
-      <div style="display: flex; gap: 10px; margin-top: 15px;">
-        <button id="quiz-back-btn" class="skip-btn" style="display: none; background-color: #4a4463;" onclick="goBack()">Zurück</button>
-        <button id="quiz-next-btn" class="skip-btn" style="display: none;" onclick="nextStep()">Weiter</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="galerie" class="character">
-    <h2>Galerie</h2>
-    <div class="gallery-grid">
-      <div class="gallery-item">
-        <img src="st-gray.jpg" alt="Waisenhaus St. Gray" class="gallery-img">
-        <p class="gallery-caption">Waisenhaus St. Gray</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="character" style="text-align: center;">
-    <button onclick="toggleSpoiler()" class="spoiler-btn">
-      Erklärung des ersten Endes (Spoiler-Alarm ⚠️)
-    </button>
-    
-    <div id="spoiler-content" style="display: none; text-align: left; margin-top: 20px;">
-      <p>Nach dem Amber und Samantha die Direktorin des St. Gray besiegten, kehrte Ruhe ins St. Gray ein. Die Zeit der Trauer war vorbei. Die böse Hexe des Windes, Ann Grays, wurde von ihrer eigenen Nichte getäuscht, von einem Kronleuchter im St. Gray erschlagen und anschließend verbrannt. Dies geschah, nachdem sie versucht hatte, die junge Alice Park „verschwinden zu lassen“. Daraufhin folgte eine Jagd, bei der sie versuchte, Amber anzugreifen. Diese kam mit schweren Verletzungen davon. Letztendlich war es doch die eigene Nichte, die mit einem Zauber den Kronleuchter löste und sie tötete.</p>
-      
-      <p>Das Feuer spielt dabei eine entscheidende Rolle, da Hexen (vor allem, wenn sie sehr alt sind) in der Regel verbrannt werden müssen.</p>
-      
-      <p><strong>Doch wie konnte eine jahrhundertealte Hexe so leicht umkommen?</strong></p>
-      
-      <p>Ann Grays war zwar mächtig, jedoch nie besonders weise. Ihr größter Fehler war es, ihr eigenes Blut zu unterschätzen und die offensichtlichen Anzeichen einer Rebellion gekonnt zu ignorieren. Sie bekam sogar einzelne Tipps von Caroline (Hexe der Manipulation), verweigerte aber jegliche Hilfe aufgrund ihres hohen Stolzes. Am Ende lag ihr größter Fehler in ihrer Hochmut.</p>
-      
-      <p>Als sie Amber und Samantha kurz vorher zum Beispiel beim Austauschen der Steine erwischte, hätte sie sofort überprüfen müssen, ob sie nun auch wirklich den echten Magievorrat in der Hand hatte. Stattdessen ging sie einfach davon aus, dass jemand wie Samantha sie niemals überlisten könnte. Samantha hingegen hatte genau diese Sichtweise schon vorhergesagt und entsprechend eine zweite Kopie bereitgehalten, die die Althexe nun mit sich trug. Beim Ritual zersprang der falsche Magievorrat unter ihrer eigenen Macht – statt ihr Leben zu schenken, entzog er ihr unglaublich viel Energie.</p>
-      
-      <p>Bei der Verfolgung und Konfrontation mit Amber war sie also bereits sichtbar geschwächt. Doch auch hier konnte und wollte sie ihren Stolz nicht loslassen. Statt zu fliehen, versuchte sie Rache für das entstandene Chaos zu nehmen, und bezahlte kurz darauf mit ihrem Leben.</p>
-    </div>
-  </div>
-
-  <div class="character becher-section">
-    <h3>Die drei goldenen Becher</h3>
-    <div class="becher-wrapper">
-      <div class="becher">🏆</div>
-      <div class="becher bloody-becher">
-        🏆
-        <div class="blood-drip"></div>
-      </div>
-      <div class="becher">🏆</div>
-    </div>
-  </div>
-
-  <div <script>
-  function toggleSpoiler() {
-    var content = document.getElementById("spoiler-content");
-    if (content.style.display === "none") {
-      content.style.display = "block";
-    } else {
-      content.style.display = "none";
-    }
-  }
-
-  let historyStack = [];
-  let currentStep = "q1";
-  let pendingNextStep = null;
-
-  const quizData = {
-    q1: {
-      question: "Was ist deine Augenfarbe?",
-      answers: [
-        { text: "Blau", next: "fail_not_witch" },
-        { text: "Grün", next: "q2_gender" },
-        { text: "Gemischt", next: "q2_mixed" }
-      ]
-    },
-    q2_gender: {
-      question: "Zu welchem Geschlecht gehörst du?",
-      answers: [
-        { text: "Männlich", next: "fail_not_witch" },
-        { text: "Weiblich", next: "q3_animal" },
-        { text: "Divers", next: "fail_not_witch" }
-      ]
-    },
-    q2_mixed: {
-      question: "Was meinst du mit gemischt?",
-      answers: [
-        { text: "Sie sind unterschiedlich", next: "q3_animal" },
-        { text: "Sie haben mehrere Farben", next: "fail_not_witch" }
-      ]
-    },
-    q3_animal: {
-      question: "Als welches Tier würdest du dich eher identifizieren?",
-      answers: [
-        { text: "Katze", msg: "Eine Katze sagst du? Interessante Wahl. Passt zu dir.", next: "q4_observed" },
-        { text: "Hund", next: "fail_not_witch" },
-        { text: "Vogel", msg: "Du willst fliegen? Das dachte ich mir schon.", next: "q4_observed" },
-        { text: "Schlange", msg: "Ah ja. Ich sehe es. Die Tücke in deinen Augen.", next: "q4_observed" }
-      ]
-    },
-    q4_observed: {
-      question: "Fühlst du dich manchmal beobachtet?",
-      answers: [
-        { text: "Ja", msg: "Das solltest du auch.", next: "q5_behind" },
-        { text: "Nein", msg: "Schön für dich.", next: "q5_behind" }
-      ]
-    },
-    q5_behind: {
-      question: "Steht gerade jemand hinter dir?",
-      answers: [
-        { text: "Ja", next: "q6_know_person" },
-        { text: "Nein", next: "q6_listen_breath" },
-        { text: "Woher soll ich das wissen?", next: "q6_look_around" }
-      ]
-    },
-    q6_know_person: {
-      question: "Ach ja? Und kennst du die Person gut?",
-      answers: [
-        { text: "Ja", result: "Kleine Lauscherin", desc: "Du bist keine Hexe, aber das heißt nicht, dass du nichts mit Magie am Hut hast. Halte sie nah, bevor sie von sich aus näher kommen." },
-        { text: "Nein", msg: "Bist du sicher? Ich kann deinen Atem hören.", next: "q7_stop_breathing" }
-      ]
-    },
-    q6_listen_breath: {
-      question: "Bist du sicher? Ich kann deinen Atem hören.",
-      answers: [
-        { text: "Weiter", next: "q7_stop_breathing" }
-      ]
-    },
-    q7_stop_breathing: {
-      question: "Meinst du, du kannst kurz damit aufhören? Es stört mich. Du bist laut.",
-      answers: [
-        { text: "Dann komm doch her", msg: "Oh. Ich bin schon hier.", next: "q8_find_me" },
-        { text: "Tut mir leid", msg: "Nicht so schlimm. Möchtest du einen Apfel?", next: "q8_apple_choice" },
-        { text: "Frage ignorieren", next: "q8_ignore_breath" }
-      ]
-    },
-    q8_find_me: {
-      question: "Meinst du, du findest mich, bevor ich dich finde?",
-      answers: [
-        { text: "Weiter", result: "100% Hexe", desc: "Sei auf der Hut vor anderen Hexenschwestern! Sie könnten deine Nähe suchen." }
-      ]
-    },
-    q8_apple_choice: {
-      question: "",
-      answers: [
-        { text: "Ja", result: "Opfergabe", desc: "Was, hast du bei Schneewittchen nicht aufgepasst? Du bist keine Hexe." },
-        { text: "Nein", next: "q9_why_no_apple" }
-      ]
-    },
-    q9_why_no_apple: {
-      question: "Wieso nicht?",
-      answers: [
-        { text: "Weil er giftig ist", msg: "Da hast du mich also doch noch erwischt.", next: "res_hexenmeisterin" },
-        { text: "Weil ich Äpfel nicht mag", result: "Naive Hexe", desc: "Hast du ein Glück! Du bist eine Hexe, aber du solltest dich vor anderen Hexen in Acht nehmen." },
-        { text: "Weil ich nichts von Fremden annehme. Punkt!", result: "Keine Hexe, aber eine gute Überlebende", desc: "Es ist richtig, dass du Vorsicht walten lässt." }
-      ]
-    },
-    res_hexenmeisterin: {
-      question: "",
-      answers: [],
-      result: "Hexenmeisterin",
-      desc: "An dich kommt keiner so leicht heran."
-    },
-    q8_ignore_breath: {
-      question: "Denkst du, wenn du deinen Atem anhältst, höre ich das nicht?",
-      answers: [
-        { text: "Weiter ignorieren", msg: "Da hält sich jemand für was ganz Besonderes, hm?", next: "q9_numbers" },
-        { text: "Einen Apfel anbieten", next: "q9_offer_apple" }
-      ]
-    },
-    q9_offer_apple: {
-      question: "Ist der vergiftet?",
-      answers: [
-        { text: "Ja", result: "Gifthexe", desc: "Wer braucht schon Freunde, wenn man seine Tränke hat? Phew, zum Glück warst du ehrlich." },
-        { text: "Nein", next: "q10_sure_apple" }
-      ]
-    },
-    q10_sure_apple: {
-      question: "Bist du sicher?",
-      answers: [
-        { text: "Ja", result: "100% Hexe, 0% Kraft", desc: "Deswegen hast du mich also vergiftet..." }
-      ]
-    },
-    q9_numbers: {
-      question: "Welche Zahl gefällt dir am besten?",
-      answers: [
-        { text: "3", result: "Hexe", desc: "Eiskalt, bestimmt und mächtig. Dir scheint nichts mehr im Weg zu stehen." },
-        { text: "12", result: "Gemeine Giftschlange", desc: "Du hast das Hexengen in dir, aber werd ja nicht frech!" },
-        { text: "25", result: "Gemeine Giftschlange", desc: "Du hast das Hexengen in dir, aber werd ja nicht frech!" },
-        { text: "15", result: "Gemeine Giftschlange", desc: "Du hast das Hexengen in dir, aber werd ja nicht frech!" },
-        { text: "66", result: "Gemeine Giftschlange", desc: "Du hast das Hexengen in dir, aber werd ja nicht frech!" },
-        { text: "67", result: "0% Hexe", desc: "67, echt jetzt? :( Versuchs nochmal im nächsten Leben." }
-      ]
-    },
-    q6_look_around: {
-      question: "Willst du dich nicht umsehen oder bist du zu faul?",
-      answers: [
-        { text: "Ich habe mich umgesehen", msg: "Und du hast es doch verpasst?", next: "res_exhausted" },
-        { text: "Kein Bock", msg: "...", next: "q7_unexplained" }
-      ]
-    },
-    res_exhausted: {
-      question: "",
-      answers: [],
-      result: "Erschöpfte Hexe",
-      desc: "Du magst wohl einen Funken Magie besitzen, aber was nützt dir das, wenn du sie nicht nutzt?"
-    },
-    q7_unexplained: {
-      question: "Hast du schon mal etwas Unerklärliches erlebt?",
-      answers: [
-        { text: "Ja", result: "Einseitige Hexe", desc: "Du bist stark, aber sehr selbstbezogen. Eine Hexe bist du auf jeden Fall." },
-        { text: "Nein", result: "Schwindlerin", desc: "Du bist nur hergekommen, um zu sehen, ob das Quiz was taugt, stimmt?" }
-      ]
-    },
-    fail_not_witch: {
-      question: "",
-      answers: [],
-      result: "Keine Hexe",
-      desc: "In dir schlummert keine Hexenmagie. Du bist ein ganz gewöhnlicher Mensch."
-    }
-  };
-
-  function renderQuiz() {
-    const data = quizData[currentStep];
-    const qElem = document.getElementById("quiz-question");
-    const aElem = document.getElementById("quiz-answers");
-    const mElem = document.getElementById("quiz-message");
-    const nBtn = document.getElementById("quiz-next-btn");
-    const bBtn = document.getElementById("quiz-back-btn");
-
-    qElem.innerText = data.question;
-    aElem.innerHTML = "";
-    mElem.innerText = "";
-    nBtn.style.display = "none";
-
-    bBtn.style.display = historyStack.length > 0 ? "inline-block" : "none";
-
-    if (data.result) {
-      qElem.innerText = "Ergebnis: " + data.result;
-      mElem.innerText = data.desc;
-      aElem.innerHTML = `<button class="skip-btn" onclick="resetQuiz()">Quiz neustarten</button>`;
-      return;
-    }
-
-    data.answers.forEach(ans => {
-      const btn = document.createElement("button");
-      btn.className = "skip-btn";
-      btn.style.width = "100%";
-      btn.innerText = ans.text;
-      btn.onclick = () => {
-        historyStack.push(currentStep);
-        if (ans.msg) {
-          mElem.innerText = ans.msg;
-          aElem.innerHTML = "";
-          if (ans.next) {
-            pendingNextStep = ans.next;
-            nBtn.style.display = "inline-block";
-          } else if (ans.result) {
-            currentStep = "result_custom";
-            quizData.result_custom = { result: ans.result, desc: ans.desc };
-            nBtn.style.display = "inline-block";
-          }
-        } else if (ans.result) {
-          currentStep = "result_custom";
-          quizData.result_custom = { result: ans.result, desc: ans.desc };
-          renderQuiz();
-        } else {
-          currentStep = ans.next;
-          renderQuiz();
-        }
-      };
-      aElem.appendChild(btn);
-    });
-  }
-
-  function nextStep() {
-    if (pendingNextStep) {
-      currentStep = pendingNextStep;
-      pendingNextStep = null;
-      renderQuiz();
-    }
-  }
-
-  function goBack() {
-    if (historyStack.length > 0) {
-      currentStep = historyStack.pop();
-      pendingNextStep = null;
-      renderQuiz();
-    }
-  }
-
-
-    function resetQuiz() {
-    historyStack = [];
+      <p
+        = [];
     currentStep = "q1";
     pendingNextStep = null;
     renderQuiz();
