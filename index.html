@@ -4,7 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Witch-Hunt: Kinder der verlorenen Zeit</title>
-    <!-- SEO & Suchmaschinen-Optimierung -->
+  
+  <!-- SEO & Suchmaschinen-Optimierung -->
   <meta name="description" content="Das inoffizielle Wiki & die Hexen-Fan Seite zum Buch Witch-Hunt: Kinder der verlorenen Zeit von Lara Antonia Rösler.">
   <meta name="keywords" content="Hexen, Witch-Hunt, Hexenbuch, Hexen-Fan Seite, Kinder der verlorenen Zeit, Lara Antonia Rösler, Wiki, Lore">
   <meta name="author" content="Lara Antonia Rösler Fan-Projekt">
@@ -15,6 +16,10 @@
   <meta property="og:type" content="website">
   
   <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       font-family: Arial, sans-serif;
       background-color: #120f1a;
@@ -58,13 +63,6 @@
       color: #a8a0b5;
     }
 
-   <div class="character">
-    <h2>Elite Waisenhaus?</h2>
-    <p>Grundsätzlich nimmt das Waisenhaus St. Gray nur Kinder ab einem Alter von <strong>8 Jahren</strong> auf. Zwar wurden in Einzelfällen auch Babys vor den Toren abgelegt, diese bilden jedoch absolute <strong>Ausnahmen</strong> oder werden an andere Einrichtungen weitervermittelt.</p>
-    <p>Die meisten Bewohner hatten zwar von Geburt an keine Eltern, wurden jedoch erst im späteren Verlauf nach St. Gray gebracht – nämlich genau dann, wenn die Heimleitung Interesse an ihren spezifischen Fällen zeigte.</p>
-    <p>St. Gray gilt daher als eines der wenigen <strong>„Elite-Waisenhäuser“</strong>, die Kindern die Chance auf ein neues und besseres Leben bieten. Die schulische und praktische Ausbildung vor Ort ist deutlich qualifizierter als in gewöhnlichen Waisenhäusern oder regulären Schulen. Aus diesem Grund existiert trotz des Status als Waisenhaus eine strikte Altersgrenze.</p>
-  </div>
-    
     .character {
       margin-bottom: 30px;
       border: 1px solid #332f4a;
@@ -75,7 +73,6 @@
       cursor: pointer;
     }
 
-    /* Leuchteffekt und Anheben beim Berühren/Klicken */
     .character:hover, .character:active {
       border-color: #6b0980;
       box-shadow: 0 0 15px rgba(107, 9, 128, 0.6);
@@ -83,8 +80,22 @@
       background-color: #2e2a45;
     }
 
+    /* Raster-Layout für die Charakter-Kästchen */
+    .char-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .char-card {
+      margin-bottom: 0; /* Verhindert doppelten Abstand im Grid */
+      display: flex;
+      flex-direction: column;
+    }
+
     .char-name {
-      font-size: 1.5em;
+      font-size: 1.3em;
       font-weight: bold;
       color: #ffffff;
       margin: 0;
@@ -94,12 +105,43 @@
       color: #6b0980;
       font-weight: bold;
       text-transform: uppercase;
-      font-size: 0.9em;
+      font-size: 0.85em;
     }
 
     .char-eyes {
       color: #00ff88;
+      font-size: 0.85em;
+    }
+
+    .update-box {
+      border-left: 4px solid #7597de;
+      background-color: #211d33;
+    }
+
+    .update-date {
+      color: #00ff88;
       font-size: 0.9em;
+      margin-bottom: 5px;
+    }
+
+    /* Buttons Style */
+    .skip-btn, .spoiler-btn {
+      background-color: #6b0980;
+      color: #ffffff;
+      border: none;
+      padding: 10px 18px;
+      font-size: 0.9em;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      display: inline-block;
+      margin-top: 10px;
+    }
+
+    .skip-btn:hover, .spoiler-btn:hover {
+      background-color: #8c0fa7;
+      transform: scale(1.03);
     }
 
     .footer {
@@ -115,6 +157,7 @@
 <div class="container">
   <h1>Witch-Hunt: Kinder der verlorenen Zeit</h1>
   <div class="subtitle">Das inoffizielle Wiki & Fan-Kompendium zum Meisterwerk von Lara Antonia Rösler</div>
+
   <!-- Ankündigungen & Updates Box -->
   <div class="character update-box">
     <h2>📢 Ankündigungen & Updates</h2>
@@ -140,82 +183,95 @@
     <p>Diese Hoffnung wird auf die Probe gestellt, denn Amber, die älteste Schwester, wird Zeugin eines mysteriösen Zaubers mit drastischen Folgen. Plötzlich wird sie von Alpträumen gejagt und ihre Mitbewohnerin warnt sie vor einer düsteren Welt, die sich bisher vor den Menschen versteckt gehalten hatte. Amber ist gezwungen zu handeln oder alles zu verlieren.</p>
   </div>
 
-  <h2>Charakter-Datenbank</h2>
+  <div class="character">
+    <h2>Elite Waisenhaus?</h2>
+    <p>Grundsätzlich nimmt das Waisenhaus St. Gray nur Kinder ab einem Alter von <strong>8 Jahren</strong> auf. Zwar wurden in Einzelfällen auch Babys vor den Toren abgelegt, diese bilden jedoch absolute <strong>Ausnahmen</strong> oder werden an andere Einrichtungen weitervermittelt.</p>
+    <p>Die meisten Bewohner hatten zwar von Geburt an keine Eltern, wurden jedoch erst im späteren Verlauf nach St. Gray gebracht – nämlich genau dann, wenn die Heimleitung Interesse an ihren spezifischen Fällen zeigte.</p>
+    <p>St. Gray gilt daher als eines der wenigen <strong>„Elite-Waisenhäuser“</strong>, die Kindern die Chance auf ein neues und besseres Leben bieten. Die schulische und praktische Ausbildung vor Ort ist deutlich qualifizierter als in gewöhnlichen Waisenhäusern oder regulären Schulen. Aus diesem Grund existiert trotz des Status als Waisenhaus eine strikte Altersgrenze.</p>
+  </div>
+
+  <!-- Überschrift & Überspring-Button -->
+  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 15px;">
+    <h2 style="margin-bottom: 0;">Charakter-Datenbank</h2>
+    <a href="#ritual-section"><button class="skip-btn">⬇️ Zur Lore & zum Ritual springen</button></a>
+  </div>
   
-  <!-- Alphabetisch sortiert -->
+  <!-- Alphabetisch sortierte Charakter-Kästchen als Grid -->
+  <div class="char-grid">
+    <div class="character char-card">
+      <p class="char-name">Alice Park</p>
+      <p class="char-role">KLEINE SCHWESTER (10 JAHRE)</p>
+      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
+      <p>Das absolute Nesthäkchen der Park-Familie. Mit ihren 10 Jahren ist sie im düsteren Waisenhaus am verletzlichsten. Sie ist der größte emotionale Antrieb für Amber und Finn, die Gefahren der Hexenwelt durchzustehen.</p>
+    </div>
 
-  <div class="character">
-    <p class="char-name">Alice Park</p>
-    <p class="char-role">KLEINE SCHWESTER (10 JAHRE)</p>
-    <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
-    <p>Das absolute Nesthäkchen der Park-Familie. Mit ihren 10 Jahren ist sie im düsteren Waisenhaus am verletzlichsten. Sie ist der größte emotionale Antrieb für Amber und Finn, die Gefahren der Hexenwelt durchzustehen.</p>
+    <div class="character char-card">
+      <p class="char-name">Amber Park</p>
+      <p class="char-role">HAUPTPROTAGONISTIN (14 JAHRE)</p>
+      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
+      <p>Nach dem plötzlichen Verschwinden ihrer Eltern bricht Ambers Welt zusammen. Im Waisenhaus St. Gray wird sie unfreiwillig in die Welt der Magie hineingezogen. Ihre Fähigkeiten sind rein mentaler Natur: Sie kann keine Auren lesen, besitzt jedoch die Gabe, Visionen zu sehen. Diese Visionen sind so intensiv, dass sie als Nebeneffekt stark darunter schlafwandelt. Sie wehrt sich anfangs dagegen, ihre Hexennatur anzunehmen.</p>
+    </div>
+
+    <div class="character char-card">
+      <p class="char-name">Ann Grays</p>
+      <p class="char-role">DIE DIREKTORIN / ANTAGONISTIN</p>
+      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
+      <p>Die Leiterin des Waisenhauses St. Gray. Sie ist eine mächtige, böse Hexe. Ann ist von Grund auf kaltherzig, arrogant und extrem abgehoben - zudem abgrundtief von einem tiefen Hass auf Kinder erfüllt. Sie weiß anfangs nicht, dass Amber eine Hexe ist, was der Gruppe einen unschätzbaren strategischen Vorteil verschafft.</p>
+    </div>
+
+    <div class="character char-card">
+      <p class="char-name">Caroline Blackthorne</p>
+      <p class="char-role">DIE GROSSE HEXE DER MANIPULATION</p>
+      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
+      <p>Eine mächtige, unberechenbare Hexe, die für eine völlig eigene Partei steht. Sie ist weder auf der Seite von Ann Grays noch auf der Seite der Kinder-Gruppe. Sie fällt optisch sofort durch ihre auffälligen silbernen Haare und ihr ständiges schelmisches Grinsen auf. Ohne einen wirklichen, ersichtlichen Grund entführt sie Finn und verbreitet in der Gruppe pure Angst und Schrecken.</p>
+    </div>
+
+    <div class="character char-card">
+      <p class="char-name">Elizabeth Everhart</p>
+      <p class="char-role">DIE HAUSHÄLTERIN</p>
+      <p>Die Angestellte im St. Gray, die im ganzen Haus für ihre extreme Strenge und ungeduldige Eile bekannt ist. Sie zögert nicht, den Kindern harte Strafarbeiten aufzubrummen. Doch hinter der harten Fassade verbirgt sich ein Geheimnis: Sie scheint weitaus mehr über die magischen Zustände zu wissen, als sie zugibt, und steht insgeheim fest auf der Seite der Kinder - auch wenn sie ihre wahren Gefühle niemals offen zeigt.</p>
+    </div>
+
+    <div class="character char-card">
+      <p class="char-name">Finn Park</p>
+      <p class="char-role">AMBERS GROSSER BRUDER (16 JAHRE)</p>
+      <p>Der älteste der Park-Geschwister. Er übernimmt eine starke Beschützerrolle für seine jüngeren Schwestern. Da er ein normaler Mensch ohne jede Magie ist, gerät er schnell ins Visier von Samanthas Spott, die ihn regelmäßig als dumm beschimpft. Er bildet zusammen mit seinen Schwestern, Samantha, Theo und Mary die Kern-Gruppe.</p>
+    </div>
+
+    <div class="character char-card">
+      <p class="char-name">Jacob Mclean</p>
+      <p class="char-role">STRENGER POLIZIST & VORGESETZTER</p>
+      <p>Ein strenger Polizist, der selbst in brenzligen Momenten die Ruhe bewahrt und sich auch von jungen Hexen wie Samantha nicht einschüchtern lässt. Er ist eher schweigsam, trennt Privat- und Berufsleben strikt und ist aus reiner Leidenschaft Polizist geworden. Für Mason ist er eine wichtige Vaterfigur.</p>
+    </div>
+
+    <div class="character char-card">
+      <p class="char-name">Lennard</p>
+      <p class="char-role">OPFER DES DREI-BECHER-RITUALS (9 JAHRE)</p>
+      <p>Ein schüchterner neunjähriger Junge, der sich früh mit Alice angefreundet hat. Er gehört leider zu den Kindern, die dem Drei-Becher-Ritual zum Opfer gefallen sind. Sein Familienname ist unbekannt, da er schon als Baby beim St. Gray abgegeben wurde.</p>
+    </div>
+
+    <div class="character char-card">
+      <p class="char-name">Mason Cater</p>
+      <p class="char-role">POLIZIST IN AUSBILDUNG</p>
+      <p>Ein früherer Waise und jetziger Polizist in Ausbildung mit einem starken Gerechtigkeitssinn. Schon früh verlor er beide Eltern bei einem Autounfall und kam in ein anderes Waisenhaus, das später wegen gewalttätiger Erzieher geschlossen wurde. Danach musste Mason von einer Gastfamilie zur nächsten. Als junger Polizist will er oft mit dem Kopf durch die Wand. In der Geschichte stellt er aufgrund seiner schlechten Erfahrungen eigene Nachforschungen zum St. Gray an. Er trifft nach dessen Entführung auf Finn und wird misstrauisch, da Finn nach seinem Wiederauftauchen seltsam entspannt wirkt. Masons größtes Vorbild ist sein bester Freund und Vorgesetzter Jacob Mclean.</p>
+    </div>
+
+    <div class="character char-card">
+      <p class="char-name">Samantha Grays</p>
+      <p class="char-role">EIGENSINNIGE MENTORIN</p>
+      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
+      <p>Samantha ist charakterlich extrem kalt, unnahbar und pragmatisch. Sie lässt sich nur auf Amber ein, weil diese ebenfalls eine Hexe ist, und nutzt Ambers Visionstalent gezielt für ihre eigenen Pläne aus. Der große Plot-Twist: Samantha ist die leibliche Nichte der bösen Direktorin Ann Grays. Trotz dieser Verwandtschaft steht sie jedoch auf der Seite der Kinder-Gruppe und will ihnen keinen Schaden zufügen, sondern agiert aktiv gegen ihre Tante.</p>
+    </div>
+
+    <div class="character char-card">
+      <p class="char-name">Theo & Mary Norack</p>
+      <p class="char-role">MITGLIEDER DER GRUPPE</p>
+      <p>Zwei wichtige Jugendliche im Waisenhaus, die fest zur Gruppe rund um die Park-Geschwister gehören. Aufgrund von Samanthas kühlem und abweisendem Charakter ist diese absolut nicht gut auf die beiden zu sprechen, obwohl sie am selben Strang ziehen müssen.</p>
+    </div>
   </div>
 
-  <div class="character">
-    <p class="char-name">Amber Park</p>
-    <p class="char-role">HAUPTPROTAGONISTIN (14 JAHRE)</p>
-    <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
-    <p>Nach dem plötzlichen Verschwinden ihrer Eltern bricht Ambers Welt zusammen. Im Waisenhaus St. Gray wird sie unfreiwillig in die Welt der Magie hineingezogen. Ihre Fähigkeiten sind rein mentaler Natur: Sie kann keine Auren lesen, besitzt jedoch die Gabe, Visionen zu sehen. Diese Visionen sind so intensiv, dass sie als Nebeneffekt stark darunter schlafwandelt. Sie wehrt sich anfangs dagegen, ihre Hexennatur anzunehmen.</p>
-  </div>
-
-  <div class="character">
-    <p class="char-name">Ann Grays</p>
-    <p class="char-role">DIE DIREKTORIN / ANTAGONISTIN</p>
-    <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
-    <p>Die Leiterin des Waisenhauses St. Gray. Sie ist eine mächtige, böse Hexe. Ann ist von Grund auf kaltherzig, arrogant und extrem abgehoben - zudem abgrundtief von einem tiefen Hass auf Kinder erfüllt. Sie weiß anfangs nicht, dass Amber eine Hexe ist, was der Gruppe einen unschätzbaren strategischen Vorteil verschafft.</p>
-  </div>
-
-  <div class="character">
-    <p class="char-name">Caroline Blackthorne</p>
-    <p class="char-role">DIE GROSSE HEXE DER MANIPULATION</p>
-    <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
-    <p>Eine mächtige, unberechenbare Hexe, die für eine völlig eigene Partei steht. Sie ist weder auf der Seite von Ann Grays noch auf der Seite der Kinder-Gruppe. Sie fällt optisch sofort durch ihre auffälligen silbernen Haare und ihr ständiges schelmisches Grinsen auf. Ohne einen wirklichen, ersichtlichen Grund entführt sie Finn und verbreitet in der Gruppe pure Angst und Schrecken.</p>
-  </div>
-
-  <div class="character">
-    <p class="char-name">Elizabeth Everhart</p>
-    <p class="char-role">DIE HAUSHÄLTERIN</p>
-    <p>Die Angestellte im St. Gray, die im ganzen Haus für ihre extreme Strenge und ungeduldige Eile bekannt ist. Sie zögert nicht, den Kindern harte Strafarbeiten aufzubrummen. Doch hinter der harten Fassade verbirgt sich ein Geheimnis: Sie scheint weitaus mehr über die magischen Zustände zu wissen, als sie zugibt, und steht insgeheim fest auf der Seite der Kinder - auch wenn sie ihre wahren Gefühle niemals offen zeigt.</p>
-  </div>
-
-  <div class="character">
-    <p class="char-name">Finn Park</p>
-    <p class="char-role">AMBERS GROSSER BRUDER (16 JAHRE)</p>
-    <p>Der älteste der Park-Geschwister. Er übernimmt eine starke Beschützerrolle für seine jüngeren Schwestern. Da er ein normaler Mensch ohne jede Magie ist, gerät er schnell ins Visier von Samanthas Spott, die ihn regelmäßig als dumm beschimpft. Er bildet zusammen mit seinen Schwestern, Samantha, Theo und Mary die Kern-Gruppe.</p>
-  </div>
-
-  <div class="character">
-    <p class="char-name">Jacob Mclean</p>
-    <p class="char-role">STRENGER POLIZIST & VORGESETZTER</p>
-    <p>Ein strenger Polizist, der selbst in brenzligen Momenten die Ruhe bewahrt und sich auch von jungen Hexen wie Samantha nicht einschüchtern lässt. Er ist eher schweigsam, trennt Privat- und Berufsleben strikt und ist aus reiner Leidenschaft Polizist geworden. Für Mason ist er eine wichtige Vaterfigur.</p>
-  </div>
-
-  <div class="character">
-    <p class="char-name">Lennard</p>
-    <p class="char-role">OPFER DES DREI-BECHER-RITUALS (9 JAHRE)</p>
-    <p>Ein schüchterner neunjähriger Junge, der sich früh mit Alice angefreundet hat. Er gehört leider zu den Kindern, die dem Drei-Becher-Ritual zum Opfer gefallen sind. Sein Familienname ist unbekannt, da er schon als Baby beim St. Gray abgegeben wurde.</p>
-  </div>
-
-  <div class="character">
-    <p class="char-name">Mason Cater</p>
-    <p class="char-role">POLIZIST IN AUSBILDUNG</p>
-    <p>Ein früherer Waise und jetziger Polizist in Ausbildung mit einem starken Gerechtigkeitssinn. Schon früh verlor er beide Eltern bei einem Autounfall und kam in ein anderes Waisenhaus, das später wegen gewalttätiger Erzieher geschlossen wurde. Danach musste Mason von einer Gastfamilie zur nächsten. Als junger Polizist will er oft mit dem Kopf durch die Wand. In der Geschichte stellt er aufgrund seiner schlechten Erfahrungen eigene Nachforschungen zum St. Gray an. Er trifft nach dessen Entführung auf Finn und wird misstrauisch, da Finn nach seinem Wiederauftauchen seltsam entspannt wirkt. Masons größtes Vorbild ist sein bester Freund und Vorgesetzter Jacob Mclean.</p>
-  </div>
-
-  <div class="character">
-    <p class="char-name">Samantha Grays</p>
-    <p class="char-role">EIGENSINNIGE MENTORIN</p>
-    <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
-    <p>Samantha ist charakterlich extrem kalt, unnahbar und pragmatisch. Sie lässt sich nur auf Amber ein, weil diese ebenfalls eine Hexe ist, und nutzt Ambers Visionstalent gezielt für ihre eigenen Pläne aus. Der große Plot-Twist: Samantha ist die leibliche Nichte der bösen Direktorin Ann Grays. Trotz dieser Verwandtschaft steht sie jedoch auf der Seite der Kinder-Gruppe und will ihnen keinen Schaden zufügen, sondern agiert aktiv gegen ihre Tante.</p>
-  </div>
-
-  <div class="character">
-    <p class="char-name">Theo & Mary Norack</p>
-    <p class="char-role">MITGLIEDER DER GRUPPE</p>
-    <p>Zwei wichtige Jugendliche im Waisenhaus, die fest zur Gruppe rund um die Park-Geschwister gehören. Aufgrund von Samanthas kühlem und abweisendem Charakter ist diese absolut nicht gut auf die beiden zu sprechen, obwohl sie am selben Strang ziehen müssen.</p>
-  </div>
-
-  <h2>Das Ritual der Hexen (Lore)</h2>
+  <!-- Ziel für den Überspring-Button -->
+  <h2 id="ritual-section">Das Ritual der Hexen (Lore)</h2>
   <div class="character">
     <p class="char-name">Das Drei-Becher-Ritual</p>
     <p class="char-role">RITUAL UND BEDINGUNGEN</p>
@@ -232,13 +288,14 @@
     <p><strong>Benötigte Gegenstände:</strong> Drei goldene Becher und ein Magievorrat.</p>
     <p><strong>Beteiligte Personen:</strong> Ein Kind im Alter von 10–18 Jahren (das Opfer), die Hexe (oder mehrere Hexen), die mehr Lebenszeit ersucht, sowie ein/e Unschuldige/r.</p>
   </div>
+
   <!-- Spoiler-Button & Textbereich -->
   <div class="character" style="text-align: center;">
     <button onclick="toggleSpoiler()" class="spoiler-btn">
       Erklärung des ersten Endes (Spoiler-Alarm ⚠️)
     </button>
     
-    <div id="spoiler-content" class="spoiler-text" style="display: none; text-align: left; margin-top: 20px;">
+    <div id="spoiler-content" style="display: none; text-align: left; margin-top: 20px;">
       <p>Nach dem Amber und Samantha die Direktorin des St. Gray besiegten, kehrte Ruhe ins St. Gray ein. Die Zeit der Trauer war vorbei. Die böse Hexe des Windes, Ann Grays, wurde von ihrer eigenen Nichte getäuscht, von einem Kronleuchter im St. Gray erschlagen und anschließend verbrannt. Dies geschah, nachdem sie versucht hatte, die junge Alice Park „verschwinden zu lassen“. Daraufhin folgte eine Jagd, bei der sie versuchte, Amber anzugreifen. Diese kam mit schweren Verletzungen davon. Letztendlich war es doch die eigene Nichte, die mit einem Zauber den Kronleuchter löste und sie tötete.</p>
       
       <p>Das Feuer spielt dabei eine entscheidende Rolle, da Hexen (vor allem, wenn sie sehr alt sind) in der Regel verbrannt werden müssen.</p>
@@ -253,41 +310,22 @@
     </div>
   </div>
 
-  <!-- Styling für den Button -->
-  <style>
-    .spoiler-btn {
-      background-color: #6b0980;
-      color: #ffffff;
-      border: none;
-      padding: 12px 20px;
-      font-size: 1em;
-      font-weight: bold;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-    .spoiler-btn:hover {
-      background-color: #8c0fa7;
-      transform: scale(1.03);
-    }
-  </style>
-
-  <!-- JavaScript für die Klick-Funktion -->
-  <script>
-    function toggleSpoiler() {
-      var content = document.getElementById("spoiler-content");
-      if (content.style.display === "none") {
-        content.style.display = "block";
-      } else {
-        content.style.display = "none";
-      }
-    }
-  </script>
-  
   <div class="footer">
     <p>© 2026 Fan-Projekt zu "Witch-Hunt". Alle Rechte am Inhalt und den Charakteren liegen bei der Autorin Lara Antonia Rösler.</p>
   </div>
 </div>
+
+<!-- JavaScript für Spoiler-Funktion -->
+<script>
+  function toggleSpoiler() {
+    var content = document.getElementById("spoiler-content");
+    if (content.style.display === "none") {
+      content.style.display = "block";
+    } else {
+      content.style.display = "none";
+    }
+  }
+</script>
 
 </body>
 </html>
