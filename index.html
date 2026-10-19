@@ -232,7 +232,58 @@
     <p><strong>Benötigte Gegenstände:</strong> Drei goldene Becher und ein Magievorrat.</p>
     <p><strong>Beteiligte Personen:</strong> Ein Kind im Alter von 10–18 Jahren (das Opfer), die Hexe (oder mehrere Hexen), die mehr Lebenszeit ersucht, sowie ein/e Unschuldige/r.</p>
   </div>
+  <!-- Spoiler-Button & Textbereich -->
+  <div class="character" style="text-align: center;">
+    <button onclick="toggleSpoiler()" class="spoiler-btn">
+      Erklärung des ersten Endes (Spoiler-Alarm ⚠️)
+    </button>
+    
+    <div id="spoiler-content" class="spoiler-text" style="display: none; text-align: left; margin-top: 20px;">
+      <p>Nach dem Amber und Samantha die Direktorin des St. Gray besiegten, kehrte Ruhe ins St. Gray ein. Die Zeit der Trauer war vorbei. Die böse Hexe des Windes, Ann Grays, wurde von ihrer eigenen Nichte getäuscht, von einem Kronleuchter im St. Gray erschlagen und anschließend verbrannt. Dies geschah, nachdem sie versucht hatte, die junge Alice Park „verschwinden zu lassen“. Daraufhin folgte eine Jagd, bei der sie versuchte, Amber anzugreifen. Diese kam mit schweren Verletzungen davon. Letztendlich war es doch die eigene Nichte, die mit einem Zauber den Kronleuchter löste und sie tötete.</p>
+      
+      <p>Das Feuer spielt dabei eine entscheidende Rolle, da Hexen (vor allem, wenn sie sehr alt sind) in der Regel verbrannt werden müssen.</p>
+      
+      <p><strong>Doch wie konnte eine jahrhundertealte Hexe so leicht umkommen?</strong></p>
+      
+      <p>Ann Grays war zwar mächtig, jedoch nie besonders weise. Ihr größter Fehler war es, ihr eigenes Blut zu unterschätzen und die offensichtlichen Anzeichen einer Rebellion gekonnt zu ignorieren. Sie bekam sogar einzelne Tipps von Caroline (Hexe der Manipulation), verweigerte aber jegliche Hilfe aufgrund ihres hohen Stolzes. Am Ende lag ihr größter Fehler in ihrer Hochmut.</p>
+      
+      <p>Als sie Amber und Samantha kurz vorher zum Beispiel beim Austauschen der Steine erwischte, hätte sie sofort überprüfen müssen, ob sie nun auch wirklich den echten Magievorrat in der Hand hatte. Stattdessen ging sie einfach davon aus, dass jemand wie Samantha sie niemals überlisten könnte. Samantha hingegen hatte genau diese Sichtweise schon vorhergesagt und entsprechend eine zweite Kopie bereitgehalten, die die Althexe nun mit sich trug. Beim Ritual zersprang der falsche Magievorrat unter ihrer eigenen Macht – statt ihr Leben zu schenken, entzog er ihr unglaublich viel Energie.</p>
+      
+      <p>Bei der Verfolgung und Konfrontation mit Amber war sie also bereits sichtbar geschwächt. Doch auch hier konnte und wollte sie ihren Stolz nicht loslassen. Statt zu fliehen, versuchte sie Rache für das entstandene Chaos zu nehmen, und bezahlte kurz darauf mit ihrem Leben.</p>
+    </div>
+  </div>
 
+  <!-- Styling für den Button -->
+  <style>
+    .spoiler-btn {
+      background-color: #6b0980;
+      color: #ffffff;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1em;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+    .spoiler-btn:hover {
+      background-color: #8c0fa7;
+      transform: scale(1.03);
+    }
+  </style>
+
+  <!-- JavaScript für die Klick-Funktion -->
+  <script>
+    function toggleSpoiler() {
+      var content = document.getElementById("spoiler-content");
+      if (content.style.display === "none") {
+        content.style.display = "block";
+      } else {
+        content.style.display = "none";
+      }
+    }
+  </script>
+  
   <div class="footer">
     <p>© 2026 Fan-Projekt zu "Witch-Hunt". Alle Rechte am Inhalt und den Charakteren liegen bei der Autorin Lara Antonia Rösler.</p>
   </div>
