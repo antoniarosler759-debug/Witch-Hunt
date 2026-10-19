@@ -309,7 +309,89 @@
       <p>Bei der Verfolgung und Konfrontation mit Amber war sie also bereits sichtbar geschwächt. Doch auch hier konnte und wollte sie ihren Stolz nicht loslassen. Statt zu fliehen, versuchte sie Rache für das entstandene Chaos zu nehmen, und bezahlte kurz darauf mit ihrem Leben.</p>
     </div>
   </div>
+<!-- Drei Goldene Becher Bereich -->
+<div class="character becher-section">
+  <h3>Die drei goldenen Becher</h3>
+  <div class="becher-wrapper">
+    <!-- Normaler Becher 1 -->
+    <div class="becher">🏆</div>
+    
+    <!-- Tropfender Becher 2 -->
+    <div class="becher bloody-becher">
+      🏆
+      <div class="blood-drip"></div>
+    </div>
+    
+    <!-- Normaler Becher 3 -->
+    <div class="becher">🏆</div>
+  </div>
+</div>
 
+<style>
+  .becher-section {
+    text-align: center;
+    margin-top: 30px;
+    padding: 25px 15px;
+  }
+
+  .becher-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: 15px;
+  }
+
+  .becher {
+    font-size: 3.5rem;
+    position: relative;
+    display: inline-block;
+    filter: drop-shadow(0 0 8px #ffd700);
+    transition: transform 0.3s ease;
+  }
+
+  .becher:hover {
+    transform: scale(1.15);
+  }
+
+  /* Roter Leuchteffekt für den blutenden Becher */
+  .bloody-becher {
+    filter: drop-shadow(0 0 12px #ff0033) saturate(2);
+  }
+
+  /* Tropfen-Animation */
+  .blood-drip {
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 8px;
+    height: 8px;
+    background-color: #d60000;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #ff0000;
+    animation: dripAnimation 2s infinite ease-in;
+  }
+
+  @keyframes dripAnimation {
+    0% {
+      top: 60%;
+      opacity: 1;
+      transform: translateX(-50%) scale(1);
+    }
+    70% {
+      top: 110%;
+      opacity: 0.9;
+      transform: translateX(-50%) scale(1.2, 1.8);
+    }
+    100% {
+      top: 150%;
+      opacity: 0;
+      transform: translateX(-50%) scale(0.5);
+    }
+  }
+</style>
+  
   <div class="footer">
     <p>© 2026 Fan-Projekt zu "Witch-Hunt". Alle Rechte am Inhalt und den Charakteren liegen bei der Autorin Lara Antonia Rösler.</p>
   </div>
