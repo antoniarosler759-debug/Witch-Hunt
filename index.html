@@ -1,4 +1,4 @@
-<!D<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8">
@@ -10,7 +10,7 @@
   <meta name="keywords" content="Hexen, Witch-Hunt, Hexenbuch, Hexen-Fan Seite, Kinder der verlorenen Zeit, Lara Antonia Rösler, Wiki, Lore">
   <meta name="author" content="Lara Antonia Rösler Fan-Projekt">
 
-  <!-- Social Media & Vorschau -->
+  <!-- Social Media & Vorschau (WhatsApp, Discord etc.) -->
   <meta property="og:title" content="Witch-Hunt: Kinder der verlorenen Zeit">
   <meta property="og:description" content="Die inoffizielle Hexen-Fan Seite & Wiki zum Hexenbuch Witch-Hunt. Erfahre alles über Lore und Charaktere.">
   <meta property="og:type" content="website">
@@ -80,6 +80,7 @@
       background-color: #2e2a45;
     }
 
+    /* Raster-Layout für die Charakter-Kästchen */
     .char-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -88,7 +89,7 @@
     }
 
     .char-card {
-      margin-bottom: 0;
+      margin-bottom: 0; /* Verhindert doppelten Abstand im Grid */
       display: flex;
       flex-direction: column;
     }
@@ -123,6 +124,7 @@
       margin-bottom: 5px;
     }
 
+    /* Buttons Style */
     .skip-btn, .spoiler-btn {
       background-color: #6b0980;
       color: #ffffff;
@@ -147,146 +149,84 @@
       font-size: 0.8em;
       color: #6b6b6b;
       margin-top: 40px;
-    }
+/* Navigationsleiste ganz oben */
+.top-nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background-color: #1e1b29;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #332f4a;
+}
 
-    .top-nav {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      background-color: #1e1b29;
-      padding: 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      border: 1px solid #332f4a;
-    }
+.nav-link {
+  color: #00ff88;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1em;
+  padding: 8px 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
 
-    .nav-link {
-      color: #00ff88;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.1em;
-      padding: 8px 16px;
-      border-radius: 5px;
-      transition: background-color 0.3s ease, color 0.3s ease;
-    }
+.nav-link:hover {
+  background-color: #6b0980;
+  color: #ffffff;
+}
 
-    .nav-link:hover {
-      background-color: #6b0980;
-      color: #ffffff;
-    }
+/* Galerie Styling */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
+}
 
-    .info-box {
-      border: 1px solid #6b0980;
-      border-radius: 8px;
-      padding: 12px;
-      background-color: #27233a;
-      max-width: 100%;
-      font-family: sans-serif;
-      margin-bottom: 30px;
-    }
+.gallery-item {
+  background-color: #27233a;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #332f4a;
+  text-align: center;
+}
 
-    .info-box-title {
-      font-weight: bold;
-      font-size: 1.1em;
-      cursor: pointer;
-      user-select: none;
-      color: #00ff88;
-    }
+.gallery-img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+}
 
-    .info-box-content {
-      margin-top: 10px;
-      line-height: 1.5;
-      color: #d1d1d1;
-    }
-
-    .info-box-content p {
-      margin-bottom: 10px;
-    }
-
-    .info-box-content p:last-child {
-      margin-bottom: 0;
-    }
-
-    .becher-section {
-      text-align: center;
-      margin-top: 30px;
-      padding: 25px 15px;
-    }
-
-    .becher-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 40px;
-      margin-top: 15px;
-    }
-
-    .becher {
-      font-size: 3.5rem;
-      position: relative;
-      display: inline-block;
-      filter: drop-shadow(0 0 8px #ffd700);
-      transition: transform 0.3s ease;
-    }
-
-    .becher:hover {
-      transform: scale(1.15);
-    }
-
-    .bloody-becher {
-      filter: drop-shadow(0 0 12px #ff0033) saturate(2);
-    }
-
-    .blood-drip {
-      position: absolute;
-      bottom: -5px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 8px;
-      height: 8px;
-      background-color: #ff0033;
-      border-radius: 50%;
-      animation: drip 1.5s infinite ease-in;
-    }
-
-    @keyframes drip {
-      0% {
-        bottom: 5px;
-        opacity: 1;
-        transform: translateX(-50%) scale(0.5);
-      }
-      70% {
-        bottom: -15px;
-        opacity: 0.8;
-        transform: translateX(-50%) scale(1.2);
-      }
-      100% {
-        bottom: -25px;
-        opacity: 0;
-        transform: translateX(-50%) scale(0.8);
-      }
+.gallery-caption {
+  padding: 10px;
+  margin: 0;
+  font-size: 0.9em;
+  color: #d1d1d1;
+}
+      
     }
   </style>
 </head>
 <body>
-
-<div class="container" id="home">
-
-  <nav class="top-nav">
-    <a href="#home" class="nav-link">Home</a>
-    <a href="#ritual-section" class="nav-link">Lore & Ritual</a>
-  </nav>
-
+<nav class="top-nav">
+  <a href="#home" class="nav-link">Home</a>
+  <a href="#galerie" class="nav-link">Galerie</a>
+</nav>
+  
+<div class="container">
   <h1>Witch-Hunt: Kinder der verlorenen Zeit</h1>
   <div class="subtitle">Das inoffizielle Wiki & Fan-Kompendium zum Meisterwerk von Lara Antonia Rösler</div>
 
+  <!-- Ankündigungen & Updates Box -->
   <div class="character update-box">
     <h2>📢 Ankündigungen & Updates</h2>
     <p class="update-date"><strong>19. Oktober 2026:</strong> Neuer Lore-Abschnitt hinzugefügt!</p>
     <p>Willkommen auf der überarbeiteten Fan-Seite! Hier findest du ab sofort alle aktuellen Infos, Charaktere und Hintergründe zu <em>Witch-Hunt: Kinder der verlorenen Zeit</em>.</p>
-    <p>-Erster Teil? Fertig</p>
-    <p>-Zweiter Teil? In Arbeit</p>
-    <p>Dritter Teil???</p>
+ <p>-Erster Teil? Fertig</p>
+ <p>-Zweiter Teil? In Arbeit</p>
+   <p>Dritter Teil???</p>
   </div>
   
   <div class="character">
@@ -314,39 +254,103 @@
     <p>St. Gray gilt daher als eines der wenigen <strong>„Elite-Waisenhäuser“</strong>, die Kindern die Chance auf ein neues und besseres Leben bieten. Die schulische und praktische Ausbildung vor Ort ist deutlich qualifizierter als in gewöhnlichen Waisenhäusern oder regulären Schulen. Aus diesem Grund existiert trotz des Status als Waisenhaus eine strikte Altersgrenze.</p>
   </div>
 
+  <!-- Überschrift & Überspring-Button -->
   <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; margin-bottom: 15px;">
     <h2 style="margin-bottom: 0;">Charakter-Datenbank</h2>
     <a href="#ritual-section"><button class="skip-btn">⬇️ Zur Lore & zum Ritual springen</button></a>
   </div>
   
+  <!-- Alphabetisch sortierte Charakter-Kästchen als Grid -->
   <div class="char-grid">
     <div class="character char-card">
-      <p
-        = [];
-    currentStep = "q1";
-    pendingNextStep = null;
-    renderQuiz();
-  }
-
-  document.addEventListener("DOMContentLoaded", renderQuiz);
-</script>
-
-</body>
-  </html>
+      <p class="char-name">Alice Park</p>
+      <p class="char-role">KLEINE SCHWESTER</p>
+      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
+      <p>Das absolute Nesthäkchen der Park-Familie. Im düsteren Waisenhaus ist sie am verletzlichsten. Sie ist der größte emotionale Antrieb für Amber und Finn, die Gefahren der Hexenwelt durchzustehen.</p>
+    </div>
+    <div class="character char-card">
+      <p class="char-name">Bianka & Jeffrey Park</p>
+      <p class="char-role">ELTERN DER PARK-GESCHWISTER</p>
+      <p>Zwei liebevolle Eltern, die ihre Kinder in London großgezogen haben und eines Tages plötzlich verschwunden sind. Beide sind eher ruhiger Natur.</p>
+    </div>
     
-    renderQuiz();
-  }
+    <div class="character char-card">
+      <p class="char-name">Amber Park</p>
+      <p class="char-role">HAUPTPROTAGONISTIN</p>
+      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
+      <p>Nach dem plötzlichen Verschwinden ihrer Eltern bricht Ambers Welt zusammen. Im Waisenhaus St. Gray wird sie unfreiwillig in die Welt der Magie hineingezogen. Ihre Fähigkeiten sind rein mentaler Natur: Sie kann keine Auren lesen, besitzt jedoch die Gabe, Visionen zu sehen. Diese Visionen sind so intensiv, dass sie als Nebeneffekt stark darunter schlafwandelt. Sie wehrt sich anfangs dagegen, ihre Hexennatur anzunehmen.</p>
+    </div>
 
-  document.addEventListener("DOMContentLoaded", renderQuiz);
-</script>
+    <div class="character char-card">
+      <p class="char-name">Ann Grays</p>
+      <p class="char-role">DIE DIREKTORIN / ANTAGONISTIN</p>
+      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
+      <p>Die Leiterin des Waisenhauses St. Gray. Sie ist eine mächtige, böse Hexe. Ann ist von Grund auf kaltherzig, arrogant und extrem abgehoben - zudem abgrundtief von einem tiefen Hass auf Kinder erfüllt. Sie weiß anfangs nicht, dass Amber eine Hexe ist, was der Gruppe einen unschätzbaren strategischen Vorteil verschafft.</p>
+    </div>
 
-</body>
-  </html>
-    class="footer">
-    <p>&copy; 2026 Fan-Projekt zu "Witch-Hunt". Alle Rechte an Inhalt und den Charakteren liegen bei der Autorin Lara 
-  
+    <div class="character char-card">
+      <p class="char-name">Caroline Blackthorne</p>
+      <p class="char-role">DIE GROSSE HEXE DER MANIPULATION</p>
+      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
+      <p>Eine mächtige, unberechenbare Hexe, die für eine völlig eigene Partei steht. Sie ist weder auf der Seite von Ann Grays noch auf der Seite der Kinder-Gruppe. Sie fällt optisch sofort durch ihre auffälligen silbernen Haare und ihr ständiges schelmisches Grinsen auf. Ohne einen wirklichen, ersichtlichen Grund entführt sie Finn und verbreitet in der Gruppe pure Angst und Schrecken.</p>
+    </div>
 
-        <h2 id="ritual-section">Das Ritual der Hexen (Lore)</h2>
+    <div class="character char-card">
+      <p class="char-name">Elizabeth Everhart</p>
+      <p class="char-role">DIE HAUSHÄLTERIN</p>
+      <p>Die Angestellte im St. Gray, die im ganzen Haus für ihre extreme Strenge und ungeduldige Eile bekannt ist. Sie zögert nicht, den Kindern harte Strafarbeiten aufzubrummen. Doch hinter der harten Fassade verbirgt sich ein Geheimnis: Sie scheint weitaus mehr über die magischen Zustände zu wissen, als sie zugibt, und steht insgeheim fest auf der Seite der Kinder - auch wenn sie ihre wahren Gefühle niemals offen zeigt.</p>
+    </div>
+
+    <div class="character char-card">
+      <p class="char-name">Finn Park</p>
+      <p class="char-role">AMBERS GROSSER BRUDER</p>
+      <p>Der älteste der Park-Geschwister. Er übernimmt eine starke Beschützerrolle für seine jüngeren Schwestern. Da er ein normaler Mensch ohne jede Magie ist, gerät er schnell ins Visier von Samanthas Spott, die ihn regelmäßig als dumm beschimpft. Er bildet zusammen mit seinen Schwestern, Samantha, Theo und Mary die Kern-Gruppe.</p>
+    </div>
+<!-- Galerie-Bereich -->
+<div id="galerie" class="character">
+  <h2>Galerie</h2>
+  <div class="gallery-grid">
+    <div class="gallery-item">
+      <img src="st-gray.jpg" alt="Waisenhaus St. Gray" class="gallery-img">
+      <p class="gallery-caption">Waisenhaus St. Gray</p>
+    </div>
+  </div>
+</div>
+    
+    <div class="character char-card">
+      <p class="char-name">Jacob Mclean</p>
+      <p class="char-role">STRENGER POLIZIST & VORGESETZTER</p>
+      <p>Ein strenger Polizist, der selbst in brenzligen Momenten die Ruhe bewahrt und sich auch von jungen Hexen wie Samantha nicht einschüchtern lässt. Er ist eher schweigsam, trennt Privat- und Berufsleben strikt und ist aus reiner Leidenschaft Polizist geworden. Für Mason ist er eine wichtige Vaterfigur.</p>
+    </div>
+
+    <div class="character char-card">
+      <p class="char-name">Lennard</p>
+      <p class="char-role">OPFER DES DREI-BECHER-RITUALS</p>
+      <p>Ein schüchterner neunjähriger Junge, der sich früh mit Alice angefreundet hat. Er gehört leider zu den Kindern, die dem Drei-Becher-Ritual zum Opfer gefallen sind. Sein Familienname ist unbekannt, da er schon als Baby beim St. Gray abgegeben wurde.</p>
+    </div>
+
+    <div class="character char-card">
+      <p class="char-name">Mason Cater</p>
+      <p class="char-role">POLIZIST IN AUSBILDUNG</p>
+      <p>Ein früherer Waise und jetziger Polizist in Ausbildung mit einem starken Gerechtigkeitssinn. Schon früh verlor er beide Eltern bei einem Autounfall und kam in ein anderes Waisenhaus, das später wegen gewalttätiger Erzieher geschlossen wurde. Danach musste Mason von einer Gastfamilie zur nächsten. Als junger Polizist will er oft mit dem Kopf durch die Wand. In der Geschichte stellt er aufgrund seiner schlechten Erfahrungen eigene Nachforschungen zum St. Gray an. Er trifft nach dessen Entführung auf Finn und wird misstrauisch, da Finn nach seinem Wiederauftauchen seltsam entspannt wirkt. Masons größtes Vorbild ist sein bester Freund und Vorgesetzter Jacob Mclean.</p>
+    </div>
+
+    <div class="character char-card">
+      <p class="char-name">Samantha Grays</p>
+      <p class="char-role">EIGENSINNIGE MENTORIN</p>
+      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
+      <p>Samantha ist charakterlich extrem kalt, unnahbar und pragmatisch. Sie lässt sich nur auf Amber ein, weil diese ebenfalls eine Hexe ist, und nutzt Ambers Visionstalent gezielt für ihre eigenen Pläne aus. Der große Plot-Twist: Samantha ist die leibliche Nichte der bösen Direktorin Ann Grays. Trotz dieser Verwandtschaft steht sie jedoch auf der Seite der Kinder-Gruppe und will ihnen keinen Schaden zufügen, sondern agiert aktiv gegen ihre Tante.</p>
+    </div>
+
+    <div class="character char-card">
+      <p class="char-name">Theo & Mary Norack</p>
+      <p class="char-role">MITGLIEDER DER GRUPPE</p>
+      <p>Zwei wichtige Jugendliche im Waisenhaus, die fest zur Gruppe rund um die Park-Geschwister gehören. Aufgrund von Samanthas kühlem und abweisendem Charakter ist diese absolut nicht gut auf die beiden zu sprechen, obwohl sie am selben Strang ziehen müssen.</p>
+    </div>
+  </div>
+
+  <!-- Ziel für den Überspring-Button -->
+  <h2 id="ritual-section">Das Ritual der Hexen (Lore)</h2>
   <div class="character">
     <p class="char-name">Das Drei-Becher-Ritual</p>
     <p class="char-role">RITUAL UND BEDINGUNGEN</p>
@@ -364,6 +368,7 @@
     <p><strong>Beteiligte Personen:</strong> Ein Kind im Alter von 10–18 Jahren (das Opfer), die Hexe (oder mehrere Hexen), die mehr Lebenszeit ersucht, sowie ein/e Unschuldige/r.</p>
   </div>
 
+  <!-- HTML-Struktur -->
   <details class="info-box">
     <summary class="info-box-title">Malvorrith, was ist das?</summary>
     <div class="info-box-content">
@@ -374,6 +379,42 @@
     </div>
   </details>
 
+  <!-- CSS-Styling für das Infokästchen -->
+  <style>
+    .info-box {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 12px;
+      background-color: #f9f9f9;
+      max-width: 600px;
+      font-family: sans-serif;
+      margin-bottom: 30px;
+    }
+
+    .info-box-title {
+      font-weight: bold;
+      font-size: 1.1em;
+      cursor: pointer;
+      user-select: none;
+      color: #333;
+    }
+
+    .info-box-content {
+      margin-top: 10px;
+      line-height: 1.5;
+      color: #555;
+    }
+
+    .info-box-content p {
+      margin-bottom: 10px;
+    }
+
+    .info-box-content p:last-child {
+      margin-bottom: 0;
+    }
+  </style>
+  
+  <!-- Spoiler-Button & Textbereich -->
   <div class="character" style="text-align: center;">
     <button onclick="toggleSpoiler()" class="spoiler-btn">
       Erklärung des ersten Endes (Spoiler-Alarm ⚠️)
@@ -390,38 +431,4 @@
       
       <p>Als sie Amber und Samantha kurz vorher zum Beispiel beim Austauschen der Steine erwischte, hätte sie sofort überprüfen müssen, ob sie nun auch wirklich den echten Magievorrat in der Hand hatte. Stattdessen ging sie einfach davon aus, dass jemand wie Samantha sie niemals überlisten könnte. Samantha hingegen hatte genau diese Sichtweise schon vorhergesagt und entsprechend eine zweite Kopie bereitgehalten, die die Althexe nun mit sich trug. Beim Ritual zersprang der falsche Magievorrat unter ihrer eigenen Macht – statt ihr Leben zu schenken, entzog er ihr unglaublich viel Energie.</p>
       
-      <p>Bei der Verfolgung und Konfrontation mit Amber war sie also bereits sichtbar geschwächt. Doch auch hier konnte und wollte sie ihren Stolz nicht loslassen. Statt zu fliehen, versuchte sie Rache für das entstandene Chaos zu nehmen, und bezahlte kurz darauf mit ihrem Leben.</p>
-    </div>
-  </div>
-
-  <div class="character becher-section">
-    <h3>Die drei goldenen Becher</h3>
-    <div class="becher-wrapper">
-      <div class="becher">🏆</div>
-      <div class="becher bloody-becher">
-        🏆
-        <div class="blood-drip"></div>
-      </div>
-      <div class="becher">🏆</div>
-    </div>
-  </div>
-
-  <div class="footer">
-    <p>&copy; 2026 Fan-Projekt zu "Witch-Hunt". Alle Rechte an Inhalt und den Charakteren liegen bei der Autorin Lara Antonia Rösler.</p>
-  </div>
-</div>
-
-<script>
-  function toggleSpoiler() {
-    var content = document.getElementById("spoiler-content");
-    if (content.style.display === "none") {
-      content.style.display = "block";
-    } else {
-      content.style.display = "none";
-    }
-  }
-</script>
-
-</body>
-  </html>
-    
+      <p>Bei der Verfolgung und Konfrontation mit Amber wa
