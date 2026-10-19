@@ -80,6 +80,118 @@ margin-top: 40px;
         <span class="becher-icon">🏆</span>
         <span class="becher-icon">🏆</span>
         <span class="becher-icon">🏆</span>
+    <!-- Style-Bereich für die Flipcard -->
+<style>
+  .flip-card-container {
+    perspective: 1000px;
+    max-width: 600px;
+    margin: 30px auto;
+    font-family: inherit;
+  }
+
+  .flip-card {
+    width: 100%;
+    min-height: 420px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+  }
+
+  .flip-card.flipped {
+    transform: rotateY(180deg);
+  }
+
+  .flip-card-front, .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    backface-visibility: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  /* Vorderseite Styling */
+  .flip-card-front {
+    background: linear-gradient(135deg, #2b1055, #7597de);
+    color: #ffffff;
+    border: 2px solid #ffd700;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .flip-card-front h3 {
+    margin-top: 0;
+    color: #ffd700;
+    font-size: 1.4rem;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.4);
+    padding-bottom: 10px;
+  }
+
+  .flip-card-front p {
+    line-height: 1.5;
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+  }
+
+  .flip-hint {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #ffd700;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 8px;
+    border-radius: 6px;
+    margin-top: 10px;
+  }
+
+  /* Rückseite Styling */
+  .flip-card-back {
+    background-color: #000;
+    transform: rotateY(180deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .flip-card-back img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+</style>
+
+<!-- HTML-Struktur der Flipcard -->
+<div class="flip-card-container">
+  <div class="flip-card" onclick="this.classList.toggle('flipped')">
+    
+    <!-- VORDERSEITE -->
+    <div class="flip-card-front">
+      <div>
+        <h3> Aufnahmekriterien St. Grays</h3>
+        <p>Grundsätzlich nimmt das Waisenhaus St. Grays nur Kinder ab einem Alter von <strong>8 Jahren</strong> auf. Zwar wurden in Einzelfällen auch Babys vor den Toren abgelegt, diese bilden jedoch absolute <strong>Ausnahmen</strong> oder werden an andere Einrichtungen weitervermittelt.</p>
+        <p>Die meisten Bewohner hatten zwar von Geburt an keine Eltern, wurden jedoch erst später nach St. Grays gebracht – nämlich genau dann, wenn die Heimleitung Interesse an ihren spezifischen Fällen zeigte.</p>
+        <p>St. Grays gilt daher als eines der wenigen <strong>„Elite-Waisenhäuser“</strong>. Die schulische und praktische Ausbildung vor Ort ist deutlich qualifizierter als in gewöhnlichen Waisenhäusern oder regulären Schulen. Aus diesem Grund existiert trotz des Status als Waisenhaus eine strikte Altersgrenze.</p>
+      </div>
+      <div class="flip-hint">
+        Klicken zum Umdrehen 🔄
+      </div>
+    </div>
+
+    <!-- RÜCKSEITE -->
+    <div class="flip-card-back">
+      <img src="1000011588.png" alt="Witch-Hunt Cover">
+    </div>
+
+  </div>
+</div>
+    
     </div>
 
     <p>Das Ritual der drei Becher geht genau drei Nächte lang. Unterm Vollmond entsteht durch einen Fluch der Austausch von Lebensenergie, wobei der Magievorrat die Lebenskraft aufnimmt.</p>
