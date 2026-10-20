@@ -33,6 +33,59 @@
       margin-top: 0;
     }
 
+    /* Startseiten-Design */
+    .start-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 25px;
+      padding: 20px 0;
+    }
+
+    .start-title {
+      font-size: 1.8rem;
+      color: #dfbf60;
+      text-shadow: 0 0 10px rgba(223, 191, 96, 0.4);
+      margin: 0;
+    }
+
+    /* Leuchtender Start-Button */
+    .start-btn {
+      position: relative;
+      background: #2b233a;
+      color: #dfbf60;
+      border: 2px solid #dfbf60;
+      padding: 15px 45px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(223, 191, 96, 0.6);
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+
+    .start-btn:hover {
+      box-shadow: 0 0 25px rgba(223, 191, 96, 0.9);
+      background: #3b2f50;
+      transform: scale(1.05);
+    }
+
+    /* Krabbelnde Spinne */
+    .spider {
+      position: absolute;
+      top: 50%;
+      left: -30px;
+      transform: translateY(-50%);
+      font-size: 1.2rem;
+      pointer-events: none;
+      animation: crawl 4s linear infinite;
+    }
+
+    @keyframes crawl {
+      0% { left: -30px; }
+      100% { left: 110%; }
+    }
     .question {
       font-size: 1.2rem;
       margin-bottom: 25px;
@@ -94,7 +147,90 @@
   </div>
 
   <script>
-    // Quiz-Datenstruktur basierend auf deinen Verzweigungen
+        // Pool aus 20 Zufallsfragen für mehr Atmosphäre
+    const extraQuestionsPool = [
+      {
+        text: "Du betrittst ein altes, nebliges Anwesen im Wald. Welches Geräusch fällt dir zuerst auf?",
+        options: ["Das Rascheln von Laub im Wind", "Ein fernes Rufen einer Eule", "Das Knarren einer hölzernen Tür", "Das leise Knistern eines Kessels"]
+      },
+      {
+        text: "Wenn das Licht des Vollmonds auf deine Augen fällt, was spiegeln sie wider?",
+        options: ["Eine ruhige, tiefe Nacht", "Ein flackerndes, verborgenes Feuer", "Den Schein eines alten Zauberspiegels", "Das Funkeln von taunassen Blättern"]
+      },
+      {
+        text: "Auf einem alten Eichentisch liegen vier Gegenstände. Zu welchem greift deine Hand instinktiv?",
+        options: ["Ein abgewetztes Lederbuch", "Ein geschliffener Bergkristall", "Eine getrocknete Kräuterwurzel", "Eine alte Messingschlüssel-Kette"]
+      },
+      {
+        text: "Welche Tageszeit lässt deine Gedanken am ruhigsten werden?",
+        options: ["Die geheimnisvolle Dämmerung", "Die tiefste Mitternacht", "Der frische, neblige Morgen", "Der warme Spätnachmittag"]
+      },
+      {
+        text: "Du läufst durch einen verwunschenen Garten. Welcher Duft liegt in der Luft?",
+        options: ["Feuchte Erde und Moos", "Süßer Lavendel und Salbei", "Rauch von brennendem Holz", "Frischer Regen auf heißem Stein"]
+      },
+      {
+        text: "Ein magisches Wesen blickt dich aufmerksam an. Was tut es als Nächstes?",
+        options: ["Es verneigt leise den Kopf", "Es umkreist dich aufmerksam", "Es gibt einen sanften Laut von sich", "Es beobachtet dich starr aus dem Schatten"]
+      },
+      {
+        text: "Erinnerst du dich an Träume, die sich ungewöhnlich real angefühlt haben?",
+        options: ["Ja, sehr oft – sie begleiten mich am Tag", "Ab und zu, besonders bei Vollmond", "Selten, aber wenn, dann sehr intensiv", "Kaum, ich vergesse sie meist sofort"]
+      },
+      {
+        text: "Ein Windstoß bläst deine Kerze aus. Wie reagierst du im Dunkeln?",
+        options: ["Ich bleibe ganz ruhig und schließe die Augen", "Ich suche sofort nach einem Streichholz", "Ich flüstere leise Worte vor mich hin", "Ich warte, bis sich meine Augen anpassen"]
+      },
+      {
+        text: "Der Kessel vor dir fängt an zu brodeln. Welche Farbe nimmt der Rauch an?",
+        options: ["Tiefes Violett", "Sanftes Smaragdgrün", "Warmer Goldton", "Silberner Nebel"]
+      },
+      {
+        text: "Welches Element spürst du am stärksten in deiner Nähe?",
+        options: ["Die kühle Luft des Windes", "Die Wärme einer knisternden Flamme", "Die Tiefe des klaren Wassers", "Die Ruhe der festen Erde"]
+      },
+            {
+        text: "Welcher Edelstein zieht dich am ehesten an?",
+        options: ["Dunkler Obsidian", "Strahlender Amethyst", "Grüner Malachit", "Funkelnder Mondstein"]
+      },
+      {
+        text: "Wie verhältst du dich bei einem schweren Gewitter?",
+        options: ["Ich schaue fasziniert aus dem Fenster", "Ich spüre eine seltsame Energie in mir", "Ich ziehe mich an einen gemütlichen Ort zurück", "Ich lausche dem Donner aus der Ferne"]
+      },
+      {
+        text: "Welches Kraut würdest du in deinen Schutztrank mischen?",
+        options: ["Beifuß und Thymian", "Rosmarin und Minze", "Kamille und Schafgarbe", "Eisenkraut und Alraune"]
+      },
+      {
+        text: "Ein altes Symbol zeichnet sich im Staub ab. Was bedeutet es für dich?",
+        options: ["Schutz vor dunklen Kräften", "Ein Wegweiser in die Zukunft", "Verborgenes Wissen vergangener Zeiten", "Ein Versprechen von Macht"]
+      },
+      {
+        text: "Was wünschst du dir am meisten von einem magischen Artefakt?",
+        options: ["Einsicht in verborgene Wahrheiten", "Schutz für meine Liebsten", "Die Fähigkeit, Unsichtbares zu sehen", "Kraft, mein Schicksal zu lenken"]
+      },
+      {
+        text: "Welcher Baum hat für dich die beruhigendste Ausstrahlung?",
+        options: ["Uralte Eiche", "Trauerweide am Fluss", "Mächtige Eibe", "Schlanke Birke"]
+      },
+      {
+        text: "Welche Himmelserscheinung fasziniert dich am meisten?",
+        options: ["Ein Blutmond am Nachthimmel", "Tanzende Polarlichter", "Ein plötzlicher Sternschnuppenregen", "Ein doppelter Regenbogen im Nebel"]
+      },
+      {
+        text: "Wenn du einen Trank brauen könntest, was sollte er bewirken?",
+        options: ["Klare Träume schenken", "Müdigkeit augenblicklich vertreiben", "Gefahren im Voraus spüren", "Gedanken von Ballast befreien"]
+      },
+      {
+        text: "In einer alten Bibliothek steht ein verschlossenes Buch. Welcher Einband fällt dir auf?",
+        options: ["Schwarzes Leder mit Rillen", "Samtblau mit gestickten Sternen", "Holz mit eingelegten Runen", "Glattes Pergament mit Goldrand"]
+      },
+      {
+        text: "Welches Wort beschreibt deine Intuition am besten?",
+        options: ["Scharf und blitzartig", "Leise, aber stetig", "Plötzlich und tiefgreifend", "Vorsichtig und abwägend"]
+      }
+    ];
+        // Hauptfragen-Baum
     const quizTree = {
       start: {
         text: "1. Welche Augenfarbe hast du?",
@@ -104,7 +240,7 @@
           { text: "Grün / Gemischt", next: "gruen_geschlecht" }
         ]
       },
-            // --- BRAUN PFAD ---
+
       braun_geschlecht: {
         text: "Welches biologische Geschlecht hast du?",
         options: [
@@ -157,7 +293,6 @@
       res_braun_w_1: { result: "1% Hexengene vorhanden." },
       res_braun_w_0: { result: "0% Hexe – keine magischen Spuren." },
 
-      // --- BLAU PFAD ---
       blau_geschlecht: {
         text: "Welches biologische Geschlecht hast du?",
         options: [
@@ -166,7 +301,6 @@
         ]
       },
 
-      // --- GRÜN / GEMISCHT PFAD ---
       gruen_geschlecht: {
         text: "Welches biologische Geschlecht hast du?",
         options: [
@@ -174,8 +308,7 @@
           { text: "Weiblich", next: "tier_w" }
         ]
       },
-            // --- TIER SELEKTION WEIBLICH ---
-      tier_w: {
+            tier_w: {
         text: "Welches Tier spricht dich am meisten an?",
         options: [
           { text: "Vogelart", next: "w_vogel_seltsam" },
@@ -187,45 +320,32 @@
 
       w_vogel_seltsam: {
         text: "Ist dir schon mal etwas Seltsames passiert?",
-        options: [
-          { text: "Ja", next: "res_w_vogel_ja" },
-          { text: "Nein", next: "res_w_vogel_nein" }
-        ]
+        options: [{ text: "Ja", next: "res_w_vogel_ja" }, { text: "Nein", next: "res_w_vogel_nein" }]
       },
       res_w_vogel_ja: { result: "Du hast ausgeprägte Hexengene und vertraust den Lüften!" },
       res_w_vogel_nein: { result: "45% Hexengene – deine Magie schläft noch." },
 
       w_katze_seltsam: {
         text: "Ist dir schon mal etwas Seltsames passiert?",
-        options: [
-          { text: "Ja", next: "res_w_katze_ja" },
-          { text: "Nein", next: "res_w_katze_nein" }
-        ]
+        options: [{ text: "Ja", next: "res_w_katze_ja" }, { text: "Nein", next: "res_w_katze_nein" }]
       },
       res_w_katze_ja: { result: "Sehr hohe Hexenaffinität! Katzen fühlen deine Auraluft." },
       res_w_katze_nein: { result: "5% Hexengene – dein Gespür ist noch schwach." },
 
       w_schlange_seltsam: {
         text: "Ist dir schon mal etwas Seltsames passiert?",
-        options: [
-          { text: "Ja", next: "res_w_schlange_ja" },
-          { text: "Nein", next: "res_w_schlange_nein" }
-        ]
+        options: [{ text: "Ja", next: "res_w_schlange_ja" }, { text: "Nein", next: "res_w_schlange_nein" }]
       },
       res_w_schlange_ja: { result: "Mächtige, verborgene Magie in deiner Blutlinie!" },
       res_w_schlange_nein: { result: "Spürbare Magie, aber selten genutzt." },
 
       w_kroete_seltsam: {
         text: "Ist dir schon mal etwas Seltsames passiert?",
-        options: [
-          { text: "Ja", next: "res_w_kroete_ja" },
-          { text: "Nein", next: "res_w_kroete_nein" }
-        ]
+        options: [{ text: "Ja", next: "res_w_kroete_ja" }, { text: "Nein", next: "res_w_kroete_nein" }]
       },
       res_w_kroete_ja: { result: "10% Hexengene mit Erd-Affinität." },
       res_w_kroete_nein: { result: "Legendäre Geschichten, aber keine aktive Hexe." },
 
-      // --- TIER SELEKTION MÄNNLICH ---
       tier_m: {
         text: "Welches Tier spricht dich am meisten an?",
         options: [
@@ -238,52 +358,65 @@
 
       m_vogel_seltsam: {
         text: "Ist dir schon mal etwas Seltsames passiert?",
-        options: [
-          { text: "Ja", next: "res_m_vogel_ja" },
-          { text: "Nein", next: "res_m_vogel_nein" }
-        ]
+        options: [{ text: "Ja", next: "res_m_vogel_ja" }, { text: "Nein", next: "res_m_vogel_nein" }]
       },
       res_m_vogel_ja: { result: "Vogel-Aura: Deine Magie zieht durch die Lüfte!" },
       res_m_vogel_nein: { result: "Keine direkten Hexengene nachweisbar." },
 
       m_katze_seltsam: {
         text: "Ist dir schon mal etwas Seltsames passiert?",
-        options: [
-          { text: "Ja", next: "res_m_katze_ja" },
-          { text: "Nein", next: "res_m_katze_nein" }
-        ]
+        options: [{ text: "Ja", next: "res_m_katze_ja" }, { text: "Nein", next: "res_m_katze_nein" }]
       },
       res_m_katze_ja: { result: "Katzen-Magie: Du erkennst die Zeichen der Umgebung." },
       res_m_katze_nein: { result: "Du stehst fest im Leben, keine Hexenenergie." },
 
       m_schlange_seltsam: {
         text: "Ist dir schon mal etwas Seltsames passiert?",
-        options: [
-          { text: "Ja", next: "res_m_schlange_ja" },
-          { text: "Nein", next: "res_m_schlange_nein" }
-        ]
+        options: [{ text: "Ja", next: "res_m_schlange_ja" }, { text: "Nein", next: "res_m_schlange_nein" }]
       },
       res_m_schlange_ja: { result: "Schlangen-Schutzaura vorhanden!" },
       res_m_schlange_nein: { result: "Ganz normaler Mensch ohne Magie." },
 
       m_kroete_seltsam: {
         text: "Ist dir schon mal etwas Seltsames passiert?",
-        options: [
-          { text: "Ja", next: "res_m_kroete_ja" },
-          { text: "Nein", next: "res_m_kroete_nein" }
-        ]
+        options: [{ text: "Ja", next: "res_m_kroete_ja" }, { text: "Nein", next: "res_m_kroete_nein" }]
       },
       res_m_kroete_ja: { result: "5% Hexengene nachgewiesen." },
       res_m_kroete_nein: { result: "0% Hexe – du schaust eher rational auf die Welt." }
     };
-        let currentNode = "start";
+        let isStartPage = true;
+    let currentNode = "start";
+    let pendingNextMainNode = null;
+    let selectedExtraQuestions = [];
+    let extraQuestionIndex = 0;
+
+    function prepareRandomExtraQuestions() {
+      const shuffled = [...extraQuestionsPool].sort(() => 0.5 - Math.random());
+      selectedExtraQuestions = shuffled.slice(0, 10);
+      extraQuestionIndex = 0;
+    }
 
     function renderStep() {
       const quizContent = document.getElementById("quiz-content");
+
+      // Startseite anzeigen
+      if (isStartPage) {
+        quizContent.innerHTML = `
+          <div class="start-screen">
+            <h2 class="start-title">Hast du das Zeug zur Hexerei?</h2>
+            <button class="start-btn" onclick="startQuizFromTitle()">
+              Spielen
+              <span class="spider">🕷️</span>
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      // Quiz-Schritte & Endergebnis
       const step = quizTree[currentNode];
 
-      if (step.result) {
-        // Ergebnis anzeigen
+      if (step && step.result) {
         quizContent.innerHTML = `
           <div class="result-box">
             <h2>Dein Ergebnis:</h2>
@@ -292,10 +425,9 @@
           <button class="restart-btn" onclick="restartQuiz()">Quiz neu starten</button>
         `;
       } else {
-        // Frage anzeigen
         let optionsHTML = "";
         step.options.forEach(option => {
-          optionsHTML += `<button class="option-btn" onclick="nextStep('${option.next}')">${option.text}</button>`;
+          optionsHTML += `<button class="option-btn" onclick="handleMainAnswer('${option.next}')">${option.text}</button>`;
         });
 
         quizContent.innerHTML = `
@@ -305,17 +437,57 @@
       }
     }
 
-    function nextStep(nodeKey) {
-      currentNode = nodeKey;
+    function startQuizFromTitle() {
+      isStartPage = false;
       renderStep();
+    }
+
+    function handleMainAnswer(nextMainNode) {
+      if (extraQuestionIndex < selectedExtraQuestions.length) {
+        pendingNextMainNode = nextMainNode;
+        showExtraQuestion();
+      } else {
+        currentNode = nextMainNode;
+        renderStep();
+      }
+    }
+
+    function showExtraQuestion() {
+      const quizContent = document.getElementById("quiz-content");
+      const extraQ = selectedExtraQuestions[extraQuestionIndex];
+
+      let optionsHTML = "";
+      extraQ.options.forEach(optionText => {
+        optionsHTML += `<button class="option-btn" onclick="handleExtraAnswer()">${optionText}</button>`;
+      });
+
+      quizContent.innerHTML = `
+        <div class="question">${extraQ.text}</div>
+        <div class="options-grid">${optionsHTML}</div>
+      `;
+    }
+
+    function handleExtraAnswer() {
+      extraQuestionIndex++;
+
+      if (extraQuestionIndex % 2 === 0 || extraQuestionIndex >= selectedExtraQuestions.length) {
+        currentNode = pendingNextMainNode;
+        pendingNextMainNode = null;
+        renderStep();
+      } else {
+        showExtraQuestion();
+      }
     }
 
     function restartQuiz() {
+      isStartPage = true;
       currentNode = "start";
+      pendingNextMainNode = null;
+      prepareRandomExtraQuestions();
       renderStep();
     }
 
-    // Quiz initialisieren
+    prepareRandomExtraQuestions();
     renderStep();
   </script>
 
