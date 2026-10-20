@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Witch-Hunt: Kinder der verlorenen Zeit - Quiz</title>
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: Arial, sans-serif; background-color: #120f1a; color: #d1d1d1; line-height: 1.6; margin: 0; padding: 20px; }
+    .container { max-width: 800px; margin: 0 auto; background-color: #1e1b29; padding: 30px; border-radius: 8px; }
+    h1 { color: #ffffff; margin-bottom: 5px; text-align: center; }
+    h2 { color: #6b0980; margin-bottom: 5px; border-bottom: 2px solid #6b0980; padding-bottom: 10px; }
+    .subtitle { text-align: center; font-style: italic; margin-bottom: 30px; color: #a8a0b5; }
+    .character { margin-bottom: 30px; border: 1px solid #332f4a; padding: 15px; border-radius: 5px; background-color: #27233a; }
+    .portal-btn { background-color: #6b0980; color: #ffffff; border: none; padding: 10px 18px; font-size: 0.9em; font-weight: bold; border-radius: 5px; cursor: pointer; transition: background-color 0.3s ease, transform 0.2s ease; display: inline-block; margin-top: 10px; text-decoration: none; }
+    .portal-btn:hover { background-color: #8c0fa7; transform: scale(1.03); }
+    .footer { text-align: center; font-size: 0.8em; color: #6b6b6b; margin-top: 40px; }
+    .top-nav { display: flex; justify-content: center; gap: 20px; background-color: #1e1b29; padding: 15px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #332f4a; }
+    .nav-link { color: #00ff88; text-decoration: none; font-weight: bold; font-size: 1.1em; padding: 8px 16px; border-radius: 5px; transition: background-color 0.3s ease, color 0.3s ease; }
+    .nav-link:hover { background-color: #6b0980; color: #ffffff; }
+    .portal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(10, 8, 15, 0.95); display: flex; justify-content: center; align-items: center; z-index: 9999; padding: 20px; box-sizing: border-box; }
+    .portal-card { background-color: #1e1b29; border: 2px solid #6b0980; box-shadow: 0 0 25px rgba(107, 9, 128, 0.8); border-radius: 12px; width: 100%; max-width: 550px; padding: 30px; position: relative; text-align: center; }
+    .close-portal { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; color: #a8a0b5; cursor: pointer; font-weight: bold; text-decoration: none; }
+    .close-portal:hover { color: #00ff88; }
+    .quiz-options { display: flex; flex-direction: column; gap: 12px; margin-top: 20px; }
+    .quiz-opt-btn { background-color: #27233a; border: 1px solid #6b0980; color: #ffffff; padding: 12px; border-radius: 6px; font-size: 1em; cursor: pointer; transition: all 0.2s ease; }
+    .quiz-opt-btn:hover { background-color: #6b0980; transform: translateY(-2px); }
+  </style>
+</head>
+<body>
+
+<div class="container" id="home">
+
+  <nav class="top-nav">
+    <a href="index.html" class="nav-link">⬅️ Zurück zur Hauptseite</a>
+  </nav>
+
+  <h1>Witch-Hunt: Kinder der verlorenen Zeit</h1>
+  <div class="subtitle">Das inoffizielle Wiki & Fan-Kompendium zum Meisterwerk von Lara Antonia Rösler</div>
+
+  <div class="character" style="text-align: center; border-color: #00ff88;">
+    <h2>🔮 Willkommen im Hexen-Portal</h2>
+    <p>Finde heraus, ob in deinen Adern echtes Hexenblut fließt!</p>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2026 Fan-Projekt zu "Witch-Hunt". Alle Rechte an Inhalt und den Charakteren liegen bei der Autorin Lara Antonia Rösler.</p>
+  </div>
+</div>
+<!-- DASHBOARD / PORTAL OVERLAY FÜR DAS QUIZ -->
+<div id="quiz-portal" class="portal-overlay">
+  <div class="portal-card">
+    <a href="index.html" class="close-portal" title="Zurück zur Hauptseite">&times;</a>
+    <h2 style="color: #00ff88; border-bottom: 1px solid #6b0980;" id="portal-title">🔮 Hexen-Portal</h2>
+    <p id="portal-question" style="font-size: 1.1em; margin-top: 20px; font-weight: bold; color: #ffffff;"></p>
+    <div id="portal-options" class="quiz-options"></div>
+    <div id="portal-desc" style="margin-top: 15px; color: #d1d1d1; font-style: italic;"></div>
+  </div>
+</div>
+
+<script>
+  let currentStep = "q1";
+
+  const portalQuiz = {
+    q1: {
+      question: "Schritt 1: Welche Augenfarbe besitzt du?",
+      options: [
+        { text: "💚 Echte Grüne Augen", next: "q2" },
+        { text: "👁️ Gemischt (z.B. zwei verschiedene Augenfarben)", next: "q1_mixed" },
+        { text: "💙 Blau / Braun / Andere", result: "Keine Hexe (Gewöhnlicher Mensch)", desc: "In deinen Adern fließt keine Hexenmagie. Du gehörst zur Welt der gewöhnlichen Menschen." }
+      ]
+    },
+    q1_mixed: {
+      question: "Besitzt du mindestens ein Auge, das komplett grün ist?",
+      options: [
+        { text: "Ja", next: "q2" },
+        { text: "Nein", result: "Keine Hexe (Gewöhnlicher Mensch)", desc: "Ohne echtes Hexen-Grün schlummert keine Zauberkraft in dir." }
+      ]
+    },
+    q2: {
+      question: "Schritt 2: Die Magielinie – Welchem Geschlecht gehörst du an?",
+      options: [
+        { text: "Weiblich", next: "q3" },
+        { text: "Männlich / Divers", result: "Keine Hexe", desc: "Die magische Vererbung in der Hexenwelt ist rein weiblich bestimmt." }
+      ]
+    },
+    q3: {
+      question: "Schritt 3: Das Vertrauten-Tier – Welchem Wesen fühlst du dich am nächsten?",
+      options: [
+        { text: "🐱 Katze (Aufmerksam & Unnahbar)", next: "q4_cat" },
+        { text: "🐍 Schlange (Machtvoll & Verschlagen)", next: "q4_snake" },
+        { text: "🦅 Vogel (Frei & Visionär)", next: "q4_bird" },
+        { text: "🐶 Hund", result: "Keine Hexe", desc: "Hunde sind treue Begleiter der Menschen, aber keine Vertrauten der Hexenwelt." }
+      ]
+    },
+    q4_cat: {
+      question: "Schritt 4: Jemand beobachtet dich aus den Schatten des St. Gray. Wie reagierst du?",
+      options: [
+        { text: "Ich beobachte schweigend zurück", result: "100% Hexe", desc: "Du bist wachsam, ruhig und absolut bereit für die Gefahren im St. Gray." },
+        { text: "Ich weiche keinen Schritt zurück", result: "Kleine Lauscherin", desc: "Du hast das Zeug zur Hexe, musst aber lernen, deine Energie gezielt einzusetzen." }
+      ]
+    },
+    q4_snake: {
+      question: "Schritt 4: Dir wird eine verbotene Kostbarkeit angeboten. Nimmst du sie an?",
+      options: [
+        { text: "Nur, wenn ich den Nutzen kenne", result: "Gifthexe", desc: "Gefährlich, schlau und nicht zu unterschätzen!" },
+        { text: "Sofort zugreifen!", result: "Schwindlerin", desc: "Deine Gier könnte dich in der Hexenwelt schnell den Kopf kosten." }
+      ]
+    },
+    q4_bird: {
+      question: "Schritt 4: Du ahnst ein düsteres Ereignis voraus. Was tust du?",
+      options: [
+        { text: "Ich vertraue meinen Visionen und handle", result: "Visionäre Hexe", desc: "Genau wie Amber besitzt du eine seltene mentale Gabe!" },
+        { text: "Ich ignoriere es", result: "Naive Hexe", desc: "Du besitzt Magie, aber deine Ängste blockieren dein wahres Potenzial." }
+      ]
+    }
+  };
+
+  function renderPortalStep() {
+    const data = portalQuiz[currentStep];
+    const qElem = document.getElementById("portal-question");
+    const oElem = document.getElementById("portal-options");
+    const dElem = document.getElementById("portal-desc");
+
+    oElem.innerHTML = "";
+    dElem.innerText = "";
+
+    if (data.result) {
+      document.getElementById("portal-title").innerText = "✨ Dein Ergebnis";
+      qElem.innerText = data.result;
+      dElem.innerText = data.desc;
+      
+      const restartBtn = document.createElement("button");
+      restartBtn.className = "portal-btn";
+      restartBtn.innerText = "🔄 Quiz neustarten";
+      restartBtn.onclick = () => { currentStep = "q1"; document.getElementById("portal-title").innerText = "🔮 Hexen-Portal"; renderPortalStep(); };
+      
+      const homeLink = document.createElement("a");
+      homeLink.className = "portal-btn";
+      homeLink.style.backgroundColor = "#332f4a";
+      homeLink.style.marginLeft = "10px";
+      homeLink.innerText = "🏠 Hauptseite";
+      homeLink.href = "index.html";
+
+      oElem.appendChild(restartBtn);
+      oElem.appendChild(homeLink);
+      return;
+    }
+
+    qElem.innerText = data.question;
+
+    data.options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.className = "quiz-opt-btn";
+      btn.innerText = opt.text;
+      btn.onclick = () => {
+        if (opt.next) {
+          currentStep = opt.next;
+          renderPortalStep();
+        } else if (opt.result) {
+          currentStep = "result";
+          portalQuiz.result = { result: opt.result, desc: opt.desc };
+          renderPortalStep();
+        }
+      };
+      oElem.appendChild(btn);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", renderPortalStep);
+</script>
+
+</body>
+</html>
