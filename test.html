@@ -75,8 +75,7 @@
             border-radius: 8px;
             border-left: 4px solid var(--accent-purple);
         }
-
-        .question-text {
+                .question-text {
             font-size: 1.15rem;
             font-weight: bold;
             margin-bottom: 15px;
@@ -192,13 +191,40 @@
             text-decoration: line-through;
         }
 
-        .btn-restart {
+        .action-buttons {
+            display: flex;
+            gap: 15px;
             margin-top: 30px;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.05rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            color: white;
+            transition: background-color 0.2s;
+        }
+
+        .btn-restart {
             background: #34495e;
         }
 
         .btn-restart:hover {
             background: #2c3e50;
+        }
+
+        .btn-home {
+            background: var(--accent-purple);
+        }
+
+        .btn-home:hover {
+            background: #6c3483;
         }
     </style>
 </head>
@@ -229,12 +255,15 @@
             <div id="review-list" style="margin-top: 15px;"></div>
         </div>
 
-        <button type="button" class="btn-next btn-restart" onclick="location.reload()">Quiz nochmal machen</button>
+        <div class="action-buttons">
+            <button type="button" class="btn-action btn-restart" onclick="location.reload()">Quiz nochmal machen</button>
+            <a href="index.html" class="btn-action btn-home">⬅️ Zurück zur Hauptseite</a>
+        </div>
     </div>
 </div>
 
 <script>
-const quizData = [
+    const quizData = [
     {
         question: "Welches unverkennbare biologische Merkmal vereint alle echten Hexen in der Welt von Witch-Hunt?",
         options: ["Silberne Haare", "Eine Brandnarbe am Handgelenk", "Grüne Augen", "Eine unnatürlich tiefe Stimme"],
@@ -259,13 +288,13 @@ const quizData = [
         correctIndex: 2,
         explanation: "Das Ritual erstreckt sich über drei Nächte unter dem Vollmond. In der allerersten Nacht muss das Blut der Hexe bereitgestellt werden."
     },
-        {
+    {
         question: "Aus welchen Komponenten wird ein „Malvorrith“ (auch Hexenherz genannt) geformt?",
         options: ["Aus Gold, Silber und flüssigem Blut", "Aus verbrannter Asche und Mondgestein", "Aus dem Blut, den Knochen und dem Herzen einer Hexe", "Aus geschmolzenen Ritualbechern"],
         correctIndex: 2,
         explanation: "Der Malvorrith ist ein extrem gefährlicher und verpönter Ritualstein, der aus dem Blut, den Knochen und dem echten Herzen einer Hexe erschaffen wird – seine Existenz gilt in der Hexengesellschaft als Beweis für einen Mord."
     },
-    {
+            {
         question: "Warum ist Samantha Grays charakterlich so unnahbar, arbeitet aber insgeheim aktiv gegen die böse Direktorin Ann Grays?",
         options: ["Sie wurde von Ann aus dem Waisenhaus geworfen.", "Sie will selbst die alleinige Macht über das Wind-Element.", "Sie ist Anns leibliche Nichte, steht aber auf der Seite der Kinder.", "Sie wurde von Caroline Blackthorne dazu gezwungen."],
         correctIndex: 2,
@@ -291,11 +320,11 @@ const quizData = [
     },
     {
         question: "Welcher fatale Fehler führt am Ende von Band 1 zum Untergang der jahrhundertealten Althexe Ann Grays?",
-        options: ["Sie unterschätzte die polizeilichen Ermittlungen von Mason.", "Ihr Hochmut sorgte dafür, dass sie eine gefälschte Kopie des Magievorrats nicht überprüfte.", "Sie unterschätzte die körperliche Stärke von Finn Park.", "Sie vergaß, ihr eigenes Blut für das Drei-Becher-Ritual bereitzustellen."],
+        options: ["Sie unterschätzte die polizeilichen Ermittlungen von Mason.", "Ihr Hochmut sorgte dafür, dass sie eine gefälschte Kopie des Malvorriths nicht überprüfte.", "Sie unterschätzte die körperliche Stärke von Finn Park.", "Sie vergaß, ihr eigenes Blut für das Drei-Becher-Ritual bereitzustellen."],
         correctIndex: 1,
-        explanation: "Anns Stolz war ihr Untergang. Sie glaubte nicht, dass Samantha sie überlisten könnte. Beim Ritual zersprang der gefälschte Magievorrat und entzog ihr massiv Energie, sodass sie geschwächt vom Kronleuchter erschlagen werden konnte."
+        explanation: "Anns Stolz war ihr Untergang. Sie glaubte nicht, dass Samantha sie überlisten könnte. Beim Ritual zersprang der gefälschte Malvorrith und entzog ihr massiv Energie, sodass sie geschwächt vom Kronleuchter erschlagen werden konnte."
     },
-        {
+            {
         question: "Welcher wichtige Nebencharakter wirkt im Waisenhaus St. Gray extrem streng, teilt harte Strafen aus, schützt die Kinder aber insgeheim vor den magischen Gefahren?",
         options: ["Jacob Mclean", "Caroline Blackthorne", "Elizabeth Everhart", "Ann Grays"],
         correctIndex: 2,
@@ -308,10 +337,10 @@ const quizData = [
         explanation: "Obwohl Finn von der unberechenbaren Caroline Blackthorne entführt wurde, wirkt er danach seltsam gelassen. Das weckt sofort den ausgeprägten Ermittlerinstinkt von Mason."
     },
     {
-        question: "Wer ist die wichtige Vaterfigur und das große berufliche Vorbild für den angehenden Polizisten Mason Cater?",
+        question: "Wer entspricht gefühlt einer wichtigen Vaterfigur und einem großen beruflichen Vorbild für den angehenden Polizisten Mason Cater?",
         options: ["Jeffrey Park", "Jacob Mclean", "Theo Norack", "Lennards unbekannter Vater"],
         correctIndex: 1,
-        explanation: "Der erfahrene und schweigsame Polizist Jacob Mclean ist Masons Vorgesetzter. Mason bewundert ihn dafür, dass er selbst vor jungen Hexen wie Samantha keine Angst zeigt und immer die Ruhe bewahrt."
+        explanation: "Der erfahrene Polizist Jacob Mclean ist Masons Vorgesetzter. Mason bewundert ihn dafür, dass er selbst vor magischen Bedrohungen keine Angst zeigt und immer die Ruhe bewahrt."
     },
     {
         question: "Wie reagiert Samantha Grays auf die beiden Waisenhaus-Jugendlichen Theo und Mary Norack, obwohl alle am selben Strang ziehen müssen?",
@@ -324,6 +353,36 @@ const quizData = [
         options: ["Sie verliert dauerhaft die Fähigkeit, Visionen zu sehen.", "Die Nutzung wirkt sich extrem schädlich auf ihren Verstand aus.", "Sie vergisst allmählich ihre eigene Herkunft und Familie.", "Ihr Verstand wird komplett unsterblich und resistent gegen jeden Zauber."],
         correctIndex: 1,
         explanation: "Da die Erschaffung eines Hexenherzens gegen das natürliche Gesetz verstößt, fordert das Artefakt einen mentalen Preis: Es greift den Verstand der Hexe massiv an und führt bei Ritualen oft zu Unglücken."
+    },
+            {
+        question: "In welcher bekannten Großstadt haben die liebevollen, aber plötzlich spurlos verschwundenen Eltern Bianka und Jeffrey ihre Kinder großgezogen?",
+        options: ["Edinburgh", "London", "Dublin", "Manchester"],
+        correctIndex: 1,
+        explanation: "Bevor ihre Welt zusammenbrach und sie ins Waisenhaus St. Gray kamen, lebten die Park-Geschwister mit ihren eher ruhigen Eltern in London."
+    },
+    {
+        question: "Warum wird Ambers großer Bruder, Finn Park, regelmäßig von der pragmatischen Samantha als dumm beschimpft?",
+        options: ["Weil er die magischen Geheimnisse im Waisenhaus verraten hat.", "Weil er heimlich für die tyrannische Direktorin arbeitet.", "Weil er ein normaler Mensch ohne jede magische Begabung ist.", "Aus reinem Spott, weil er sehr hitzköpfig ist und sie ihn deshalb so abstempelt."],
+        correctIndex: 3,
+        explanation: "Samantha mag Finns hitzköpfige Art überhaupt nicht. Aus reinem Spott stempelt die kühle und pragmatische Mentorin ihn deshalb regelmäßig als eine „dumme“ Person ab."
+    },
+    {
+        question: "Welches Schicksal ereilte das Waisenhaus, in dem der Polizist in Ausbildung, Mason Cater, vor seiner Zeit in Gastfamilien untergebracht war?",
+        options: ["Es wurde bei einem magischen Ritual komplett zerstört.", "Es wurde von der Hexe Caroline Blackthorne aufgekauft.", "Es wurde wegen gewalttätiger Erzieher behördlich geschlossen.", "Es brannte nach einem Unfall mit einem Kronleuchter nieder."],
+        correctIndex: 2,
+        explanation: "Mason hat eine schwere Vergangenheit. Nach dem Unfalltod seiner Eltern kam er in eine Einrichtung, die wegen Misshandlungen geschlossen werden musste, weshalb er danach von Gastfamilie zu Gastfamilie gereicht wurde."
+    },
+    {
+        question: "Was passiert laut der Hexen-Lore unweigerlich mit sehr alten Hexen (wie Ann Grays), wenn sie endgültig besiegt und getötet werden sollen?",
+        options: ["Sie müssen in fließendes Gewässer geworfen werden.", "Man muss ihr Herz mit einem silbernen Dolch durchbohren.", "Sie müssen unter dem Licht des Neumonds begraben werden.", "Sie müssen nach ihrem Tod verbrannt werden."],
+        correctIndex: 3,
+        explanation: "Feuer spielt bei der Vernichtung von Hexen eine entscheidende Rolle. Vor allem sehr alte Hexen müssen verbrannt werden, um sicherzustellen, dass sie wirklich endgültig vergehen – genau das geschieht am Ende auch mit Ann Grays."
+    },
+    {
+        question: "Wer bildet neben den drei Park-Geschwistern und der Mentorin Samantha die restliche Kern-Gruppe, die im Waisenhaus zusammenhalten muss?",
+        options: ["Der Polizist Jacob Mclean und die Haushälterin Elizabeth", "Das entführte Opfer Lennard und die Hexe Caroline", "Die beiden wichtigen Jugendlichen Theo und Mary Norack", "Ausschließlich Amber und Samantha ganz alleine"],
+        correctIndex: 2,
+        explanation: "Die eingeschworene Kern-Gruppe, die sich den Gefahren der versteckten Hexenwelt im Waisenhaus St. Gray entgegenstellt, besteht aus den Park-Geschwistern, Samantha sowie Theo und Mary Norack."
     }
 ];
 
@@ -341,7 +400,7 @@ function shuffleArray(array) {
 }
 
 function initQuiz() {
-    // 15 Fragen mischen und genau 10 für das Quiz auswählen
+    // Zufällig 10 der 20 Fragen für eine Runde auswählen
     let shuffledQ = shuffleArray(quizData).slice(0, 10);
 
     randomizedQuiz = shuffledQ.map(q => {
@@ -417,8 +476,7 @@ function handleNextQuestion() {
         showResults();
     }
 }
-
-function showResults() {
+    function showResults() {
     document.getElementById('quiz-container').style.display = 'none';
     document.getElementById('result-screen').style.display = 'block';
 
