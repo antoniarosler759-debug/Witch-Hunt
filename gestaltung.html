@@ -38,14 +38,6 @@
       text-align: center;
     }
 
-    h2 {
-      color: #6b0980;
-      margin-bottom: 15px;
-      border-bottom: 2px solid #6b0980;
-      padding-bottom: 8px;
-      font-size: 1.4em;
-    }
-
     .subtitle {
       text-align: center;
       font-style: italic;
@@ -53,29 +45,78 @@
       color: #a8a0b5;
     }
 
-    /* Kästchen-Design für Entwürfe */
     .draft-card {
       margin-bottom: 25px;
       border: 1px solid #332f4a;
-      padding: 20px;
       border-radius: 6px;
       background-color: #27233a;
+      overflow: hidden;
       transition: all 0.3s ease;
     }
 
     .draft-card:hover {
-      border-color: #6b0980;
       box-shadow: 0 0 15px rgba(107, 9, 128, 0.5);
       transform: translateY(-2px);
-      background-color: #2e2a45;
     }
 
     .draft-title {
       font-size: 1.3em;
       font-weight: bold;
-      color: #00ff88;
+      padding: 15px 20px;
+      cursor: pointer;
+      user-select: none;
+      list-style: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.3s ease;
+    }
+
+    .draft-title::-webkit-details-marker {
+      display: none;
+    }
+
+    .draft-title::after {
+      content: '➕';
+      font-size: 0.8em;
+    }
+
+    .draft-card[open] .draft-title::after {
+      content: '➖';
+    }
+
+    .draft-content {
+      padding: 15px 20px 20px 20px;
+      background-color: #1e1b29;
+      border-top: 1px solid #332f4a;
+    }
+
+    .draft-content p:first-child {
       margin-top: 0;
-      margin-bottom: 10px;
+    }
+
+    .draft-content p:last-child {
+      margin-bottom: 0;
+    }
+
+    .card-st-gray .draft-title {
+      color: #b366ff;
+      border-left: 4px solid #b366ff;
+    }
+
+    .card-amber .draft-title {
+      color: #ff7733;
+      border-left: 4px solid #ff7733;
+    }
+
+    .card-samantha .draft-title {
+      color: #00ff88;
+      border-left: 4px solid #00ff88;
+    }
+
+    .card-uniformen .draft-title {
+      color: #ffd166;
+      border-left: 4px solid #ffd166;
     }
 
     .top-nav {
@@ -116,37 +157,44 @@
 
 <div class="container">
 
-  <!-- Navigationsleiste -->
   <nav class="top-nav">
     <a href="index.html" class="nav-link">⬅️ Zurück zur Hauptseite</a>
   </nav>
 
   <h1>Gestaltung</h1>
   <div class="subtitle">Erste Entwürfe zum Aussehen von Orten, Charakteren und Gegenständen</div>
-    <!-- Kästchen 1: Das St. Gray -->
-  <div class="draft-card">
-    <div class="draft-title">Das St. Gray</div>
-    <p>Ein abgelegenes Elite-Waisenhaus mit drei Etagen plus Dachgeschoss. Es ist sehr altmodisch gestaltet und besitzt noch alte Kronleuchter und Uhren. Im St. Gray gibt es zudem einen Anbau, der ebenfalls sehr alt ist – hier befinden sich die Unterrichtsräume und die kleine, hauseigene Bibliothek.</p>
-    <p>Im ersten und zweiten Stockwerk liegen die Schlafräume der Kinder. Aufgrund von Platzmangel gibt es im Dachgeschoss zusätzlich noch ein paar Notfallzimmer. In einem dieser Zimmer wird schließlich auch Amber zusammen mit Samantha untergebracht. Das St. Gray ist von einem großen Wald umgeben und besitzt etwas weiter entfernt sogar einen eigenen See.</p>
-  </div>
+
+  <!-- Kästchen 1: Das St. Gray -->
+  <details class="draft-card card-st-gray">
+    <summary class="draft-title">Das St. Gray</summary>
+    <div class="draft-content">
+      <p>Ein abgelegenes Elite-Waisenhaus mit drei Etagen plus Dachgeschoss. Es ist sehr altmodisch gestaltet und besitzt noch alte Kronleuchter und Uhren. Im St. Gray gibt es zudem einen Anbau, der ebenfalls sehr alt ist – hier befinden sich die Unterrichtsräume und die kleine, hauseigene Bibliothek.</p>
+      <p>Im ersten und zweiten Stockwerk liegen die Schlafräume der Kinder. Aufgrund von Platzmangel gibt es im Dachgeschoss zusätzlich noch ein paar Notfallzimmer. In einem dieser Zimmer wird schließlich auch Amber zusammen mit Samantha untergebracht. Das St. Gray ist von einem großen Wald umgeben und besitzt etwas weiter entfernt sogar einen eigenen See.</p>
+    </div>
+  </details>
 
   <!-- Kästchen 2: Amber -->
-  <div class="draft-card">
-    <div class="draft-title">Amber</div>
-    <p>Ab dem ersten Teil 14 Jahre alt. Jung, klein und mit rotem, leicht gelocktem Haar. Sie hat grüne Augen und sanfte Gesichtszüge.</p>
-  </div>
-
-  <!-- Kästchen 3: Samantha -->
-  <div class="draft-card">
-    <div class="draft-title">Samantha</div>
-    <p>Etwas größer als Amber, schlank und ein bisschen blass. Sie hat rabenschwarzes, glattes Haar und stechend grüne Augen. Sie wirkt recht zurückgezogen und mysteriös.</p>
-  </div>
+  <details class="draft-card card-amber">
+    <summary class="draft-title">Amber</summary>
+    <div class="draft-content">
+      <p>Ab dem ersten Teil 14 Jahre alt. Jung, klein und mit rotem, leicht gelocktem Haar. Sie hat grüne Augen und sanfte Gesichtszüge.</p>
+    </div>
+  </details>
+    <!-- Kästchen 3: Samantha -->
+  <details class="draft-card card-samantha">
+    <summary class="draft-title">Samantha</summary>
+    <div class="draft-content">
+      <p>Etwas größer als Amber, schlank und ein bisschen blass. Sie hat rabenschwarzes, glattes Haar und stechend grüne Augen. Sie wirkt recht zurückgezogen und mysteriös.</p>
+    </div>
+  </details>
 
   <!-- Kästchen 4: Uniformen des St. Gray -->
-  <div class="draft-card">
-    <div class="draft-title">Uniformen des St. Gray</div>
-    <p>Die Uniformen im St. Gray wirken recht verstaubt. Dazu gehören ein hellbrauner Rock, eine weiße Bluse oder ein Hemd sowie ein ebenfalls braunes Sakko/Jacket. Optional gibt es dazu entweder eine rote Schleife oder eine rote Krawatte, jedoch verzichten die meisten Kinder auf dieses Extra.</p>
-  </div>
+  <details class="draft-card card-uniformen">
+    <summary class="draft-title">Uniformen des St. Gray</summary>
+    <div class="draft-content">
+      <p>Die Uniformen im St. Gray wirken recht verstaubt. Dazu gehören ein hellbrauner Rock, eine weiße Bluse oder ein Hemd sowie ein ebenfalls braunes Sakko/Jacket. Optional gibt es dazu entweder eine rote Schleife oder eine rote Krawatte, jedoch verzichten die meisten Kinder auf dieses Extra.</p>
+    </div>
+  </details>
 
   <div class="footer">
     <p>&copy; 2026 Fan-Projekt zu "Witch-Hunt". Alle Rechte an Inhalt und den Charakteren liegen bei der Autorin Lara Antonia Rösler.</p>
