@@ -18,109 +18,108 @@
       --ann-wind: #81ecec;
       --blood-red: #d63031;
       --text-main: #e2e8f0;
-      --panel-bg: rgba(10, 18, 14, 0.85);
-      --panel-border: rgba(0, 255, 102, 0.25);
+      --panel-bg: rgba(8, 14, 11, 0.92);
+      --panel-border: rgba(0, 255, 102, 0.3);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      user-select: none;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
 
     body {
       background-color: var(--bg-dark);
       color: var(--text-main);
       font-family: 'Quicksand', sans-serif;
-      overflow-x: hidden;
-      min-height: 100vh;
+      overflow: hidden;
+      width: 100vw;
+      height: 100vh;
     }
 
     #clearing-canvas {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
       z-index: 1;
-      pointer-events: auto;
       cursor: grab;
     }
-
-    #clearing-canvas:active {
-      cursor: grabbing;
-    }
+    #clearing-canvas:active { cursor: grabbing; }
 
     .ui-layer {
       position: relative;
       z-index: 10;
       pointer-events: none;
-      min-height: 100vh;
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      padding: 1.5rem;
+      padding: 1rem;
     }
 
-    .interactive {
-      pointer-events: auto;
-    }
+    .interactive { pointer-events: auto; }
         header {
       text-align: center;
-      background: radial-gradient(ellipse at top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 80%);
+      background: radial-gradient(ellipse at top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 80%);
       padding-bottom: 0.5rem;
-      transition: opacity 0.3s ease;
+      position: relative;
+    }
+
+    .home-btn {
+      position: absolute;
+      left: 1rem; top: 0.5rem;
+      background: rgba(0, 255, 102, 0.15);
+      border: 1px solid var(--witch-green);
+      color: #fff;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .home-btn:hover {
+      background: var(--witch-green);
+      color: #000;
+      box-shadow: 0 0 15px var(--witch-green);
     }
 
     h1 {
       font-family: 'Cinzel', serif;
-      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      font-size: clamp(1.4rem, 3.5vw, 2.5rem);
       letter-spacing: 3px;
       color: #fff;
       text-shadow: 0 0 10px var(--witch-green-glow), 0 0 20px var(--witch-green);
-      margin-bottom: 0.3rem;
     }
 
     .subtitle {
       font-family: 'Metamorphous', cursive;
-      font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+      font-size: clamp(0.75rem, 1.5vw, 0.95rem);
       color: #a8b2c1;
-      letter-spacing: 1px;
     }
 
     .main-controls {
       display: flex;
       justify-content: center;
-      gap: 1rem;
-      margin-top: 1rem;
-      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-top: 0.6rem;
     }
 
     .btn-tab {
       background: var(--panel-bg);
       border: 1px solid var(--panel-border);
       color: #fff;
-      padding: 0.6rem 1.2rem;
+      padding: 0.5rem 1rem;
       border-radius: 30px;
       font-family: 'Cinzel', serif;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
+      font-size: 0.8rem;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.3s;
       backdrop-filter: blur(8px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     }
-
     .btn-tab:hover, .btn-tab.active {
       border-color: var(--witch-green);
-      background: rgba(0, 255, 102, 0.15);
-      box-shadow: 0 0 20px var(--witch-green-glow);
-      color: #fff;
-      transform: translateY(-2px);
+      background: rgba(0, 255, 102, 0.2);
+      box-shadow: 0 0 15px var(--witch-green-glow);
     }
         .panel-container {
-      max-width: 900px;
+      max-width: 850px;
       margin: 0 auto;
       width: 100%;
     }
@@ -129,210 +128,126 @@
       background: var(--panel-bg);
       border: 1px solid var(--panel-border);
       border-radius: 16px;
-      padding: 1.5rem;
+      padding: 1.2rem;
       backdrop-filter: blur(12px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.9);
       display: none;
-      animation: fadeIn 0.4s ease forwards;
     }
+    .witch-panel.active { display: block; }
 
-    .witch-panel.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .active-spell-bar {
-      display: none;
-      align-items: center;
-      justify-content: space-between;
-      background: rgba(10, 18, 14, 0.9);
+    /* UNTEN PLATZIERTE, DEZENTE BEDIENLEISTE */
+    .bottom-bar {
+      position: fixed;
+      bottom: 0.8rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(5, 12, 8, 0.85);
       border: 1px solid var(--witch-green);
       border-radius: 30px;
-      padding: 0.6rem 1.2rem;
+      padding: 0.4rem 1rem;
       backdrop-filter: blur(10px);
-      box-shadow: 0 0 20px rgba(0, 255, 102, 0.3);
-      max-width: 600px;
-      margin: 0 auto;
+      display: none;
+      align-items: center;
+      gap: 1rem;
+      z-index: 100;
+      box-shadow: 0 0 20px rgba(0,0,0,0.8);
     }
+    .bottom-bar.visible { display: flex; }
 
-    .active-spell-bar.visible {
-      display: flex;
-    }
-
-    .btn-back-arrow {
+    .btn-bottom-toggle {
       background: rgba(0, 255, 102, 0.2);
       border: 1px solid var(--witch-green);
       color: #fff;
-      padding: 0.4rem 0.9rem;
+      padding: 0.35rem 0.8rem;
       border-radius: 20px;
       font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+    .btn-bottom-toggle:hover { background: var(--witch-green); color: #000; }
+
+    .bottom-info {
+      font-size: 0.8rem;
+      color: var(--witch-green);
+      font-family: 'Cinzel', serif;
+    }
+
+    .element-picker {
+      display: flex;
+      gap: 0.4rem;
+    }
+    .btn-element {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 0.25rem 0.6rem;
+      border-radius: 12px;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+    .btn-element.active {
+      border-color: var(--witch-green);
+      background: rgba(0, 255, 102, 0.25);
+    }
+        .bg-selector {
+      display: flex;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .btn-bg {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #ccc;
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
       font-size: 0.8rem;
       cursor: pointer;
       transition: all 0.2s;
     }
-
-    .btn-back-arrow:hover {
-      background: var(--witch-green);
-      color: #000;
-      box-shadow: 0 0 15px var(--witch-green);
-    }
-
-    .active-witch-info {
-      font-family: 'Cinzel', serif;
-      font-size: 0.85rem;
-      color: var(--witch-green);
-      letter-spacing: 1px;
-    }
-        .ritual-stepper {
-      display: flex;
-      justify-content: space-between;
-      gap: 0.5rem;
-      margin-bottom: 1.5rem;
-      position: relative;
-    }
-
-    .ritual-step {
-      flex: 1;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      padding: 0.8rem;
-      text-align: center;
-      transition: all 0.3s;
-    }
-
-    .ritual-step.active {
+    .btn-bg.active {
       border-color: var(--witch-green);
-      background: rgba(0, 255, 102, 0.08);
-      box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
-    }
-
-    .ritual-step.completed {
-      border-color: var(--blood-red);
-      background: rgba(214, 48, 49, 0.15);
-    }
-
-    .step-num {
-      font-family: 'Cinzel', serif;
-      font-size: 0.75rem;
-      color: #888;
-      margin-bottom: 0.2rem;
-    }
-
-    .step-title {
-      font-weight: 600;
-      font-size: 0.85rem;
-    }
-
-    .ritual-desc {
-      text-align: center;
-      margin-bottom: 1.2rem;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      color: #cbd5e1;
-    }
-
-    .btn-action {
-      display: block;
-      width: 100%;
-      max-width: 320px;
-      margin: 0 auto;
-      padding: 0.8rem;
-      background: linear-gradient(135deg, rgba(0,255,102,0.2), rgba(0,150,50,0.4));
-      border: 1px solid var(--witch-green);
       color: #fff;
-      font-family: 'Cinzel', serif;
-      font-weight: 700;
-      border-radius: 8px;
-      cursor: pointer;
-      text-align: center;
-      letter-spacing: 1px;
-      transition: all 0.3s;
-      box-shadow: 0 0 15px rgba(0, 255, 102, 0.3);
-    }
-
-    .btn-action:hover {
-      background: linear-gradient(135deg, rgba(0,255,102,0.4), rgba(0,200,80,0.6));
-      box-shadow: 0 0 25px rgba(0, 255, 102, 0.6);
-      transform: scale(1.02);
+      background: rgba(0, 255, 102, 0.15);
     }
 
     .spell-selector {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-top: 1rem;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 0.8rem;
     }
 
     .spell-card {
       background: rgba(255,255,255,0.03);
       border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 1rem;
+      border-radius: 10px;
+      padding: 0.8rem;
       cursor: pointer;
-      transition: all 0.3s;
-      position: relative;
-      overflow: hidden;
+      transition: all 0.2s;
+    }
+    .spell-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.3); }
+
+    .spell-witch { font-family: 'Cinzel', serif; font-size: 0.75rem; color: var(--card-color, #fff); }
+    .spell-name { font-size: 0.95rem; font-weight: 600; color: #fff; margin: 0.2rem 0; }
+    .spell-desc { font-size: 0.75rem; color: #94a3b8; }
+
+    .ritual-stepper { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+    .ritual-step {
+      flex: 1; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px; padding: 0.5rem; text-align: center; font-size: 0.75rem;
+    }
+    .ritual-step.active { border-color: var(--witch-green); background: rgba(0,255,102,0.1); }
+    .ritual-step.completed { border-color: var(--blood-red); background: rgba(214,48,49,0.15); }
+
+    .btn-action {
+      display: block; width: 100%; max-width: 280px; margin: 0 auto;
+      padding: 0.6rem; background: linear-gradient(135deg, rgba(0,255,102,0.2), rgba(0,150,50,0.4));
+      border: 1px solid var(--witch-green); color: #fff; font-family: 'Cinzel', serif;
+      font-weight: 700; border-radius: 6px; cursor: pointer; text-align: center;
     }
 
-    .spell-card:hover {
-      transform: translateY(-3px);
-      border-color: rgba(255,255,255,0.3);
-    }
-
-    .spell-card.selected {
-      border-color: var(--card-color, var(--witch-green));
-      background: rgba(0,0,0,0.6);
-      box-shadow: 0 0 20px var(--card-glow, var(--witch-green-glow));
-    }
-
-    .spell-witch {
-      font-family: 'Cinzel', serif;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-      color: var(--card-color, #fff);
-      margin-bottom: 0.3rem;
-    }
-
-    .spell-name {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 0.5rem;
-      color: #fff;
-    }
-
-    .spell-desc {
-      font-size: 0.8rem;
-      color: #94a3b8;
-      line-height: 1.4;
-    }
-
-    .instruction-hint {
-      text-align: center;
-      font-size: 0.85rem;
-      color: var(--witch-green);
-      margin-top: 1rem;
-      font-style: italic;
-      text-shadow: 0 0 8px rgba(0,255,102,0.3);
-    }
-
-    footer {
-      text-align: center;
-      padding-top: 1rem;
-      font-size: 0.75rem;
-      color: #64748b;
-      background: radial-gradient(ellipse at bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 80%);
-    }
-
-    @media (max-width: 600px) {
-      .ui-layer { padding: 0.8rem; }
-      .ritual-stepper { flex-direction: column; }
-      .spell-selector { grid-template-columns: 1fr; }
-    }
+    footer { text-align: center; padding: 0.3rem; font-size: 0.7rem; color: #64748b; }
   </style>
 </head>
 <body>
@@ -341,8 +256,9 @@
 
   <div class="ui-layer">
     <header class="interactive" id="main-header">
+      <a href="index.html" class="home-btn">🏠 Hauptseite</a>
       <h1>WITCH-HUNT</h1>
-      <div class="subtitle">Kinder der verlorenen Zeit — Rituale & Hexenmagie</div>
+      <div class="subtitle">Kinder der verlorenen Zeit — Magie-Laboratorium</div>
       
       <div class="main-controls">
         <button class="btn-tab active" id="tab-btn-ritual" onclick="switchTab('ritual')">🌕 Das 3-Becher-Ritual</button>
@@ -352,501 +268,317 @@
 
     <div class="panel-container interactive">
       
-      <!-- MINIMIZED STRIP BAR (BEIM AUSPROBIEREN SICHTBAR) -->
-      <div id="active-spell-bar" class="active-spell-bar">
-        <button class="btn-back-arrow" id="btn-back-menu" onclick="reopenPanel()">‹ Menü aufklappen</button>
-        <div id="active-witch-name" class="active-witch-info">💡 Ziehe Becher & Malvorrith | Doppelklick = Zerstörung</div>
-      </div>
-
       <!-- PANEL 1: DAS RITUAL -->
       <div id="panel-ritual" class="witch-panel active">
         <div class="ritual-stepper">
-          <div id="step-1" class="ritual-step active">
-            <div class="step-num">1. VOLLMONDNACHT</div>
-            <div class="step-title">Blut der Hexe</div>
-          </div>
-          <div id="step-2" class="ritual-step">
-            <div class="step-num">2. VOLLMONDNACHT</div>
-            <div class="step-title">Blut der Unschuldigen</div>
-          </div>
-          <div id="step-3" class="ritual-step">
-            <div class="step-num">3. VOLLMONDNACHT</div>
-            <div class="step-title">Blut des Opfers</div>
-          </div>
+          <div id="step-1" class="ritual-step active">1. VOLLMONDNACHT<br>Hexenblut</div>
+          <div id="step-2" class="ritual-step">2. VOLLMONDNACHT<br>Unschuldigen-Blut</div>
+          <div id="step-3" class="ritual-step">3. VOLLMONDNACHT<br>Opferblut</div>
         </div>
 
-        <div id="ritual-description" class="ritual-desc">
-          Auf der Waldlichtung unter dem klaren Vollmond stehen drei goldene Becher um den verformten <strong>Malvorrith-Stein</strong> bereit. Starte das Ritual oder bewege Gegenstände frei auf der Lichtung.
+        <div id="ritual-description" style="text-align:center; font-size:0.85rem; margin-bottom:1rem; color:#cbd5e1;">
+          Wähle unten deine Elementarkraft, um beim Ritual mitzuwirken, Becher zu füllen oder den Malvorrith zu zerstören!
         </div>
 
-        <button id="btn-ritual-action" class="btn-action" onclick="advanceRitualAndMinimize()">1. Becher füllen & Ritual ausführen</button>
+        <button class="btn-action" onclick="startRitualMode()">Spielfeld freischalten & Ritual starten</button>
       </div>
-            <!-- PANEL 2: MAGIE-LABOR -->
+            <!-- PANEL 2: MAGIE-LABORATORIUM (4 HINTERGRÜNDE) -->
       <div id="panel-lab" class="witch-panel">
+        
+        <div class="bg-selector">
+          <button class="btn-bg active" onclick="selectBg('clearing', this)">🌲 1. Waldlichtung</button>
+          <button class="btn-bg" onclick="selectBg('library', this)">📚 2. Die Bibliothek</button>
+          <button class="btn-bg" onclick="selectBg('hall', this)">🏰 3. Eingangshalle</button>
+          <button class="btn-bg" onclick="selectBg('office', this)">🕰️ 4. Anns Büro</button>
+        </div>
+
         <div class="spell-selector">
-          
-          <div class="spell-card" style="--card-color: var(--samantha-thorns); --card-glow: rgba(46, 204, 113, 0.4);" onclick="selectSpell('samantha', 'Samantha Grays (Wachstum)')">
+          <div class="spell-card" style="--card-color: var(--samantha-thorns);" onclick="selectSpell('samantha', 'Samantha Grays')">
             <div class="spell-witch">Samantha Grays</div>
-            <div class="spell-name">Wachstumsmagie</div>
-            <div class="spell-desc">Lässt aus dem Waldboden dornige, lebendige Hexenranken sprießen.</div>
+            <div class="spell-name">Wachstum & Natur</div>
+            <div class="spell-desc">Ranken sprießen lassen, Regale umstoßen, Kronleuchter stürzen, Uhren bewoachsen.</div>
           </div>
 
-          <div class="spell-card" style="--card-color: var(--amber-gold); --card-glow: rgba(255, 170, 0, 0.4);" onclick="selectSpell('amber', 'Amber Park (Lichtkugeln)')">
+          <div class="spell-card" style="--card-color: var(--amber-gold);" onclick="selectSpell('amber', 'Amber Park')">
             <div class="spell-witch">Amber Park</div>
-            <div class="spell-name">Lichtkugeln</div>
-            <div class="spell-desc">Erzeugt sanft schwebende Lichtkugeln, die deinen Bewegungen folgen.</div>
+            <div class="spell-name">Licht & Runen</div>
+            <div class="spell-desc">Lichtkugeln erschaffen, Runen zeichnen, Fackeln entzünden, Uhren erstrahlen.</div>
           </div>
 
-          <div class="spell-card" style="--card-color: var(--ann-wind); --card-glow: rgba(129, 236, 236, 0.4);" onclick="selectSpell('ann', 'Ann Grays (Sturmwind)')">
+          <div class="spell-card" style="--card-color: var(--ann-wind);" onclick="selectSpell('ann', 'Ann Grays')">
             <div class="spell-witch">Ann Grays</div>
             <div class="spell-name">Sturmwind</div>
-            <div class="spell-desc">Entfacht stürmische Böen, die Nebel und Blätter über die Lichtung peitschen.</div>
+            <div class="spell-desc">Bücher/Sturm wirbeln, Kerzen auspusten, Fenster bersten, Zeiger verdrehen.</div>
           </div>
 
-          <div class="spell-card" style="--card-color: var(--caroline-silver); --card-glow: rgba(224, 230, 237, 0.4);" onclick="selectSpell('caroline', 'Caroline Blackthorne (Levitation)')">
+          <div class="spell-card" style="--card-color: var(--caroline-silver);" onclick="selectSpell('caroline', 'Caroline Blackthorne')">
             <div class="spell-witch">Caroline Blackthorne</div>
             <div class="spell-name">Levitation & Illusion</div>
-            <div class="spell-desc">Bringt Becher zum Schweben oder lässt sie in Silberschleiern verschwinden.</div>
+            <div class="spell-desc">Objekte schweben/verschwinden lassen, Kronleuchter retten, Uhren verstellen.</div>
           </div>
-
         </div>
 
-        <div id="lab-hint" class="instruction-hint">
-          Wähle eine Hexe aus, um ihre Magie auf der Waldlichtung zu entfesseln!
-        </div>
       </div>
 
     </div>
 
+    <!-- UNTEN PLATZIERTE, UNAUFFÄLLIGE BEDIENLEISTE (NUR IM SPIEL VISIBEL) -->
+    <div id="bottom-bar" class="bottom-bar interactive">
+      <button class="btn-bottom-toggle" onclick="reopenPanel()">▲ Menü</button>
+      <div id="bottom-info" class="bottom-info">Lichtung / Samantha</div>
+      
+      <div id="element-box" class="element-picker" style="display:none;">
+        <button class="btn-element active" onclick="setElement('fire', this)">🔥 Feuer</button>
+        <button class="btn-element" onclick="setElement('water', this)">💧 Wasser</button>
+        <button class="btn-element" onclick="setElement('earth', this)">🌱 Erde</button>
+        <button class="btn-element" onclick="setElement('wind', this)">🌪️ Wind</button>
+      </div>
+    </div>
+
     <footer class="interactive" id="main-footer">
-      Inoffizielles interaktives Kompendium zu "Witch-Hunt: Kinder der verlorenen Zeit" von Lara Antonia Rösler
+      Witch-Hunt: Kinder der verlorenen Zeit — Lara Antonia Rösler
     </footer>
   </div>
     <script>
-    // --- CANVAS & GRAPHICS SETUP ---
     const canvas = document.getElementById('clearing-canvas');
     const ctx = canvas.getContext('2d');
 
     let width, height;
-    function resize() {
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
-    }
+    function resize() { width = canvas.width = window.innerWidth; height = canvas.height = window.innerHeight; }
     window.addEventListener('resize', resize);
     resize();
 
-    // Game state & Magic Systems
+    // System States
     let activeTab = 'ritual';
-    let ritualStep = 0; // 0, 1, 2, 3
+    let activeBg = 'clearing'; // clearing, library, hall, office
     let activeSpell = 'samantha';
+    let userElement = 'fire';
+    let ritualStep = 0;
 
-    // Malvorrith Colors (Yellow first, then Blue, Red, Green, Purple)
-    const malvorrithColors = [
-      { name: 'Gelb', hex: '#f1c40f', glow: '#ffeaa7' },
-      { name: 'Blau', hex: '#0984e3', glow: '#74b9ff' },
-      { name: 'Rot', hex: '#d63031', glow: '#ff7675' },
-      { name: 'Grün', hex: '#00ff66', glow: '#55efc4' },
-      { name: 'Lila', hex: '#9b59b6', glow: '#a29bfe' }
-    ];
-    let malColorIdx = 0;
-    let malvorrithDestroyed = false;
+    // Interactive Objects per Scene
+    let malvorrith = { x: 0, y: 0, destroyed: false };
+    let cups = [];
+    let books = [];
+    let shelves = [];
+    let chandelier = { y: 0, fallen: false };
+    let torches = [];
+    let clocks = [];
 
-    // Draggable Entities
-    let malvorrith = { x: 0, y: 0, isDragging: false, destroyed: false };
-    let floatingObjects = [];
-    let draggedObj = null;
-    let dragOffsetX = 0, dragOffsetY = 0;
+    function initSceneObjects() {
+      const cx = width * 0.5, cy = height * 0.5;
+      
+      // Ritual Cups & Malvorrith
+      malvorrith.x = cx; malvorrith.y = cy + 120; malvorrith.destroyed = false;
+      cups = [
+        { x: cx - 80, y: cy + 100, filled: false, element: null },
+        { x: cx, y: cy + 80, filled: false, element: null },
+        { x: cx + 80, y: cy + 100, filled: false, element: null }
+      ];
 
-    // Entities
-    let fireflies = [];
+      // Library Shelves & Books
+      shelves = [
+        { x: width * 0.2, y: height * 0.4, w: 120, h: 220, fallen: false, floating: false, invisible: false },
+        { x: width * 0.8, y: height * 0.4, w: 120, h: 220, fallen: false, floating: false, invisible: false }
+      ];
+      books = [];
+      for(let i=0; i<15; i++) {
+        books.push({ x: width*0.15 + Math.random()*width*0.7, y: height*0.3 + Math.random()*height*0.3, vx: 0, vy: 0, floating: false });
+      }
+
+      // Hall Chandelier & Torches
+      chandelier = { x: cx, y: height * 0.25, fallen: false, floating: false };
+      torches = [
+        { x: width * 0.15, y: height * 0.45, lit: false },
+        { x: width * 0.85, y: height * 0.45, lit: false }
+      ];
+
+      // Office Clocks
+      clocks = [];
+      for(let i=0; i<8; i++) {
+        clocks.push({
+          x: width*0.2 + (i%4)*width*0.2,
+          y: height*0.3 + Math.floor(i/4)*height*0.25,
+          angle: Math.random()*Math.PI*2,
+          overgrown: false, glowing: false, invisible: false
+        });
+      }
+    }
+    initSceneObjects();
+
+    // Particles & Spells
     let particles = [];
     let vines = [];
     let amberOrbs = [];
     let windParticles = [];
-    let lightningLines = [];
+    let runes = [];
+          // --- DRAWING BACKGROUNDS ---
 
-    function getAltarPos() {
-      return { x: width * 0.5, y: height * 0.72 };
-    }
+    function drawBackground() {
+      ctx.clearRect(0, 0, width, height);
 
-    function initPositions() {
-      const altar = getAltarPos();
-      malvorrith.x = altar.x;
-      malvorrith.y = altar.y - 15;
+      if (activeBg === 'clearing') {
+        // 1. Waldlichtung
+        const skyGrad = ctx.createLinearGradient(0, 0, 0, height);
+        skyGrad.addColorStop(0, '#020508'); skyGrad.addColorStop(1, '#030805');
+        ctx.fillStyle = skyGrad; ctx.fillRect(0, 0, width, height);
 
-      floatingObjects = [
-        { id: 1, x: altar.x - 75, y: altar.y - 25, filled: false, hoverOffsetY: 0, invisible: false, lastX: altar.x - 75, lastY: altar.y - 25 },
-        { id: 2, x: altar.x, y: altar.y - 45, filled: false, hoverOffsetY: 0, invisible: false, lastX: altar.x, lastY: altar.y - 45 },
-        { id: 3, x: altar.x + 75, y: altar.y - 25, filled: false, hoverOffsetY: 0, invisible: false, lastX: altar.x + 75, lastY: altar.y - 25 }
-      ];
-    }
-    initPositions();
+        // Moon
+        const moonX = width * 0.5, moonY = height * 0.2;
+        ctx.fillStyle = '#ffffff'; ctx.beginPath(); ctx.arc(moonX, moonY, 50, 0, Math.PI*2); ctx.fill();
 
-    // Audio Synthesizer (Web Audio API)
-    const AudioCtx = window.AudioContext || window.webkitAudioContext;
-    let audioCtx = null;
+        // Forest Ground
+        ctx.fillStyle = '#05140a';
+        ctx.beginPath(); ctx.ellipse(width*0.5, height*0.8, width*0.6, height*0.25, 0, 0, Math.PI*2); ctx.fill();
 
-    function playMagicSound(type) {
-      if (!audioCtx) audioCtx = new AudioCtx();
-      if (audioCtx.state === 'suspended') audioCtx.resume();
-
-      const osc = audioCtx.createOscillator();
-      const gain = audioCtx.createGain();
-      osc.connect(gain);
-      gain.connect(audioCtx.destination);
-      const now = audioCtx.currentTime;
-
-      if (type === 'fill') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(150, now);
-        osc.frequency.exponentialRampToValueAtTime(450, now + 0.6);
-        gain.gain.setValueAtTime(0.3, now);
-        gain.gain.linearRampToValueAtTime(0, now + 0.6);
-        osc.start(now); osc.stop(now + 0.6);
-      } else if (type === 'burst' || type === 'lightning') {
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(80, now);
-        osc.frequency.exponentialRampToValueAtTime(900, now + 1.2);
-        gain.gain.setValueAtTime(0.5, now);
-        gain.gain.linearRampToValueAtTime(0, now + 1.2);
-        osc.start(now); osc.stop(now + 1.2);
-      } else if (type === 'color') {
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(300 + malColorIdx * 100, now);
-        osc.frequency.linearRampToValueAtTime(600 + malColorIdx * 100, now + 0.3);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.linearRampToValueAtTime(0, now + 0.3);
-        osc.start(now); osc.stop(now + 0.3);
-      } else if (type === 'spill') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(120, now);
-        osc.frequency.linearRampToValueAtTime(80, now + 0.4);
-        gain.gain.setValueAtTime(0.2, now);
-        gain.gain.linearRampToValueAtTime(0, now + 0.4);
-        osc.start(now); osc.stop(now + 0.4);
-      }
-    }
-          // Fireflies Init
-    for (let i = 0; i < 40; i++) {
-      fireflies.push({
-        x: Math.random() * window.innerWidth,
-        y: Math.random() * window.innerHeight,
-        radius: Math.random() * 2 + 1,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        alpha: Math.random()
-      });
-    }
-
-    // --- DRAWING FUNCTIONS ---
-
-    function drawSkyAndMoon() {
-      const skyGrad = ctx.createLinearGradient(0, 0, 0, height);
-      skyGrad.addColorStop(0, '#020508');
-      skyGrad.addColorStop(0.5, '#081410');
-      skyGrad.addColorStop(1, '#030805');
-      ctx.fillStyle = skyGrad;
-      ctx.fillRect(0, 0, width, height);
-
-      // Moon
-      const moonX = width * 0.5;
-      const moonY = height * 0.22;
-      const moonRadius = Math.min(width, height) * 0.08;
-
-      const moonGlow = ctx.createRadialGradient(moonX, moonY, moonRadius * 0.5, moonX, moonY, moonRadius * 4);
-      moonGlow.addColorStop(0, 'rgba(230, 255, 240, 0.4)');
-      moonGlow.addColorStop(0.3, 'rgba(0, 255, 102, 0.12)');
-      moonGlow.addColorStop(1, 'rgba(0,0,0,0)');
-      ctx.fillStyle = moonGlow;
-      ctx.beginPath(); ctx.arc(moonX, moonY, moonRadius * 4, 0, Math.PI * 2); ctx.fill();
-
-      const moonBody = ctx.createRadialGradient(moonX - moonRadius*0.3, moonY - moonRadius*0.3, 0, moonX, moonY, moonRadius);
-      moonBody.addColorStop(0, '#ffffff');
-      moonBody.addColorStop(0.85, '#e2f7ed');
-      moonBody.addColorStop(1, '#a3e0c2');
-      ctx.fillStyle = moonBody;
-      ctx.beginPath(); ctx.arc(moonX, moonY, moonRadius, 0, Math.PI * 2); ctx.fill();
-
-      // Moon Rays
-      ctx.save();
-      ctx.fillStyle = 'rgba(200, 255, 220, 0.02)';
-      for (let i = -3; i <= 3; i++) {
-        ctx.beginPath();
-        ctx.moveTo(moonX, moonY);
-        ctx.lineTo(moonX + i * 150 - 100, height);
-        ctx.lineTo(moonX + i * 150 + 100, height);
-        ctx.closePath(); ctx.fill();
-      }
-      ctx.restore();
-    }
-          function drawForest() {
-      ctx.fillStyle = '#020a05';
-      ctx.beginPath(); ctx.moveTo(0, height);
-      for (let i = 0; i <= width; i += 40) {
-        const treeH = 120 + Math.sin(i * 0.01) * 50 + Math.cos(i * 0.03) * 30;
-        ctx.lineTo(i, height * 0.65 - treeH);
-        ctx.lineTo(i + 20, height * 0.65);
-      }
-      ctx.lineTo(width, height); ctx.fill();
-
-      const groundGrad = ctx.createLinearGradient(0, height * 0.6, 0, height);
-      groundGrad.addColorStop(0, '#05140a'); groundGrad.addColorStop(1, '#020604');
-      ctx.fillStyle = groundGrad;
-      ctx.beginPath(); ctx.ellipse(width * 0.5, height * 0.78, width * 0.55, height * 0.25, 0, 0, Math.PI * 2); ctx.fill();
-    }
-
-    function drawAltar() {
-      const altar = getAltarPos();
-
-      ctx.save();
-      ctx.fillStyle = '#111815';
-      ctx.strokeStyle = 'rgba(0, 255, 102, 0.2)';
-      ctx.lineWidth = 2;
-
-      ctx.beginPath(); ctx.ellipse(altar.x, altar.y, 140, 45, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
-      ctx.beginPath(); ctx.ellipse(altar.x, altar.y - 12, 120, 35, 0, 0, Math.PI * 2);
-      ctx.fillStyle = '#1a2420'; ctx.fill(); ctx.stroke();
-
-      ctx.strokeStyle = (ritualStep > 0 && !malvorrith.destroyed) ? '#00ff66' : '#334155';
-      ctx.shadowBlur = (ritualStep > 0 && !malvorrith.destroyed) ? 10 : 0;
-      ctx.shadowColor = '#00ff66';
-      ctx.beginPath(); ctx.arc(altar.x, altar.y - 12, 85, 0, Math.PI * 2); ctx.stroke();
-      ctx.restore();
-
-      // MALVORRITH STEIN (Verformt & Verschiebbar)
-      if (!malvorrith.destroyed) {
-        const c = malvorrithColors[malColorIdx];
-        const mx = malvorrith.x;
-        const my = malvorrith.y;
-
-        ctx.save();
-        ctx.shadowBlur = 20;
-        ctx.shadowColor = c.glow;
-
-        // Custom organic crystal shape
-        const grad = ctx.createRadialGradient(mx - 3, my - 3, 2, mx, my, 22);
-        grad.addColorStop(0, '#ffffff');
-        grad.addColorStop(0.5, c.hex);
-        grad.addColorStop(1, '#111');
-
-        ctx.fillStyle = grad;
-        ctx.beginPath();
-        ctx.moveTo(mx, my - 24);
-        ctx.lineTo(mx + 16, my - 8);
-        ctx.lineTo(mx + 12, my + 18);
-        ctx.lineTo(mx - 6, my + 22);
-        ctx.lineTo(mx - 18, my + 4);
-        ctx.lineTo(mx - 10, my - 16);
-        ctx.closePath();
-        ctx.fill();
-        ctx.strokeStyle = c.glow;
-        ctx.lineWidth = 1.5;
-        ctx.stroke();
-        ctx.restore();
-
-        // Check interaction with Moon (Mond-Strahl Effekt)
-        const moonX = width * 0.5, moonY = height * 0.22;
-        if (Math.hypot(mx - moonX, my - moonY) < 100) {
+      } else if (activeBg === 'library') {
+        // 2. Bibliothek
+        ctx.fillStyle = '#0c0705'; ctx.fillRect(0, 0, width, height);
+        
+        // Shelves
+        shelves.forEach(s => {
+          if (s.invisible) return;
           ctx.save();
-          ctx.strokeStyle = c.glow;
-          ctx.lineWidth = 3;
-          ctx.shadowBlur = 15;
-          ctx.shadowColor = c.glow;
-          ctx.beginPath();
-          ctx.moveTo(mx, my);
-          ctx.lineTo(moonX, moonY);
-          ctx.stroke();
+          if (s.floating) ctx.shadowBlur = 20; ctx.shadowColor = '#e0e6ed';
+          ctx.fillStyle = s.fallen ? '#2c1810' : '#4a2810';
+          const drawY = s.floating ? s.y - 30 : s.y;
+          ctx.fillRect(s.x - s.w/2, drawY - s.h/2, s.w, s.h);
           ctx.restore();
+        });
 
-          if (Math.random() > 0.4) {
-            particles.push({
-              x: mx + (Math.random() - 0.5) * 20,
-              y: my + (Math.random() - 0.5) * 20,
-              vx: (Math.random() - 0.5) * 4,
-              vy: -Math.random() * 5 - 2,
-              color: c.glow, radius: Math.random() * 3 + 1, alpha: 1, decay: 0.03
-            });
-          }
+        // Books
+        books.forEach(b => {
+          ctx.fillStyle = b.floating ? '#81ecec' : '#8e44ad';
+          ctx.fillRect(b.x, b.y, 18, 24);
+          b.x += b.vx; b.y += b.vy;
+          b.vx *= 0.95; b.vy *= 0.95;
+        });
+
+      } else if (activeBg === 'hall') {
+        // 3. Eingangshalle
+        ctx.fillStyle = '#120a0a'; ctx.fillRect(0, 0, width, height);
+
+        // Red Carpet
+        ctx.fillStyle = '#800909';
+        ctx.beginPath(); ctx.moveTo(width*0.35, height); ctx.lineTo(width*0.65, height);
+        ctx.lineTo(width*0.55, height*0.5); ctx.lineTo(width*0.45, height*0.5); ctx.fill();
+
+        // Chandelier
+        if (chandelier.fallen) {
+          ctx.fillStyle = '#d4af37'; ctx.fillRect(width*0.5 - 40, height*0.85, 80, 20);
+        } else {
+          ctx.fillStyle = '#d4af37'; ctx.fillRect(chandelier.x - 50, chandelier.y, 100, 30);
         }
 
-        // Check interaction with Cups (Eintauchen in Becher)
-        floatingObjects.forEach(cup => {
-          if (cup.filled && Math.hypot(mx - cup.x, my - (cup.y + cup.hoverOffsetY)) < 30) {
-            if (Math.random() > 0.3) {
-              particles.push({
-                x: cup.x, y: cup.y + cup.hoverOffsetY,
-                vx: (Math.random() - 0.5) * 8, vy: (Math.random() - 0.5) * 8,
-                color: c.glow, radius: Math.random() * 4 + 2, alpha: 1, decay: 0.02
-              });
-            }
+        // Torches
+        torches.forEach(t => {
+          ctx.fillStyle = '#555'; ctx.fillRect(t.x - 5, t.y, 10, 30);
+          if (t.lit) {
+            ctx.fillStyle = '#ffaa00'; ctx.beginPath(); ctx.arc(t.x, t.y - 5, 12, 0, Math.PI*2); ctx.fill();
           }
         });
+
+      } else if (activeBg === 'office') {
+        // 4. Anns Büro (Uhrenwand)
+        ctx.fillStyle = '#0f0f18'; ctx.fillRect(0, 0, width, height);
+
+        clocks.forEach(c => {
+          if (c.invisible) return;
+          ctx.save();
+          if (c.glowing) { ctx.shadowBlur = 15; ctx.shadowColor = '#ffaa00'; }
+          ctx.fillStyle = c.overgrown ? '#27ae60' : '#2c3e50';
+          ctx.beginPath(); ctx.arc(c.x, c.y, 35, 0, Math.PI*2); ctx.fill();
+          ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+
+          // Hands
+          ctx.beginPath(); ctx.moveTo(c.x, c.y);
+          ctx.lineTo(c.x + Math.cos(c.angle)*20, c.y + Math.sin(c.angle)*20);
+          ctx.stroke();
+          ctx.restore();
+        });
+      }
+    }
+          // --- DRAWING RITUAL OBJECTS ---
+
+    function drawRitualObjects() {
+      if (activeBg !== 'clearing') return;
+
+      // Malvorrith Stein
+      if (!malvorrith.destroyed) {
+        ctx.save();
+        ctx.shadowBlur = 15; ctx.shadowColor = '#ffaa00';
+        ctx.fillStyle = '#f1c40f';
+        ctx.beginPath();
+        ctx.moveTo(malvorrith.x, malvorrith.y - 20);
+        ctx.lineTo(malvorrith.x + 15, malvorrith.y + 5);
+        ctx.lineTo(malvorrith.x - 12, malvorrith.y + 18);
+        ctx.closePath(); ctx.fill();
+        ctx.restore();
       }
 
-      // CUPS (3 Becher)
-      floatingObjects.forEach((obj) => {
-        if (obj.invisible) return;
-
-        const cx = obj.x;
-        const cy = obj.y + obj.hoverOffsetY;
-
-        ctx.save();
-        ctx.fillStyle = '#d4af37'; ctx.strokeStyle = '#fff8dc'; ctx.lineWidth = 1;
-
-        ctx.fillRect(cx - 3, cy + 12, 6, 12);
-        ctx.beginPath(); ctx.ellipse(cx, cy + 24, 10, 4, 0, 0, Math.PI * 2); ctx.fill();
-
-        ctx.beginPath(); ctx.arc(cx, cy, 14, 0, Math.PI); ctx.fill(); ctx.stroke();
-
-        if (obj.filled) {
-          ctx.fillStyle = ritualStep === 3 ? '#00ff66' : '#e74c3c';
-          ctx.shadowBlur = 10; ctx.shadowColor = ritualStep === 3 ? '#00ff66' : '#e74c3c';
-          ctx.beginPath(); ctx.ellipse(cx, cy, 12, 4, 0, 0, Math.PI * 2); ctx.fill();
+      // Cups
+      cups.forEach(c => {
+        ctx.fillStyle = '#d4af37';
+        ctx.fillRect(c.x - 12, c.y, 24, 20);
+        if (c.filled) {
+          ctx.fillStyle = c.element === 'fire' ? '#e74c3c' : c.element === 'water' ? '#3498db' : '#2ecc71';
+          ctx.beginPath(); ctx.ellipse(c.x, c.y, 10, 4, 0, 0, Math.PI*2); ctx.fill();
         }
-        ctx.restore();
       });
     }
-      
-          // --- SPELL EFFECTS & LIGHTNING ---
 
-    function drawLightning() {
-      lightningLines.forEach(line => {
-        ctx.save();
-        ctx.strokeStyle = '#ffffff';
-        ctx.shadowBlur = 20; ctx.shadowColor = '#00ff66';
-        ctx.lineWidth = 4;
-        ctx.beginPath();
-        ctx.moveTo(line.pts[0].x, line.pts[0].y);
-        for (let i = 1; i < line.pts.length; i++) {
-          ctx.lineTo(line.pts[i].x, line.pts[i].y);
-        }
-        ctx.stroke();
-        ctx.restore();
-
-        line.alpha -= 0.08;
-      });
-      lightningLines = lightningLines.filter(l => l.alpha > 0);
-    }
-
-    function drawVines() {
+    function drawSpells() {
+      // Vines
       vines.forEach(v => {
-        ctx.save();
-        ctx.strokeStyle = '#2ecc71'; ctx.shadowBlur = 8; ctx.shadowColor = '#00ff66';
-        ctx.lineWidth = v.thickness; ctx.lineCap = 'round';
+        ctx.strokeStyle = '#2ecc71'; ctx.lineWidth = 4;
         ctx.beginPath(); ctx.moveTo(v.startX, v.startY);
-        
-        let currX = v.startX, currY = v.startY;
-        for (let i = 0; i < v.points.length; i++) {
-          currX += v.points[i].dx; currY -= v.points[i].dy;
-          ctx.lineTo(currX, currY);
-        }
+        let cx = v.startX, cy = v.startY;
+        v.pts.forEach(p => { cx += p.dx; cy -= p.dy; ctx.lineTo(cx, cy); });
         ctx.stroke();
-
-        if (v.points.length > 3) {
-          ctx.fillStyle = '#27ae60';
-          v.thorns.forEach(t => { ctx.beginPath(); ctx.arc(t.x, t.y, 3, 0, Math.PI * 2); ctx.fill(); });
-        }
-        ctx.restore();
-
-        if (v.points.length < v.maxPoints) {
-          const angle = (Math.random() - 0.5) * 0.8 - Math.PI * 0.5;
-          const length = Math.random() * 8 + 4;
-          v.points.push({ dx: Math.cos(angle) * length, dy: Math.abs(Math.sin(angle) * length) });
-          if (Math.random() > 0.6) v.thorns.push({ x: currX, y: currY });
-        }
+        if (v.pts.length < 15) v.pts.push({ dx: (Math.random()-0.5)*10, dy: Math.random()*8 });
       });
-    }
 
-    function drawAmberOrbs() {
-      amberOrbs.forEach(orb => {
-        ctx.save();
-        ctx.shadowBlur = 20; ctx.shadowColor = '#ffaa00';
-        const grad = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.radius);
-        grad.addColorStop(0, '#ffffff'); grad.addColorStop(0.4, '#ffdd66'); grad.addColorStop(1, 'rgba(255, 170, 0, 0)');
-        ctx.fillStyle = grad;
-        ctx.beginPath(); ctx.arc(orb.x, orb.y, orb.radius * 2, 0, Math.PI * 2); ctx.fill();
-        ctx.restore();
-
-        orb.x += orb.vx; orb.y += orb.vy;
-        orb.vy += Math.sin(Date.now() * 0.003 + orb.id) * 0.05;
-        orb.radius *= 0.995;
+      // Amber Orbs & Runes
+      amberOrbs.forEach(o => {
+        ctx.fillStyle = '#ffaa00'; ctx.beginPath(); ctx.arc(o.x, o.y, o.r, 0, Math.PI*2); ctx.fill();
+        o.r *= 0.98;
       });
-      amberOrbs = amberOrbs.filter(o => o.radius > 2);
-    }
-          function drawWind() {
+      amberOrbs = amberOrbs.filter(o => o.r > 2);
+
+      runes.forEach(r => {
+        ctx.strokeStyle = '#ffaa00'; ctx.lineWidth = 2;
+        ctx.strokeRect(r.x-15, r.y-15, 30, 30);
+      });
+
+      // Wind
       windParticles.forEach(p => {
-        ctx.save();
-        ctx.strokeStyle = 'rgba(129, 236, 236, ' + p.alpha + ')';
-        ctx.lineWidth = p.size;
-        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(p.x - p.vx * 3, p.y - p.vy * 2); ctx.stroke();
-        ctx.restore();
-        p.x += p.vx; p.y += p.vy; p.alpha -= 0.01;
+        ctx.strokeStyle = '#81ecec'; ctx.beginPath(); ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x + p.vx*3, p.y + p.vy*3); ctx.stroke();
+        p.x += p.vx; p.y += p.vy; p.alpha -= 0.02;
       });
       windParticles = windParticles.filter(p => p.alpha > 0);
-    }
 
-    function drawParticles() {
+      // Particles
       particles.forEach(p => {
-        ctx.save();
-        ctx.fillStyle = p.color; ctx.shadowBlur = 10; ctx.shadowColor = p.color;
-        ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
-        ctx.restore();
-        p.x += p.vx; p.y += p.vy; p.alpha -= p.decay;
+        ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill();
+        p.x += p.vx; p.y += p.vy; p.alpha -= 0.02;
       });
       particles = particles.filter(p => p.alpha > 0);
     }
 
-    function drawFireflies() {
-      fireflies.forEach(f => {
-        ctx.save();
-        ctx.fillStyle = `rgba(0, 255, 102, ${f.alpha})`;
-        ctx.shadowBlur = 8; ctx.shadowColor = '#00ff66';
-        ctx.beginPath(); ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2); ctx.fill();
-        ctx.restore();
-        f.x += f.vx; f.y += f.vy;
-        f.alpha += (Math.random() - 0.5) * 0.05;
-        if (f.alpha < 0.1) f.alpha = 0.1; if (f.alpha > 0.9) f.alpha = 0.9;
-        if (f.x < 0 || f.x > width) f.vx *= -1;
-        if (f.y < 0 || f.y > height) f.vy *= -1;
-      });
-    }
-
-    // --- MAIN RENDER LOOP ---
     function render() {
-      ctx.clearRect(0, 0, width, height);
-
-      drawSkyAndMoon();
-      drawForest();
-      drawAltar();
-
-      drawLightning();
-      drawVines();
-      drawAmberOrbs();
-      drawWind();
-      drawParticles();
-      drawFireflies();
-
-      // Hovering cups levitation
-      floatingObjects.forEach((obj, i) => {
-        if (!obj.isDragging) {
-          if (activeSpell === 'caroline' && activeTab === 'lab') {
-            obj.hoverOffsetY = Math.sin(Date.now() * 0.004 + i) * 20 - 15;
-          } else {
-            obj.hoverOffsetY = Math.sin(Date.now() * 0.002 + i) * 4;
-          }
-        }
-      });
-
+      drawBackground();
+      drawRitualObjects();
+      drawSpells();
       requestAnimationFrame(render);
     }
     render();
-          // --- INTERACTION LOGIC & MINIMIZING ---
+          // --- NAVIGATION & INTERFACE CONTROLS ---
 
     function switchTab(tab) {
       activeTab = tab;
       document.querySelectorAll('.btn-tab').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.witch-panel').forEach(p => p.classList.remove('active'));
-      document.getElementById('active-spell-bar').classList.remove('visible');
+      document.getElementById('bottom-bar').classList.remove('visible');
 
       if (tab === 'ritual') {
         document.getElementById('tab-btn-ritual').classList.add('active');
@@ -857,21 +589,29 @@
       }
     }
 
-    function advanceRitualAndMinimize() {
-      advanceRitual();
+    function startRitualMode() {
       document.getElementById('panel-ritual').classList.remove('active');
-      document.getElementById('active-spell-bar').classList.add('visible');
+      document.getElementById('bottom-bar').classList.add('visible');
+      document.getElementById('element-box').style.display = 'flex';
+      document.getElementById('bottom-info').innerText = 'Live-Ritual (Element wählen & mitwirken)';
     }
 
-    function selectSpell(spell, displayName) {
+    function selectSpell(spell, witchName) {
       activeSpell = spell;
       document.getElementById('panel-lab').classList.remove('active');
-      document.getElementById('active-spell-bar').classList.add('visible');
-      document.getElementById('active-witch-name').innerText = displayName;
+      document.getElementById('bottom-bar').classList.add('visible');
+      document.getElementById('element-box').style.display = 'none';
+      document.getElementById('bottom-info').innerText = witchName + ' aktiv';
+    }
+
+    function selectBg(bg, btnEl) {
+      activeBg = bg;
+      document.querySelectorAll('.btn-bg').forEach(b => b.classList.remove('active'));
+      btnEl.classList.add('active');
     }
 
     function reopenPanel() {
-      document.getElementById('active-spell-bar').classList.remove('visible');
+      document.getElementById('bottom-bar').classList.remove('visible');
       if (activeTab === 'ritual') {
         document.getElementById('panel-ritual').classList.add('active');
       } else {
@@ -879,198 +619,107 @@
       }
     }
 
-    function advanceRitual() {
-      const desc = document.getElementById('ritual-description');
-      const btn = document.getElementById('btn-ritual-action');
-      const altar = getAltarPos();
-
-      if (ritualStep === 0) {
-        ritualStep = 1;
-        floatingObjects[0].filled = true;
-        document.getElementById('step-1').classList.add('completed');
-        document.getElementById('step-2').classList.add('active');
-        desc.innerHTML = "Das <strong>Blut der Hexe</strong> liegt schimmernd im ersten goldenen Becher. Nun wird das <strong>Blut einer/eines Unschuldigen</strong> benötigt.";
-        btn.innerHTML = "2. Becher füllen (Unschuldigen-Blut)";
-        spawnBloodSparks(floatingObjects[0].x, floatingObjects[0].y);
-        playMagicSound('fill');
-
-      } else if (ritualStep === 1) {
-        ritualStep = 2;
-        floatingObjects[1].filled = true;
-        document.getElementById('step-2').classList.add('completed');
-        document.getElementById('step-3').classList.add('active');
-        desc.innerHTML = "Zwei Becher sind gefüllt. Die finale Nacht bricht an: Das <strong>Blut des gewählten Opfers</strong> entscheidet über den Austausch der Lebensenergie.";
-        btn.innerHTML = "3. Becher füllen (Opferblut)";
-        spawnBloodSparks(floatingObjects[1].x, floatingObjects[1].y);
-        playMagicSound('fill');
-
-      } else if (ritualStep === 2) {
-        ritualStep = 3;
-        floatingObjects[2].filled = true;
-        document.getElementById('step-3').classList.add('completed');
-        desc.innerHTML = "✨ <strong>DAS RITUAL IST VOLLENDET!</strong><br>Der Malvorrith-Stein erwacht zum Leben. Der magische Fluss entzieht dem Opfer die Lebensenergie!";
-        btn.innerHTML = "🔄 Ritual zurücksetzen";
-        spawnBloodSparks(floatingObjects[2].x, floatingObjects[2].y);
-        spawnEruption(altar.x, altar.y - 12);
-        playMagicSound('burst');
-
-      } else {
-        ritualStep = 0;
-        malvorrith.destroyed = false;
-        floatingObjects.forEach(o => o.filled = false);
-        document.querySelectorAll('.ritual-step').forEach((s, idx) => {
-          s.classList.remove('completed', 'active');
-          if (idx === 0) s.classList.add('active');
-        });
-        desc.innerHTML = "Auf der Waldlichtung unter dem klaren Vollmond stehen drei goldene Becher um den verformten <strong>Malvorrith-Stein</strong> bereit.";
-        btn.innerHTML = "1. Becher füllen & Ritual ausführen";
-      }
+    function setElement(el, btn) {
+      userElement = el;
+      document.querySelectorAll('.btn-element').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
     }
-          function spawnBloodSparks(x, y) {
-      for (let i = 0; i < 30; i++) {
-        particles.push({
-          x: x, y: y,
-          vx: (Math.random() - 0.5) * 6, vy: (Math.random() - 0.5) * 6 - 2,
-          color: Math.random() > 0.3 ? '#e74c3c' : '#ff7675',
-          radius: Math.random() * 3 + 1.5, alpha: 1, decay: 0.02
-        });
-      }
-    }
-
-    function spawnEruption(x, y) {
-      for (let i = 0; i < 120; i++) {
-        particles.push({
-          x: x, y: y,
-          vx: (Math.random() - 0.5) * 12, vy: (Math.random() - 0.5) * 12 - 4,
-          color: Math.random() > 0.4 ? '#00ff66' : '#ffffff',
-          radius: Math.random() * 4 + 2, alpha: 1, decay: 0.015
-        });
-      }
-    }
-
-    // --- MOUSE & TOUCH DRAG CONTROLS ---
+          // --- INTERACTIVE SPELLS & SCENE LOGIC ---
 
     canvas.addEventListener('pointerdown', (e) => {
       const rect = canvas.getBoundingClientRect();
       const cx = e.clientX - rect.left;
       const cy = e.clientY - rect.top;
 
-      // Check Malvorrith Drag / Click
-      if (!malvorrith.destroyed && Math.hypot(cx - malvorrith.x, cy - malvorrith.y) < 25) {
-        malvorrith.isDragging = true;
-        draggedObj = 'malvorrith';
-        dragOffsetX = cx - malvorrith.x;
-        dragOffsetY = cy - malvorrith.y;
+      // 1. RITUAL INTERACTION
+      if (activeTab === 'ritual' && activeBg === 'clearing') {
+        // Fill Cup with Element
+        cups.forEach(cup => {
+          if (Math.hypot(cup.x - cx, cup.y - cy) < 30) {
+            cup.filled = true;
+            cup.element = userElement;
+            spawnParticles(cx, cy, userElement === 'fire' ? '#e74c3c' : '#3498db');
+          }
+        });
+
+        // Click Element FX
+        spawnParticles(cx, cy, userElement === 'fire' ? '#ff7675' : userElement === 'water' ? '#74b9ff' : '#55efc4');
         return;
       }
 
-      // Check Cups Drag
-      for (let cup of floatingObjects) {
-        if (!cup.invisible && Math.hypot(cx - cup.x, cy - (cup.y + cup.hoverOffsetY)) < 25) {
-          draggedObj = cup;
-          cup.isDragging = true;
-          dragOffsetX = cx - cup.x;
-          dragOffsetY = cy - cup.y;
-          return;
-        }
-      }
+      // 2. LAB INTERACTION PER BACKGROUND
+      if (activeSpell === 'samantha') {
+        vines.push({ startX: cx, startY: cy, pts: [] });
 
-      // If Lab active -> Spell casting
-      if (activeTab === 'lab') {
-        if (activeSpell === 'samantha') {
-          vines.push({ startX: cx, startY: cy, thickness: Math.random() * 3 + 3, points: [], thorns: [], maxPoints: Math.floor(Math.random() * 15 + 15) });
-          playMagicSound('vine');
-        } else if (activeSpell === 'amber') {
-          for (let i = 0; i < 3; i++) {
-            amberOrbs.push({ id: Math.random(), x: cx, y: cy, vx: (Math.random() - 0.5) * 4, vy: (Math.random() - 0.5) * 4 - 2, radius: Math.random() * 12 + 10 });
-          }
-          playMagicSound('fill');
-        } else if (activeSpell === 'ann') {
-          for (let i = 0; i < 40; i++) {
-            windParticles.push({ x: cx + (Math.random() - 0.5) * 40, y: cy + (Math.random() - 0.5) * 40, vx: Math.random() * 12 + 8, vy: (Math.random() - 0.5) * 6, size: Math.random() * 3 + 1, alpha: 1 });
-          }
-          playMagicSound('wind');
-        } else if (activeSpell === 'caroline') {
-          floatingObjects.forEach(obj => {
-            if (Math.hypot(obj.x - cx, (obj.y + obj.hoverOffsetY) - cy) < 40) {
-              obj.invisible = true;
-              spawnBloodSparks(obj.x, obj.y);
-              setTimeout(() => { obj.invisible = false; spawnBloodSparks(obj.x, obj.y); }, 1800);
-            }
-          });
-          playMagicSound('fill');
+        if (activeBg === 'library') {
+          shelves.forEach(s => { if (Math.hypot(s.x - cx, s.y - cy) < 100) s.fallen = true; });
+        } else if (activeBg === 'hall') {
+          chandelier.fallen = true;
+        } else if (activeBg === 'office') {
+          clocks.forEach(c => { if (Math.hypot(c.x - cx, c.y - cy) < 40) c.overgrown = true; });
+        }
+
+      } else if (activeSpell === 'amber') {
+        for(let i=0; i<3; i++) amberOrbs.push({ x: cx, y: cy, r: 15 });
+
+        if (activeBg === 'library') {
+          runes.push({ x: cx, y: cy });
+        } else if (activeBg === 'hall') {
+          torches.forEach(t => { if (Math.hypot(t.x - cx, t.y - cy) < 40) t.lit = true; });
+        } else if (activeBg === 'office') {
+          clocks.forEach(c => { if (Math.hypot(c.x - cx, c.y - cy) < 40) c.glowing = true; });
+        }
+
+      } else if (activeSpell === 'ann') {
+        for(let i=0; i<25; i++) windParticles.push({ x: cx, y: cy, vx: (Math.random()-0.5)*10, vy: (Math.random()-0.5)*10, alpha: 1 });
+
+        if (activeBg === 'library') {
+          books.forEach(b => { b.vx = (Math.random()-0.5)*15; b.vy = (Math.random()-0.5)*15; });
+        } else if (activeBg === 'hall') {
+          torches.forEach(t => t.lit = false);
+        } else if (activeBg === 'office') {
+          clocks.forEach(c => c.angle += 1.5);
+        }
+
+      } else if (activeSpell === 'caroline') {
+        if (activeBg === 'library') {
+          shelves.forEach(s => { if (Math.hypot(s.x - cx, s.y - cy) < 100) s.floating = !s.floating; });
+        } else if (activeBg === 'hall') {
+          if (chandelier.fallen) chandelier.fallen = false;
         }
       }
     });
-
-    canvas.addEventListener('pointermove', (e) => {
+          // DOUBLE CLICK FOR CAROLINE ILLUSION / MALVORRITH DESTRUCTION
+    canvas.addEventListener('dblclick', (e) => {
       const rect = canvas.getBoundingClientRect();
       const cx = e.clientX - rect.left;
       const cy = e.clientY - rect.top;
 
-      if (draggedObj === 'malvorrith') {
-        malvorrith.x = cx - dragOffsetX;
-        malvorrith.y = cy - dragOffsetY;
-      } else if (draggedObj && typeof draggedObj === 'object') {
-        const speed = Math.hypot(cx - draggedObj.lastX, cy - draggedObj.lastY);
-        draggedObj.x = cx - dragOffsetX;
-        draggedObj.y = cy - dragOffsetY;
+      // Destroy Malvorrith in Ritual
+      if (activeTab === 'ritual' && Math.hypot(malvorrith.x - cx, malvorrith.y - cy) < 40) {
+        malvorrith.destroyed = true;
+        spawnParticles(cx, cy, '#ffffff');
+        alert("⚡ Der Malvorrith wurde zerschmettert! Das Ritual ist abgebrochen.");
+        return;
+      }
 
-        // Spill Red / Green Fluid if cup moved quickly & filled
-        if (draggedObj.filled && speed > 15) {
-          spawnBloodSparks(draggedObj.x, draggedObj.y + 10);
-          playMagicSound('spill');
-        }
-        draggedObj.lastX = cx;
-        draggedObj.lastY = cy;
+      // Caroline Office Clocks Vanish
+      if (activeSpell === 'caroline' && activeBg === 'office') {
+        clocks.forEach(c => {
+          if (Math.hypot(c.x - cx, c.y - cy) < 40) c.invisible = !c.invisible;
+        });
       }
     });
 
-    window.addEventListener('pointerup', () => {
-      draggedObj = null;
-      malvorrith.isDragging = false;
-      floatingObjects.forEach(c => c.isDragging = false);
-    });
-
-    // Single Click = Color Change | Double Click = Lightning Destruction
-    let clickTimer = null;
-    canvas.addEventListener('click', (e) => {
-      const rect = canvas.getBoundingClientRect();
-      const cx = e.clientX - rect.left;
-      const cy = e.clientY - rect.top;
-
-      if (!malvorrith.destroyed && Math.hypot(cx - malvorrith.x, cy - malvorrith.y) < 30) {
-        if (e.detail === 1) {
-          clickTimer = setTimeout(() => {
-            malColorIdx = (malColorIdx + 1) % malvorrithColors.length;
-            playMagicSound('color');
-            spawnBloodSparks(malvorrith.x, malvorrith.y);
-          }, 220);
-        } else if (e.detail === 2) {
-          clearTimeout(clickTimer);
-          // Destroy Malvorrith with Lightning
-          malvorrith.destroyed = true;
-          ritualStep = 0;
-          playMagicSound('lightning');
-
-          // Generate Lightning Line
-          const moonX = width * 0.5, moonY = height * 0.22;
-          let pts = [{ x: moonX, y: moonY }];
-          let currX = moonX, currY = moonY;
-          while (currY < malvorrith.y) {
-            currY += 25;
-            currX += (Math.random() - 0.5) * 40;
-            pts.push({ x: currX, y: currY });
-          }
-          pts.push({ x: malvorrith.x, y: malvorrith.y });
-          lightningLines.push({ pts, alpha: 1 });
-
-          // Explode particles
-          spawnEruption(malvorrith.x, malvorrith.y);
-          document.getElementById('ritual-description').innerHTML = "⚡ <strong>DER MALVORRITH WURDE ZERSTÖRT!</strong><br>Ein mächtiger Blitz hat den Ritualstein zerschmettert. Das Ritual wurde abgebrochen!";
-        }
+    function spawnParticles(x, y, color) {
+      for (let i = 0; i < 20; i++) {
+        particles.push({
+          x: x, y: y,
+          vx: (Math.random() - 0.5) * 6, vy: (Math.random() - 0.5) * 6,
+          color: color, r: Math.random() * 4 + 2, alpha: 1
+        });
       }
-    });
+    }
   </script>
 </body>
 </html>
