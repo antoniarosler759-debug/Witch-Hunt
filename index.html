@@ -211,6 +211,12 @@
 </head>
 <body>
 <nav class="top-nav">
+<nav class="top-nav">
+  <a href="#home" class="nav-link">Home</a>
+  <a href="#ritual-section" class="nav-link">Lore & Ritual</a>
+  <a href="quiz.html" class="nav-link">🎮 Hexen-Quiz</a>
+</nav>
+  
   <a href="#home" class="nav-link">Home</a>
   <a href="#galerie" class="nav-link">Galerie</a>
 </nav>
@@ -265,7 +271,7 @@
     <div class="character char-card">
       <p class="char-name">Alice Park</p>
       <p class="char-role">KLEINE SCHWESTER</p>
-      <p class="char-eyes">💚 Grüne Augen (Hexe)</p>
+      
       <p>Das absolute Nesthäkchen der Park-Familie. Im düsteren Waisenhaus ist sie am verletzlichsten. Sie ist der größte emotionale Antrieb für Amber und Finn, die Gefahren der Hexenwelt durchzustehen.</p>
     </div>
     <div class="character char-card">
@@ -414,7 +420,7 @@
     }
   </style>
   
-  <!-- Spoiler-Button & Textbereich -->
+   <!-- Spoiler-Button & Textbereich -->
   <div class="character" style="text-align: center;">
     <button onclick="toggleSpoiler()" class="spoiler-btn">
       Erklärung des ersten Endes (Spoiler-Alarm ⚠️)
@@ -431,4 +437,42 @@
       
       <p>Als sie Amber und Samantha kurz vorher zum Beispiel beim Austauschen der Steine erwischte, hätte sie sofort überprüfen müssen, ob sie nun auch wirklich den echten Magievorrat in der Hand hatte. Stattdessen ging sie einfach davon aus, dass jemand wie Samantha sie niemals überlisten könnte. Samantha hingegen hatte genau diese Sichtweise schon vorhergesagt und entsprechend eine zweite Kopie bereitgehalten, die die Althexe nun mit sich trug. Beim Ritual zersprang der falsche Magievorrat unter ihrer eigenen Macht – statt ihr Leben zu schenken, entzog er ihr unglaublich viel Energie.</p>
       
-      <p>Bei der Verfolgung und Konfrontation mit Amber wa
+      <p>Bei der Verfolgung und Konfrontation mit Amber war sie also bereits sichtbar geschwächt. Doch auch hier konnte und wollte sie ihren Stolz nicht loslassen. Statt zu fliehen, versuchte sie Rache für das entstandene Chaos zu nehmen, und bezahlte kurz darauf mit ihrem Leben.</p>
+    </div>
+  </div>
+
+  <!-- Drei Goldene Becher Bereich -->
+  <div class="character becher-section">
+    <h3>Die drei goldenen Becher</h3>
+    <div class="becher-wrapper">
+      <div class="becher">🏆</div>
+      <div class="becher bloody-becher">
+        🏆
+        <div class="blood-drip"></div>
+      </div>
+      <div class="becher">🏆</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>&copy; 2026 Fan-Projekt zu "Witch-Hunt". Alle Rechte an Inhalt und den Charakteren liegen bei der Autorin Lara Antonia Rösler.</p>
+  </div>
+</div>
+
+<script>
+  function toggleSpoiler() {
+    var content = document.getElementById("spoiler-content");
+    if (content.style.display === "none") {
+      content.style.display = "block";
+    } else {
+      content.style.display = "none";
+    }
+  }
+</script>
+
+</body>
+</html>
+
+  
+  
+  
