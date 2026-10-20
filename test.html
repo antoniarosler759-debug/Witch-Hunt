@@ -42,15 +42,15 @@
 
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             border-bottom: 2px solid var(--border-color);
-            padding-bottom: 20px;
+            padding-bottom: 15px;
         }
 
         h1 {
             color: #ffffff;
             font-size: 2.2rem;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             text-shadow: 0 0 10px rgba(142, 68, 173, 0.5);
         }
 
@@ -60,8 +60,16 @@
             font-size: 1.1rem;
         }
 
+        .progress-indicator {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         .question-block {
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             padding: 20px;
             background: rgba(0,0,0,0.2);
             border-radius: 8px;
@@ -105,7 +113,7 @@
             transform: scale(1.2);
         }
 
-        .btn-submit {
+        .btn-next {
             display: block;
             width: 100%;
             padding: 15px;
@@ -120,7 +128,7 @@
             margin-top: 20px;
         }
 
-        .btn-submit:hover {
+        .btn-next:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(142, 68, 173, 0.4);
         }
@@ -148,6 +156,23 @@
             color: var(--accent-green);
         }
 
+        .review-item {
+            background: rgba(0,0,0,0.2);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            text-align: left;
+            border-left: 4px solid var(--border-color);
+        }
+
+        .review-item.is-correct {
+            border-left-color: var(--accent-green);
+        }
+
+        .review-item.is-wrong {
+            border-left-color: var(--wrong-color);
+        }
+
         .explanation {
             margin-top: 10px;
             padding: 10px;
@@ -155,18 +180,16 @@
             border-left: 3px solid var(--accent-green);
             font-size: 0.95rem;
             color: var(--text-color);
-            display: none;
         }
 
-        .correct-answer {
-            background: rgba(46, 204, 113, 0.2) !important;
-            border-color: var(--accent-green) !important;
-            color: #ffffff;
+        .correct-answer-text {
+            color: var(--accent-green);
+            font-weight: bold;
         }
 
-        .wrong-answer {
-            background: rgba(231, 76, 60, 0.2) !important;
-            border-color: var(--wrong-color) !important;
+        .wrong-answer-text {
+            color: var(--wrong-color);
+            text-decoration: line-through;
         }
 
         .btn-restart {
@@ -187,10 +210,11 @@
         <p class="subtitle">Kinder der verlorenen Zeit – Selbsttest Quiz</p>
     </header>
 
-    <form id="quiz-form">
-        <div id="questions-container"></div>
-        <button type="submit" class="btn-submit">Quiz auswerten</button>
-    </form>
+    <div id="quiz-container">
+        <div class="progress-indicator" id="progress-indicator">Frage 1 von 10</div>
+        <div id="active-question-card"></div>
+        <button type="button" class="btn-next" id="btn-next" onclick="handleNextQuestion()">Nächste Frage</button>
+    </div>
 
     <div id="result-screen">
         <h2>Dein Ergebnis</h2>
@@ -200,163 +224,258 @@
             <p id="result-text" style="margin-top: 10px; font-size: 1.1rem;"></p>
         </div>
 
-        <div id="review-container" style="text-align: left; margin-top: 30px;">
-            <h3>Auflösung & Erklärungen:</h3>
+        <div id="review-container" style="margin-top: 30px;">
+            <h3>Auflösung & Erklärungen aller Fragen:</h3>
+            <div id="review-list" style="margin-top: 15px;"></div>
         </div>
 
-        <button type="button" class="btn-submit btn-restart" onclick="location.reload()">Quiz nochmal machen</button>
+        <button type="button" class="btn-next btn-restart" onclick="location.reload()">Quiz nochmal machen</button>
     </div>
 </div>
-  <script>
+
+<script>
 const quizData = [
     {
-        question: "1. Welches unverkennbare biologische Merkmal vereint alle echten Hexen in der Welt von Witch-Hunt?",
-        options: ["A) Silberne Haare", "B) Eine Brandnarbe am Handgelenk", "C) Grüne Augen", "D) Eine unnatürlich tiefe Stimme"],
-        correct: 2,
+        question: "Welches unverkennbare biologische Merkmal vereint alle echten Hexen in der Welt von Witch-Hunt?",
+        options: ["Silberne Haare", "Eine Brandnarbe am Handgelenk", "Grüne Augen", "Eine unnatürlich tiefe Stimme"],
+        correctIndex: 2,
         explanation: "Alle echten Hexen besitzen grüne Augen. Zwar gibt es auch normale Menschen mit dieser Augenfarbe, aber unter Hexen ist es das universelle Erkennungsmerkmal."
     },
     {
-        question: "2. Ab welchem Alter nimmt das Elite-Waisenhaus St. Gray regulär Kinder auf?",
-        options: ["A) Ab Geburt (Säuglinge)", "B) Ab 6 Jahren", "C) Ab 8 Jahren", "D) Ab 12 Jahren"],
-        correct: 2,
+        question: "Ab welchem Alter nimmt das Elite-Waisenhaus St. Gray regulär Kinder auf?",
+        options: ["Ab Geburt (Säuglinge)", "Ab 6 Jahren", "Ab 8 Jahren", "Ab 12 Jahren"],
+        correctIndex: 2,
         explanation: "St. Gray hat eine strikte Altersgrenze und nimmt Kinder erst ab 8 Jahren auf. Jüngere Kinder oder abgelegte Babys bilden absolute Ausnahmen und werden meist weitervermittelt."
     },
     {
-        question: "3. Welche rein mentale Fähigkeit besitzt die Hauptprotagonistin Amber Park, die bei ihr starkes Schlafwandeln verursacht?",
-        options: ["A) Sie kann die Auren anderer Menschen lesen", "B) Sie kann Gedanken manipulieren", "C) Sie kann durch Wände sehen", "D) Sie kann intensive Visionen sehen"],
-        correct: 3,
+        question: "Welche rein mentale Fähigkeit besitzt die Hauptprotagonistin Amber Park, die bei ihr starkes Schlafwandeln verursacht?",
+        options: ["Sie kann die Auren anderer Menschen lesen", "Sie kann Gedanken manipulieren", "Sie kann durch Wände sehen", "Sie kann intensive Visionen sehen"],
+        correctIndex: 3,
         explanation: "Ambers Magie ist rein mental. Sie kann zwar keine Auren lesen, wird dafür aber von so intensiven Visionen gejagt, dass sie als Nebeneffekt schlafwandelt."
     },
     {
-        question: "4. Was wird in der ersten Nacht des berüchtigten „Drei-Becher-Rituals“ bereitgestellt?",
-        options: ["A) Das Herz einer Hexe (Malvorrith)", "B) Das Blut eines Unschuldigen", "C) Das Blut der Hexe selbst", "D) Reines Quellwasser"],
-        correct: 2,
+        question: "Was wird in der ersten Nacht des berüchtigten „Drei-Becher-Rituals“ bereitgestellt?",
+        options: ["Das Herz einer Hexe (Malvorrith)", "Das Blut eines Unschuldigen", "Das Blut der Hexe selbst", "Reines Quellwasser"],
+        correctIndex: 2,
         explanation: "Das Ritual erstreckt sich über drei Nächte unter dem Vollmond. In der allerersten Nacht muss das Blut der Hexe bereitgestellt werden."
     },
-    {
-        question: "5. Aus welchen Komponenten wird ein „Malvorrith“ (auch Hexenherz genannt) geformt?",
-        options: ["A) Aus Gold, Silber und flüssigem Blut", "B) Aus verbrannter Asche und Mondgestein", "C) Aus dem Blut, den Knochen und dem Herzen einer Hexe", "D) Aus geschmolzenen Ritualbechern"],
-        correct: 2,
+        {
+        question: "Aus welchen Komponenten wird ein „Malvorrith“ (auch Hexenherz genannt) geformt?",
+        options: ["Aus Gold, Silber und flüssigem Blut", "Aus verbrannter Asche und Mondgestein", "Aus dem Blut, den Knochen und dem Herzen einer Hexe", "Aus geschmolzenen Ritualbechern"],
+        correctIndex: 2,
         explanation: "Der Malvorrith ist ein extrem gefährlicher und verpönter Ritualstein, der aus dem Blut, den Knochen und dem echten Herzen einer Hexe erschaffen wird – seine Existenz gilt in der Hexengesellschaft als Beweis für einen Mord."
     },
     {
-        question: "6. Warum ist Samantha Grays charakterlich so unnahbar, arbeitet aber insgeheim aktiv gegen die böse Direktorin Ann Grays?",
-        options: ["A) Sie wurde von Ann aus dem Waisenhaus geworfen.", "B) Sie will selbst die alleinige Macht über das Wind-Element.", "C) Sie ist Anns leibliche Nichte, steht aber auf der Seite der Kinder.", "D) Sie wurde von Caroline Blackthorne dazu gezwungen."],
-        correct: 2,
+        question: "Warum ist Samantha Grays charakterlich so unnahbar, arbeitet aber insgeheim aktiv gegen die böse Direktorin Ann Grays?",
+        options: ["Sie wurde von Ann aus dem Waisenhaus geworfen.", "Sie will selbst die alleinige Macht über das Wind-Element.", "Sie ist Anns leibliche Nichte, steht aber auf der Seite der Kinder.", "Sie wurde von Caroline Blackthorne dazu gezwungen."],
+        correctIndex: 2,
         explanation: "Das ist der große Plot-Twist: Obwohl Samantha die leibliche Nichte der tyrannischen Direktorin ist, nutzt sie Ambers Visionen gezielt, um ihrer Tante das Handwerk zu legen."
     },
     {
-        question: "7. Welcher Charakter fällt optisch sofort durch auffällige silberne Haare und ein ständiges schelmisches Grinsen auf?",
-        options: ["A) Elizabeth Everhart", "B) Mary Norack", "C) Caroline Blackthorne", "D) Ann Grays"],
-        correct: 2,
+        question: "Welcher Charakter fällt optisch sofort durch auffällige silberne Haare und ein ständiges schelmisches Grinsen auf?",
+        options: ["Elizabeth Everhart", "Mary Norack", "Caroline Blackthorne", "Ann Grays"],
+        correctIndex: 2,
         explanation: "Caroline Blackthorne, die mächtige Hexe der Manipulation, bildet eine ganz eigene unberechenbare Partei und verbreitet durch ihr Auftreten pure Angst und Schrecken."
     },
     {
-        question: "8. Warum stellt der junge Polizist in Ausbildung, Mason Cater, überhaupt eigene Nachforschungen zum Waisenhaus St. Gray an?",
-        options: ["A) Er sucht nach seinen leiblichen Eltern Bianka und Jeffrey.", "B) Er hat einen offiziellen Durchsuchungsbefehl von der Londoner Polizei.", "C) Er verlor selbst früh seine Eltern und machte schlechte Erfahrungen in einem anderen Waisenhaus.", "D) Er hat selbst grüne Augen und vermutet, ein Hexer zu sein."],
-        correct: 2,
+        question: "Warum stellt der junge Polizist in Ausbildung, Mason Cater, überhaupt eigene Nachforschungen zum Waisenhaus St. Gray an?",
+        options: ["Er sucht nach seinen leiblichen Eltern Bianka und Jeffrey.", "Er hat einen offiziellen Durchsuchungsbefehl von der Londoner Polizei.", "Er verlor selbst früh seine Eltern und machte schlechte Erfahrungen in einem anderen Waisenhaus.", "Er hat selbst grüne Augen und vermutet, ein Hexer zu sein."],
+        correctIndex: 2,
         explanation: "Mason hat einen extremen Gerechtigkeitssinn. Da sein erstes Waisenhaus wegen gewalttätiger Erzieher geschlossen wurde, ist er gegenüber dem „Elite-Waisenhaus“ St. Gray von Natur aus misstrauisch."
     },
     {
-        question: "9. Welches Schicksal ereilt den schüchternen neunjährigen Lennard, der sich mit Ambers kleiner Schwester Alice angefreundet hat?",
-        options: ["A) Er wird von einer Gastfamilie adoptiert.", "B) Er entpuppt sich ebenfalls als mächtiger Hexer.", "C) Er fällt leider dem grausamen Drei-Becher-Ritual zum Opfer.", "D) Er flieht gemeinsam mit Ambers Bruder Finn aus dem Waisenhaus."],
-        correct: 2,
+        question: "Welches Schicksal ereilt den schüchternen neunjährigen Lennard, der sich mit Ambers kleiner Schwester Alice angefreundet hat?",
+        options: ["Er wird von einer Gastfamilie adoptiert.", "Er entpuppt sich ebenfalls als mächtiger Hexer.", "Er fällt leider dem grausamen Drei-Becher-Ritual zum Opfer.", "Er flieht gemeinsam mit Ambers Bruder Finn aus dem Waisenhaus."],
+        correctIndex: 2,
         explanation: "Der kleine Lennard, der als Baby im St. Gray abgegeben wurde, gehört leider zu den unschuldigen Kindern, die dem Ritual der Hexen zum Opfer fallen."
     },
     {
-        question: "10. Welcher fatale Fehler führt am Ende von Band 1 zum Untergang der jahrhundertealten Althexe Ann Grays?",
-        options: ["A) Sie unterschätzte die polizeilichen Ermittlungen von Mason.", "B) Ihr Hochmut sorgte dafür, dass sie eine gefälschte Kopie des Magievorrats nicht überprüfte.", "C) Sie unterschätzte die körperliche Stärke von Finn Park.", "D) Sie vergaß, ihr eigenes Blut für das Drei-Becher-Ritual bereitzustellen."],
-        correct: 1,
+        question: "Welcher fatale Fehler führt am Ende von Band 1 zum Untergang der jahrhundertealten Althexe Ann Grays?",
+        options: ["Sie unterschätzte die polizeilichen Ermittlungen von Mason.", "Ihr Hochmut sorgte dafür, dass sie eine gefälschte Kopie des Magievorrats nicht überprüfte.", "Sie unterschätzte die körperliche Stärke von Finn Park.", "Sie vergaß, ihr eigenes Blut für das Drei-Becher-Ritual bereitzustellen."],
+        correctIndex: 1,
         explanation: "Anns Stolz war ihr Untergang. Sie glaubte nicht, dass Samantha sie überlisten könnte. Beim Ritual zersprang der gefälschte Magievorrat und entzog ihr massiv Energie, sodass sie geschwächt vom Kronleuchter erschlagen werden konnte."
+    },
+        {
+        question: "Welcher wichtige Nebencharakter wirkt im Waisenhaus St. Gray extrem streng, teilt harte Strafen aus, schützt die Kinder aber insgeheim vor den magischen Gefahren?",
+        options: ["Jacob Mclean", "Caroline Blackthorne", "Elizabeth Everhart", "Ann Grays"],
+        correctIndex: 2,
+        explanation: "Die Haushälterin Elizabeth Everhart ist für ihre ungeduldige Strenge bekannt. Doch hinter ihrer harten Fassade verbirgt sie, dass sie weitaus mehr über die Magie weiß als gedacht und insgeheim fest auf der Seite der Kinder steht."
+    },
+    {
+        question: "Warum wird der junge Polizist Mason Cater misstrauisch, als er nach der Entführung auf Ambers Bruder Finn Park trifft?",
+        options: ["Finn kann sich plötzlich an überhaupt nichts mehr erinnern.", "Finn hat plötzlich ebenfalls leuchtend grüne Augen bekommen.", "Finn wirkt nach seinem Wiederauftauchen merkwürdig entspannt.", "Finn versucht panisch, aus der Stadt zu fliehen."],
+        correctIndex: 2,
+        explanation: "Obwohl Finn von der unberechenbaren Caroline Blackthorne entführt wurde, wirkt er danach seltsam gelassen. Das weckt sofort den ausgeprägten Ermittlerinstinkt von Mason."
+    },
+    {
+        question: "Wer ist die wichtige Vaterfigur und das große berufliche Vorbild für den angehenden Polizisten Mason Cater?",
+        options: ["Jeffrey Park", "Jacob Mclean", "Theo Norack", "Lennards unbekannter Vater"],
+        correctIndex: 1,
+        explanation: "Der erfahrene und schweigsame Polizist Jacob Mclean ist Masons Vorgesetzter. Mason bewundert ihn dafür, dass er selbst vor jungen Hexen wie Samantha keine Angst zeigt und immer die Ruhe bewahrt."
+    },
+    {
+        question: "Wie reagiert Samantha Grays auf die beiden Waisenhaus-Jugendlichen Theo und Mary Norack, obwohl alle am selben Strang ziehen müssen?",
+        options: ["Sie vertraut ihnen blind und teilt alle Geheimnisse.", "Sie ist aufgrund ihres kühlen Charakters absolut nicht gut auf die beiden zu sprechen.", "Sie versucht, die beiden für das Drei-Becher-Ritual zu opfern.", "Sie hält die beiden für verkleidete Spione ihrer Tante Ann."],
+        correctIndex: 1,
+        explanation: "Samantha ist extrem pragmatisch und distanziert. Weil sie so abweisend ist, herrscht zwischen ihr und den beiden wichtigen Gruppenmitgliedern Theo und Mary eine dauerhafte, spürbare Spannung."
+    },
+    {
+        question: "Was passiert mit dem Verstand einer Hexe, wenn sie einen „Malvorrith“ erschafft oder für unnatürliche Rituale benutzt?",
+        options: ["Sie verliert dauerhaft die Fähigkeit, Visionen zu sehen.", "Die Nutzung wirkt sich extrem schädlich auf ihren Verstand aus.", "Sie vergisst allmählich ihre eigene Herkunft und Familie.", "Ihr Verstand wird komplett unsterblich und resistent gegen jeden Zauber."],
+        correctIndex: 1,
+        explanation: "Da die Erschaffung eines Hexenherzens gegen das natürliche Gesetz verstößt, fordert das Artefakt einen mentalen Preis: Es greift den Verstand der Hexe massiv an und führt bei Ritualen oft zu Unglücken."
     }
 ];
 
-const questionsContainer = document.getElementById('questions-container');
+let randomizedQuiz = [];
+let currentQuestionIndex = 0;
+let userAnswers = [];
 
-quizData.forEach((q, index) => {
-    const qBlock = document.createElement('div');
-    qBlock.className = 'question-block';
-    qBlock.id = `q-block-${index}`;
+function shuffleArray(array) {
+    let arr = [...array];
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
 
+function initQuiz() {
+    // 15 Fragen mischen und genau 10 für das Quiz auswählen
+    let shuffledQ = shuffleArray(quizData).slice(0, 10);
+
+    randomizedQuiz = shuffledQ.map(q => {
+        let optionsWithMeta = q.options.map((opt, idx) => ({
+            text: opt,
+            isCorrect: idx === q.correctIndex
+        }));
+
+        let shuffledOptions = shuffleArray(optionsWithMeta);
+        let newCorrectIndex = shuffledOptions.findIndex(opt => opt.isCorrect);
+
+        return {
+            question: q.question,
+            options: shuffledOptions.map(opt => opt.text),
+            correctIndex: newCorrectIndex,
+            explanation: q.explanation
+        };
+    });
+
+    currentQuestionIndex = 0;
+    userAnswers = [];
+    renderQuestion();
+}
+    function renderQuestion() {
+    const q = randomizedQuiz[currentQuestionIndex];
+    document.getElementById('progress-indicator').textContent = `Frage ${currentQuestionIndex + 1} von ${randomizedQuiz.length}`;
+    
+    const card = document.getElementById('active-question-card');
+    
     let optionsHTML = '';
-    q.options.forEach((opt, optIndex) => {
+    const letters = ['A', 'B', 'C', 'D'];
+    q.options.forEach((opt, idx) => {
         optionsHTML += `
             <li class="option-item">
-                <label class="option-label" id="label-${index}-${optIndex}">
-                    <input type="radio" name="question-${index}" value="${optIndex}" required>
-                    ${opt}
+                <label class="option-label">
+                    <input type="radio" name="current-option" value="${idx}" required>
+                    ${letters[idx]}) ${opt}
                 </label>
             </li>
         `;
     });
 
-    qBlock.innerHTML = `
-        <div class="question-text">${q.question}</div>
-        <ul class="options-list">${optionsHTML}</ul>
-        <div class="explanation" id="exp-${index}">
-            <strong>Erklärung:</strong> ${q.explanation}
+    card.innerHTML = `
+        <div class="question-block">
+            <div class="question-text">${q.question}</div>
+            <ul class="options-list">${optionsHTML}</ul>
         </div>
     `;
-    questionsContainer.appendChild(qBlock);
-});
 
-document.getElementById('quiz-form').addEventListener('submit', function(e) {
-    e.preventDefault();
+    const btn = document.getElementById('btn-next');
+    if (currentQuestionIndex === randomizedQuiz.length - 1) {
+        btn.textContent = "Quiz auswerten";
+    } else {
+        btn.textContent = "Nächste Frage";
+    }
+}
+
+function handleNextQuestion() {
+    const selected = document.querySelector('input[name="current-option"]:checked');
+    if (!selected) {
+        alert("Bitte wähle eine Antwort aus, bevor du fortfährst!");
+        return;
+    }
+
+    const selectedValue = parseInt(selected.value);
+    userAnswers.push(selectedValue);
+
+    currentQuestionIndex++;
+
+    if (currentQuestionIndex < randomizedQuiz.length) {
+        renderQuestion();
+    } else {
+        showResults();
+    }
+}
+
+function showResults() {
+    document.getElementById('quiz-container').style.display = 'none';
+    document.getElementById('result-screen').style.display = 'block';
 
     let score = 0;
-    const total = quizData.length;
+    const total = randomizedQuiz.length;
+    let reviewListHTML = '';
+    const letters = ['A', 'B', 'C', 'D'];
 
-    quizData.forEach((q, index) => {
-        const selected = document.querySelector(`input[name="question-${index}"]:checked`);
-        const selectedValue = selected ? parseInt(selected.value) : -1;
+    randomizedQuiz.forEach((q, index) => {
+        const userAns = userAnswers[index];
+        const isCorrect = userAns === q.correctIndex;
+        if (isCorrect) score++;
 
-        document.getElementById(`exp-${index}`).style.display = 'block';
+        const userAnsText = userAns !== null ? `${letters[userAns]}) ${q.options[userAns]}` : "Keine Antwort";
+        const correctAnsText = `${letters[q.correctIndex]}) ${q.options[q.correctIndex]}`;
 
-        q.options.forEach((_, optIndex) => {
-            const label = document.getElementById(`label-${index}-${optIndex}`);
-            if (optIndex === q.correct) {
-                label.classList.add('correct-answer');
-            } else if (optIndex === selectedValue) {
-                label.classList.add('wrong-answer');
-            }
-            label.querySelector('input').disabled = true;
-        });
-
-        if (selectedValue === q.correct) {
-            score++;
-        }
+        reviewListHTML += `
+            <div class="review-item ${isCorrect ? 'is-correct' : 'is-wrong'}">
+                <div style="font-weight: bold; margin-bottom: 5px;">${index + 1}. ${q.question}</div>
+                <div>Deine Antwort: <span class="${isCorrect ? 'correct-answer-text' : 'wrong-answer-text'}">${userAnsText}</span></div>
+                ${!isCorrect ? `<div>Richtige Antwort: <span class="correct-answer-text">${correctAnsText}</span></div>` : ''}
+                <div class="explanation"><strong>Erklärung:</strong> ${q.explanation}</div>
+            </div>
+        `;
     });
 
     const percentage = Math.round((score / total) * 100);
-
     let emoji = '';
     let text = '';
 
     if (percentage < 50) {
         emoji = '😡';
-        text = 'Die Hexen sind wütend auf dich! Du solltest Band 1 dringend noch einmal lesen.';
+        text = 'Hast du das Buch überhaupt angefasst? Lies es lieber nochmal bevor du dich hier erneut vor dem Rat Blamierst';
     } else if (percentage <= 60) {
         emoji = '🤨';
         text = 'Ein skeptischer Blick... Du kennst zwar ein paar Details, bist dir aber noch recht unsicher.';
     } else if (percentage <= 80) {
         emoji = '😏';
         text = 'Gar nicht übel! Du hast ein gutes Wissen über die Ereignisse in St. Gray.';
+    } else if (percentage === 90) {
+        emoji = '✨';
+        text = 'Wow knapp vorbei am Nerd wissen. Das war sehr gut, aber es geht noch besser.';
     } else {
         emoji = '🧙‍♀️';
         text = 'Perfekt! Du kennst dich zu 100% aus und durchschaust selbst die geheimsten Rituale!';
     }
 
-    document.getElementById('quiz-form').style.display = 'none';
-    document.getElementById('result-screen').style.display = 'block';
     document.getElementById('result-emoji').textContent = emoji;
     document.getElementById('result-percent').textContent = `${percentage}% (${score} von ${total} richtig)`;
     document.getElementById('result-text').textContent = text;
+    document.getElementById('review-list').innerHTML = reviewListHTML;
 
-    document.getElementById('review-container').appendChild(questionsContainer);
     window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+}
+
+window.onload = initQuiz;
 </script>
 
 </body>
 </html>
-
