@@ -434,6 +434,185 @@
 
     .info-box-content p:last-child {
       margin-bottom: 0;
+    /* ==========================================
+   DREI GOLDENE BECHER & BLUT-ANIMATION
+   ========================================== */
+
+.becher-section {
+  text-align: center;
+  margin: 40px auto;
+  padding: 30px 20px;
+  max-width: 800px;
+}
+
+.becher-title {
+  color: #2ecc71;
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.becher-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+.becher-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.becher-label {
+  color: #cccccc;
+  font-size: 0.95rem;
+  margin-top: 15px;
+}
+
+.highlight-label {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+/* Becher-Form & Goldener Look */
+.cup {
+  position: relative;
+  width: 75px;
+  height: 95px;
+  background: linear-gradient(135deg, #f39c12, #f1c40f, #b7950b);
+  border: 3px solid #d4ac0d;
+  border-radius: 6px 6px 28px 28px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6), inset 0 2px 6px rgba(255, 255, 255, 0.4);
+  overflow: hidden;
+}
+
+/* Becher-Rand oben */
+.cup::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 83px;
+  height: 10px;
+  background: #f1c40f;
+  border: 2px solid #b7950b;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+  z-index: 5;
+}
+
+/* Normale Gold-Füllung (statisch) */
+.liquid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 0 0 24px 24px;
+}
+
+.gold-fill {
+  height: 25%;
+  background: rgba(241, 196, 15, 0.4);
+}
+
+/* --- BLUT-ANIMATION (MITTLERER BECHER) --- */
+
+.blood-overflow-cup {
+  overflow: visible !important;
+}
+
+/* Rote Farbe / Blut steigt kontinuierlich hoch */
+.blood-fill {
+  background: linear-gradient(to top, #600000, #b30000, #ff1a1a);
+  box-shadow: 0 0 12px rgba(255, 0, 0, 0.8);
+  animation: fillAndRise 5s ease-in-out infinite alternate;
+}
+
+@keyframes fillAndRise {
+  0% {
+    height: 10%;
+  }
+  60% {
+    height: 90%;
+  }
+  100% {
+    height: 100%;
+  }
+}
+
+/* Blut läuft über den Rand */
+.blood-overflow {
+  position: absolute;
+  top: 0;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: 0;
+  background: #b30000;
+  border-radius: 8px 8px 0 0;
+  z-index: 6;
+  opacity: 0;
+  animation: overflowEffect 5s ease-in-out infinite alternate;
+}
+
+@keyframes overflowEffect {
+  0%, 60% {
+    height: 0;
+    opacity: 0;
+  }
+  85%, 100% {
+    height: 8px;
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.9);
+  }
+}
+
+/* Bluttropfen laufen außen runter */
+.drip {
+  position: absolute;
+  top: 6px;
+  width: 6px;
+  background: #b30000;
+  border-radius: 0 0 10px 10px;
+  z-index: 7;
+  opacity: 0;
+}
+
+.drip-1 {
+  left: 14px;
+  animation: dripDown1 5s ease-in-out infinite alternate;
+}
+
+.drip-2 {
+  right: 16px;
+  animation: dripDown2 5s ease-in-out infinite alternate;
+}
+
+@keyframes dripDown1 {
+  0%, 65% {
+    height: 0;
+    opacity: 0;
+  }
+  88%, 100% {
+    height: 50px;
+    opacity: 1;
+  }
+}
+
+@keyframes dripDown2 {
+  0%, 70% {
+    height: 0;
+    opacity: 0;
+  }
+  92%, 100% {
+    height: 65px;
+    opacity: 1;
+  }
+}
+      
     }
   </style>
   
@@ -458,211 +637,7 @@
     </div>
   </div>
 
-       <!-- Drei goldene Becher Bereich mit Animation -->
-<div class="becher-section">
-  <h3 class="becher-title">- Drei goldene Becher -</h3>
-  <div class="becher-container">
-    
-    <!-- Becher 1: Normaler Becher -->
-    <div class="becher-card">
-      <div class="cup gold-cup">
-        <div class="liquid gold-fill"></div>
-      </div>
-      <p class="becher-label">Normaler Becher 1</p>
-    </div>
 
-    <!-- Becher 2: Mittlerer Becher mit überlaufendem Blut -->
-    <div class="becher-card">
-      <div class="cup gold-cup blood-overflow-cup">
-        <div class="blood-overflow"></div>
-        <div class="liquid blood-fill"></div>
-        <div class="drip drip-1"></div>
-        <div class="drip drip-2"></div>
-      </div>
-      <p class="becher-label highlight-label">Überlaufender Becher (Blut)</p>
-    </div>
-
-    <!-- Becher 3: Normaler Becher -->
-    <div class="becher-card">
-      <div class="cup gold-cup">
-        <div class="liquid gold-fill"></div>
-      </div>
-      <p class="becher-label">Normaler Becher 3</p>
-    </div>
-
-  </div>
-</div>
-  /* Layout & Titel der Becher-Sektion */
-.becher-section {
-  text-align: center;
-  margin: 30px 0;
-  padding: 20px;
-}
-
-.becher-title {
-  color: #2ecc71;
-  font-size: 1.4rem;
-  margin-bottom: 25px;
-}
-
-.becher-container {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 35px;
-  flex-wrap: wrap;
-}
-
-.becher-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.becher-label {
-  color: #cccccc;
-  font-size: 0.95rem;
-  margin-top: 15px;
-}
-
-.highlight-label {
-  color: #e74c3c;
-  font-weight: bold;
-}
-
-/* Becher-Form & Goldener Look */
-.cup {
-  position: relative;
-  width: 70px;
-  height: 90px;
-  background: linear-gradient(135deg, #f39c12, #f1c40f, #b7950b);
-  border: 3px solid #d4ac0d;
-  border-radius: 5px 5px 25px 25px;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5), inset 0 2px 5px rgba(255, 255, 255, 0.4);
-  overflow: hidden;
-}
-
-.cup::before {
-  content: '';
-  position: absolute;
-  top: -6px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 78px;
-  height: 10px;
-  background: #f1c40f;
-  border: 2px solid #b7950b;
-  border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  z-index: 5;
-}
-
-/* Flüssigkeiten */
-.liquid {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  border-radius: 0 0 22px 22px;
-}
-
-.gold-fill {
-  height: 20%;
-  background: rgba(241, 196, 15, 0.4);
-}
-
-/* Blut-Füllung & Aufsteig-Animation */
-.blood-fill {
-  background: linear-gradient(to top, #800000, #b30000, #ff0000);
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.8);
-  animation: fillAndRise 4s ease-in-out infinite alternate;
-}
-
-@keyframes fillAndRise {
-  0% {
-    height: 15%;
-  }
-  50% {
-    height: 85%;
-  }
-  100% {
-    height: 100%;
-  }
-}
-
-/* Überlauf-Blut-Effekt oben & Tropfen an der Außenwand */
-.blood-overflow-cup {
-  overflow: visible !important;
-}
-
-.blood-overflow {
-  position: absolute;
-  top: 0;
-  left: -2px;
-  width: calc(100% + 4px);
-  height: 0%;
-  background: #b30000;
-  border-radius: 8px 8px 0 0;
-  z-index: 6;
-  opacity: 0;
-  animation: overflowEffect 4s ease-in-out infinite alternate;
-}
-
-@keyframes overflowEffect {
-  0%, 65% {
-    height: 0%;
-    opacity: 0;
-  }
-  85%, 100% {
-    height: 8px;
-    opacity: 1;
-    box-shadow: 0 0 8px rgba(255, 0, 0, 0.9);
-  }
-}
-
-.drip {
-  position: absolute;
-  top: 6px;
-  width: 6px;
-  background: #b30000;
-  border-radius: 0 0 10px 10px;
-  z-index: 7;
-  opacity: 0;
-}
-
-.drip-1 {
-  left: 15px;
-  animation: dripDown1 4s ease-in-out infinite alternate;
-}
-
-.drip-2 {
-  right: 18px;
-  animation: dripDown2 4s ease-in-out infinite alternate;
-}
-
-@keyframes dripDown1 {
-  0%, 70% {
-    height: 0px;
-    opacity: 0;
-  }
-  90%, 100% {
-    height: 45px;
-    opacity: 1;
-  }
-}
-
-@keyframes dripDown2 {
-  0%, 75% {
-    height: 0px;
-    opacity: 0;
-  }
-  95%, 100% {
-    height: 60px;
-    opacity: 1;
-  }
-}
-  
-  
 
   <div class="footer">
     <p>&copy; 2026 Fan-Projekt zu "Witch-Hunt". Alle Rechte an Inhalt und den Charakteren liegen bei der Autorin Lara Antonia Rösler.</p>
