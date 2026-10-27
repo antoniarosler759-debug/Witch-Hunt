@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Witch-Hunt: Das Ritual & Magie</title>
+  <title>Witch-Hunt: Das Ritual & Magie (Complete Edition)</title>
   <style>
     :root {
-      --bg-dark: #020408;
-      --accent-glow: #38bdf8;
+      --bg-deep: #020408;
+      --panel-glass: rgba(10, 15, 30, 0.85);
+      --neon-blue: #38bdf8;
+      --neon-gold: #fde047;
       --text-main: #f8fafc;
     }
 
@@ -15,7 +17,7 @@
 
     body {
       font-family: 'Georgia', serif;
-      background: var(--bg-dark);
+      background: var(--bg-deep);
       color: var(--text-main);
       overflow: hidden;
       height: 100vh;
@@ -35,17 +37,17 @@
 
     /* EDLE GLAS-BUTTONS */
     .btn {
-      background: rgba(15, 23, 42, 0.8);
-      backdrop-filter: blur(12px);
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(15px);
       border: 1px solid rgba(147, 197, 253, 0.4);
       color: #e2e8f0;
-      padding: 14px 28px;
+      padding: 14px 30px;
       font-size: 1.1rem;
       font-weight: 600;
       border-radius: 14px;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.2);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.85), inset 0 1px 0 rgba(255,255,255,0.2);
     }
     .btn:hover {
       background: rgba(30, 58, 138, 0.95);
@@ -55,7 +57,7 @@
       transform: translateY(-3px);
     }
 
-    /* STARTSEITE: SEE, MOND & GLÜHWÜRMCHEN */
+    /* STARTSEITE: VOLLSTÄNDIG ANIMIERTER SEE, MOND & ATMOSPHÄRE */
     #start-screen {
       background: radial-gradient(circle at center, #0B132B 0%, #020408 100%);
       justify-content: center;
@@ -66,7 +68,7 @@
 
     .moon {
       position: absolute;
-      top: 12%;
+      top: 10%;
       width: 180px; height: 180px;
       border-radius: 50%;
       background: radial-gradient(circle at 35% 35%, #ffffff, #e2e8f0 50%, #86efac);
@@ -76,7 +78,7 @@
 
     .lake {
       position: absolute;
-      bottom: 0; width: 100%; height: 38%;
+      bottom: 0; width: 100%; height: 40%;
       background: linear-gradient(to bottom, #090e17, #010204);
       border-top: 2px solid rgba(134, 239, 172, 0.25);
       z-index: 1;
@@ -85,7 +87,7 @@
     .lake-reflection {
       position: absolute;
       top: 0; left: 50%; transform: translateX(-50%);
-      width: 240px; height: 100%;
+      width: 260px; height: 100%;
       background: linear-gradient(to bottom, rgba(134, 239, 172, 0.35), transparent);
       filter: blur(18px);
       animation: ripple 5s infinite alternate ease-in-out;
@@ -93,30 +95,30 @@
 
     @keyframes ripple {
       0% { transform: translateX(-50%) scaleX(1); opacity: 0.3; }
-      100% { transform: translateX(-50%) scaleX(1.7); opacity: 0.6; }
+      100% { transform: translateX(-50%) scaleX(1.8); opacity: 0.6; }
     }
 
     /* GLÜHWÜRMCHEN */
     .firefly {
       position: absolute;
-      width: 4px; height: 4px;
+      width: 5px; height: 5px;
       background: #fef08a;
       border-radius: 50%;
-      box-shadow: 0 0 8px #fef08a, 0 0 15px #facc15;
+      box-shadow: 0 0 10px #fef08a, 0 0 20px #facc15;
       animation: flyAround 6s infinite ease-in-out;
       z-index: 3;
     }
 
     @keyframes flyAround {
-      0%, 100% { transform: translate(0, 0) scale(0.6); opacity: 0.2; }
-      50% { transform: translate(30px, -40px) scale(1.4); opacity: 0.9; }
+      0%, 100% { transform: translate(0, 0) scale(0.5); opacity: 0.2; }
+      50% { transform: translate(40px, -50px) scale(1.5); opacity: 0.95; }
     }
 
     /* GRÄSER AM SEE */
     .grass-blade {
       position: absolute;
-      bottom: 38%;
-      width: 3px; height: 45px;
+      bottom: 40%;
+      width: 3px; height: 50px;
       background: linear-gradient(to top, #022c22, #059669);
       border-radius: 3px 3px 0 0;
       transform-origin: bottom center;
@@ -126,16 +128,16 @@
 
     @keyframes windSway {
       0%, 100% { transform: rotate(0deg); }
-      50% { transform: rotate(6deg); }
+      50% { transform: rotate(7deg); }
     }
 
     .title {
       z-index: 10;
-      font-size: 3.8rem;
+      font-size: 4rem;
       margin-bottom: 40px;
       color: #f8fafc;
-      text-shadow: 0 0 40px rgba(134, 239, 172, 0.8);
-      letter-spacing: 4px;
+      text-shadow: 0 0 45px rgba(134, 239, 172, 0.85);
+      letter-spacing: 5px;
       text-align: center;
     }
 
@@ -151,11 +153,11 @@
 
     .glass-panel {
       display: flex; gap: 15px;
-      background: rgba(10, 15, 30, 0.75);
+      background: var(--panel-glass);
       backdrop-filter: blur(15px);
-      padding: 10px 20px; border-radius: 16px;
+      padding: 12px 22px; border-radius: 16px;
       border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 10px 35px rgba(0,0,0,0.7);
+      box-shadow: 0 10px 35px rgba(0,0,0,0.75);
     }
     .select-group { display: flex; gap: 8px; align-items: center; }
     .select-group label { font-size: 0.9rem; color: #94a3b8; font-weight: 600; }
@@ -185,11 +187,8 @@
       0% { transform: translateX(-50%) scale(0.9); opacity: 0; }
       100% { transform: translateX(-50%) scale(1); opacity: 1; }
     }
-  </style>
-</head>
-<body>
-    <style>
-    /* RITUAL SCREEN STYLES */
+
+    /* RITUAL SCREEN & OVERLAYS */
     #ritual-screen {
       background: radial-gradient(circle at center, #0B132B 0%, #020408 100%);
       justify-content: center;
@@ -210,31 +209,34 @@
     .ritual-card p { font-size: 1.2rem; color: #94a3b8; margin-bottom: 30px; line-height: 1.65; }
     .sub-text { font-size: 0.95rem !important; color: #64748b !important; margin-top: 8px; font-style: italic; }
   </style>
-
-  <!-- STARTSEITE: SEE, MOND, GRÄSER & GLÜHWÜRMCHEN -->
+</head>
+<body>
+    <!-- STARTSEITE -->
   <div id="start-screen" class="screen active">
     <div class="moon"></div>
     <div class="lake">
       <div class="lake-reflection"></div>
     </div>
     
-    <!-- Dynamische Glühwürmchen -->
-    <div class="firefly" style="top: 65%; left: 20%; animation-delay: 0s;"></div>
-    <div class="firefly" style="top: 70%; left: 45%; animation-delay: 1.2s;"></div>
-    <div class="firefly" style="top: 60%; left: 75%; animation-delay: 2.5s;"></div>
-    <div class="firefly" style="top: 75%; left: 85%; animation-delay: 0.7s;"></div>
-    <div class="firefly" style="top: 68%; left: 30%; animation-delay: 3.1s;"></div>
+    <!-- Glühwürmchen -->
+    <div class="firefly" style="top: 65%; left: 15%; animation-delay: 0s;"></div>
+    <div class="firefly" style="top: 72%; left: 40%; animation-delay: 1.2s;"></div>
+    <div class="firefly" style="top: 58%; left: 70%; animation-delay: 2.5s;"></div>
+    <div class="firefly" style="top: 78%; left: 82%; animation-delay: 0.7s;"></div>
+    <div class="firefly" style="top: 66%; left: 33%; animation-delay: 3.1s;"></div>
+    <div class="firefly" style="top: 62%; left: 90%; animation-delay: 1.8s;"></div>
 
-    <!-- Animierte Gräser am Seeufer -->
-    <div class="grass-blade" style="left: 10%; animation-delay: 0.1s;"></div>
-    <div class="grass-blade" style="left: 15%; height: 35px; animation-delay: 0.4s;"></div>
-    <div class="grass-blade" style="left: 22%; height: 50px; animation-delay: 0.2s;"></div>
-    <div class="grass-blade" style="left: 35%; height: 40px; animation-delay: 0.6s;"></div>
-    <div class="grass-blade" style="left: 48%; height: 48px; animation-delay: 0.3s;"></div>
-    <div class="grass-blade" style="left: 60%; height: 38px; animation-delay: 0.5s;"></div>
-    <div class="grass-blade" style="left: 73%; height: 52px; animation-delay: 0.2s;"></div>
-    <div class="grass-blade" style="left: 82%; height: 42px; animation-delay: 0.7s;"></div>
-    <div class="grass-blade" style="left: 90%; height: 36px; animation-delay: 0.4s;"></div>
+    <!-- Gräser am Seeufer -->
+    <div class="grass-blade" style="left: 8%; animation-delay: 0.1s;"></div>
+    <div class="grass-blade" style="left: 14%; height: 38px; animation-delay: 0.4s;"></div>
+    <div class="grass-blade" style="left: 20%; height: 55px; animation-delay: 0.2s;"></div>
+    <div class="grass-blade" style="left: 32%; height: 42px; animation-delay: 0.6s;"></div>
+    <div class="grass-blade" style="left: 45%; height: 48px; animation-delay: 0.3s;"></div>
+    <div class="grass-blade" style="left: 58%; height: 40px; animation-delay: 0.5s;"></div>
+    <div class="grass-blade" style="left: 70%; height: 52px; animation-delay: 0.2s;"></div>
+    <div class="grass-blade" style="left: 80%; height: 44px; animation-delay: 0.7s;"></div>
+    <div class="grass-blade" style="left: 88%; height: 38px; animation-delay: 0.4s;"></div>
+    <div class="grass-blade" style="left: 95%; height: 46px; animation-delay: 0.1s;"></div>
 
     <h1 class="title">Witch-Hunt</h1>
     <div class="menu-buttons">
@@ -243,7 +245,8 @@
       <button class="btn" onclick="showScreen('ritual-screen')">✨ Das Ritual</button>
     </div>
   </div>
-    <!-- HEXENSTUBE SEITE -->
+
+  <!-- HEXENSTUBE SEITE -->
   <div id="stube-screen" class="screen">
     <div class="top-bar">
       <button class="btn" onclick="showScreen('start-screen')">⬅ Menü</button>
@@ -275,8 +278,7 @@
     
     <div id="speech-bubble" class="speech-bubble"></div>
   </div>
-
-  <!-- RITUAL SEITE -->
+    <!-- RITUAL SEITE -->
   <div id="ritual-screen" class="screen">
     <div class="top-bar">
       <button class="btn" onclick="exitRitual()">⬅ Menü</button>
@@ -291,7 +293,7 @@
     <div id="ritual-start-overlay" class="ritual-overlay">
       <div class="ritual-card">
         <h2>Das Drei-Becher-Ritual</h2>
-        <p>Halte den gelben Malvorrithen gedrückt und weiche den drohenden Schatten der Blitze aus. Nach jeder Runde füllt sich ein Becher mit Blut!</p>
+        <p>Halte den gelben Malvorrithen gedrückt und weiche den drohenden Schatten der Blitze aus. 3 Runden erwarten dich (45s, 80s, 120s).</p>
         <div style="display:flex; gap:20px; justify-content:center;">
           <button class="btn" onclick="startRitualGame()">Ritual starten</button>
           <button class="btn" onclick="exitRitual()">Zurück</button>
@@ -655,11 +657,10 @@
     function isInside(x, y, rect) { if(!rect) return false; return x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h; }
     function showSpeech(text) { const b = document.getElementById('speech-bubble'); b.innerText = text; b.style.display = 'block'; setTimeout(() => { b.style.display = 'none'; }, 4000); }
     function hideSpeech() { document.getElementById('speech-bubble').style.display = 'none'; }
-    </script>
-  
-    <script>
+            </script>
+              <script>
     /* ===================================================
-       DAS RITUAL SPIEL-LOGIK
+       RITUAL SPIEL-LOGIK (Runde 1: 40s, Runde 2: 80s, Runde 3: 120s)
     =================================================== */
     let ritualCanvas, ritualCtx, gameActive = false, round = 1, bloodCups = 0, malPos = { x: 0, y: 0 }, isDraggingMal = false;
     let lightnings = [], shadows = [], gameLoopId = null, roundTimer = 0;
@@ -689,7 +690,7 @@
       ritualCanvas.onmousemove = (e) => {
         if(isDraggingMal && gameActive) {
           let tx = e.clientX, ty = e.clientY;
-          if(round === 3) tx -= (tx - ritualCanvas.width/2) * 0.3; // Zugkraft der Ranken in Runde 3
+          if(round === 3) tx -= (tx - ritualCanvas.width/2) * 0.3; // Zugkraft in Runde 3
           malPos.x = tx; malPos.y = ty;
         }
       };
@@ -701,16 +702,16 @@
       ritualCtx.clearRect(0, 0, ritualCanvas.width, ritualCanvas.height);
       const w = ritualCanvas.width, h = ritualCanvas.height;
 
-      // Waldlichtung Hintergrund
+      // Hintergrund
       ritualCtx.fillStyle = '#020408'; ritualCtx.fillRect(0, 0, w, h);
       
-      // Leuchtender Vollmond
+      // Vollmond
       ritualCtx.fillStyle = '#fef08a';
       ritualCtx.shadowColor = '#fef08a'; ritualCtx.shadowBlur = 45;
       ritualCtx.beginPath(); ritualCtx.arc(w/2, 100, 60, 0, Math.PI*2); ritualCtx.fill();
       ritualCtx.shadowBlur = 0;
 
-      // Die 3 goldenen Becher am Boden
+      // Die 3 goldenen Becher
       for(let i=0; i<3; i++) {
         let cx = w/2 - 120 + i*120, cy = h - 90;
         ritualCtx.fillStyle = '#eab308'; ritualCtx.fillRect(cx - 22, cy - 35, 44, 45);
@@ -726,7 +727,6 @@
         shadows.push({ x: Math.random() * (w - 120) + 60, y: Math.random() * (h - 250) + 120, radius: 38, timer: 45 });
       }
 
-      // Blitz-Schatten (Vorwarnung)
       shadows.forEach((s, idx) => {
         ritualCtx.fillStyle = 'rgba(0, 0, 0, 0.75)'; 
         ritualCtx.beginPath(); ritualCtx.arc(s.x, s.y, s.radius, 0, Math.PI*2); ritualCtx.fill();
@@ -738,7 +738,6 @@
         }
       });
 
-      // Einschlagende Blitze
       lightnings.forEach((l, idx) => {
         ritualCtx.strokeStyle = '#38bdf8'; ritualCtx.lineWidth = 8;
         ritualCtx.shadowColor = '#38bdf8'; ritualCtx.shadowBlur = 22;
@@ -747,7 +746,7 @@
         l.duration--; if(l.duration <= 0) lightnings.splice(idx, 1);
       });
 
-      // Gelber Malvorrith (der gesteuert wird)
+      // Malvorrith
       ritualCtx.shadowColor = '#eab308'; ritualCtx.shadowBlur = 28;
       ritualCtx.fillStyle = '#fde047'; ritualCtx.beginPath();
       ritualCtx.moveTo(malPos.x, malPos.y - 28); ritualCtx.lineTo(malPos.x + 20, malPos.y);
@@ -755,10 +754,18 @@
       ritualCtx.closePath(); ritualCtx.fill();
       ritualCtx.shadowBlur = 0;
 
-      // Runden-Fortschritt
-      if(roundTimer > 500) {
+      // Exakte Rundenzeiten bei 60 FPS: 
+      // Runde 1 (40s = 2400 Frames), Runde 2 (80s = 4800 Frames), Runde 3 (120s = 7200 Frames)
+      let targetFrames = (round === 1) ? 2400 : (round === 2) ? 4800 : 7200;
+
+      if(roundTimer > targetFrames) {
         bloodCups++;
-        if(round < 3) { round++; startRound(); } else { triggerRitualWin(); }
+        if(round < 3) { 
+          round++; 
+          startRound(); 
+        } else { 
+          triggerRitualWin(); 
+        }
       }
       gameLoopId = requestAnimationFrame(updateRitualGame);
     }
@@ -766,7 +773,7 @@
     function triggerRitualWin() {
       gameActive = false;
       document.getElementById('ritual-end-title').innerText = "Herzlichen Glückwunsch!";
-      document.getElementById('ritual-end-desc').innerText = "Du hast das Ritual erfolgreich beenden können.";
+      document.getElementById('ritual-end-desc').innerText = "Du hast alle 3 Runden des Rituals überstanden.";
       document.getElementById('ritual-end-sub').innerText = "War es das wert?";
       document.getElementById('ritual-end-overlay').style.display = 'flex';
     }
