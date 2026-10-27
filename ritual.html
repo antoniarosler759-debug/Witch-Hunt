@@ -1,86 +1,1022 @@
-#magic-bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none; /* Klicks gehen durch den Canvas durch */
-  z-index: 0; /* Hinter deinen Inhalten */
-  opacity: 0.6;
-}
-const canvas = document.getElementById('magic-bg');
-const ctx = canvas.getContext('2d');
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Witch-Hunt: Das Ritual der drei Becher & Magie-Labor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Metamorphous&family=Quicksand:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+        :root {
+      --bg-dark: #050807;
+      --witch-green: #00ff66;
+      --witch-green-glow: rgba(0, 255, 102, 0.4);
+      --amber-gold: #ffaa00;
+      --samantha-thorns: #2ecc71;
+      --caroline-silver: #e0e6ed;
+      --ann-wind: #81ecec;
+      --blood-red: #d63031;
+      --text-main: #e2e8f0;
+      --panel-bg: rgba(10, 18, 14, 0.85);
+      --panel-border: rgba(0, 255, 102, 0.25);
+    }
 
-let particles = [];
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
 
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeCanvas);
-resizeCanvas();
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Quicksand', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
 
-class Particle {
-  constructor() {
-    this.reset();
-  }
+    #clearing-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: auto;
+    }
 
-  reset() {
-    this.x = Math.random() * canvas.width;
-    this.y = canvas.height + Math.random() * 100;
-    this.size = Math.random() * 3 + 1;
-    this.speedY = Math.random() * 1.5 + 0.5;
-    this.speedX = (Math.random() - 0.5) * 0.8;
-    this.opacity = Math.random() * 0.8 + 0.2;
-    // Hexengrün-Farbpalette
-    this.color = `hsla(${110 + Math.random() * 40}, 100%, 60%, `;
-  }
+    .ui-layer {
+      position: relative;
+      z-index: 10;
+      pointer-events: none;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 1.5rem;
+    }
 
-  update() {
-    this.y -= this.speedY;
-    this.x += this.speedX;
-    if (this.y < -10) this.reset();
-  }
+    .interactive {
+      pointer-events: auto;
+    }
+        header {
+      text-align: center;
+      background: radial-gradient(ellipse at top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 80%);
+      padding-bottom: 1rem;
+    }
 
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = this.color + this.opacity + ')';
-    ctx.shadowBlur = 8;
-    ctx.shadowColor = '#00ff66';
-    ctx.fill();
-  }
-}
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 4vw, 2.8rem);
+      letter-spacing: 3px;
+      color: #fff;
+      text-shadow: 0 0 10px var(--witch-green-glow), 0 0 20px var(--witch-green);
+      margin-bottom: 0.3rem;
+    }
 
-for (let i = 0; i < 60; i++) {
-  particles.push(new Particle());
-}
+    .subtitle {
+      font-family: 'Metamorphous', cursive;
+      font-size: clamp(0.85rem, 1.8vw, 1.1rem);
+      color: #a8b2c1;
+      letter-spacing: 1px;
+    }
 
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => {
-    p.update();
-    p.draw();
-  });
-  requestAnimationFrame(animate);
-}
+    .main-controls {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
 
-animate();
-  /* Glühendes Pulsieren für grüne Hexenmagie */
-.witch-glow {
-  text-shadow: 0 0 5px #2ecc71, 0 0 10px #2ecc71, 0 0 20px #27ae60;
-  animation: pulseGlow 3s infinite alternate ease-in-out;
-}
+    .btn-tab {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 30px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
 
-@keyframes pulseGlow {
-  0% {
-    text-shadow: 0 0 4px #2ecc71, 0 0 8px #2ecc71;
-  }
-  50% {
-    text-shadow: 0 0 12px #00ff66, 0 0 25px #00ff66, 0 0 35px #1abc9c;
-  }
-  100% {
-    text-shadow: 0 0 4px #2ecc71, 0 0 8px #2ecc71;
-  }
-}
-  
+    .btn-tab:hover, .btn-tab.active {
+      border-color: var(--witch-green);
+      background: rgba(0, 255, 102, 0.15);
+      box-shadow: 0 0 20px var(--witch-green-glow);
+      color: #fff;
+      transform: translateY(-2px);
+    }
+        .panel-container {
+      max-width: 900px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .witch-panel {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 16px;
+      padding: 1.5rem;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+      display: none;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    .witch-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .ritual-stepper {
+      display: flex;
+      justify-content: space-between;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+
+    .ritual-step {
+      flex: 1;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      padding: 0.8rem;
+      text-align: center;
+      transition: all 0.3s;
+    }
+
+    .ritual-step.active {
+      border-color: var(--witch-green);
+      background: rgba(0, 255, 102, 0.08);
+      box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+    }
+
+    .ritual-step.completed {
+      border-color: var(--blood-red);
+      background: rgba(214, 48, 49, 0.15);
+    }
+        .step-num {
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      color: #888;
+      margin-bottom: 0.2rem;
+    }
+
+    .step-title {
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
+    .ritual-desc {
+      text-align: center;
+      margin-bottom: 1.2rem;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+
+    .btn-action {
+      display: block;
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      padding: 0.8rem;
+      background: linear-gradient(135deg, rgba(0,255,102,0.2), rgba(0,150,50,0.4));
+      border: 1px solid var(--witch-green);
+      color: #fff;
+      font-family: 'Cinzel', serif;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+      box-shadow: 0 0 15px rgba(0, 255, 102, 0.3);
+    }
+
+    .btn-action:hover {
+      background: linear-gradient(135deg, rgba(0,255,102,0.4), rgba(0,200,80,0.6));
+      box-shadow: 0 0 25px rgba(0, 255, 102, 0.6);
+      transform: scale(1.02);
+    }
+
+    .spell-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .spell-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .spell-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,255,255,0.3);
+    }
+
+    .spell-card.selected {
+      border-color: var(--card-color, var(--witch-green));
+      background: rgba(0,0,0,0.6);
+      box-shadow: 0 0 20px var(--card-glow, var(--witch-green-glow));
+    }
+
+    .spell-witch {
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      color: var(--card-color, #fff);
+      margin-bottom: 0.3rem;
+    }
+
+    .spell-name {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: #fff;
+    }
+
+    .spell-desc {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      line-height: 1.4;
+    }
+
+    .instruction-hint {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--witch-green);
+      margin-top: 1rem;
+      font-style: italic;
+      text-shadow: 0 0 8px rgba(0,255,102,0.3);
+    }
+
+    footer {
+      text-align: center;
+      padding-top: 1rem;
+      font-size: 0.75rem;
+      color: #64748b;
+      background: radial-gradient(ellipse at bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 80%);
+    }
+
+    @media (max-width: 600px) {
+      .ui-layer { padding: 0.8rem; }
+      .ritual-stepper { flex-direction: column; }
+      .spell-selector { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <canvas id="clearing-canvas"></canvas>
+
+  <div class="ui-layer">
+    <header class="interactive">
+      <h1>WITCH-HUNT</h1>
+      <div class="subtitle">Kinder der verlorenen Zeit — Rituale & Hexenmagie</div>
+      
+      <div class="main-controls">
+        <button class="btn-tab active" onclick="switchTab('ritual')">🌕 Das 3-Becher-Ritual</button>
+        <button class="btn-tab" onclick="switchTab('lab')">✨ Magie-Laboratorium</button>
+      </div>
+    </header>
+
+    <div class="panel-container interactive">
+      
+      <!-- PANEL 1: DAS RITUAL -->
+      <div id="panel-ritual" class="witch-panel active">
+        <div class="ritual-stepper">
+          <div id="step-1" class="ritual-step active">
+            <div class="step-num">1. VOLLMONDNACHT</div>
+            <div class="step-title">Blut der Hexe</div>
+          </div>
+          <div id="step-2" class="ritual-step">
+            <div class="step-num">2. VOLLMONDNACHT</div>
+            <div class="step-title">Blut der Unschuldigen</div>
+          </div>
+          <div id="step-3" class="ritual-step">
+            <div class="step-num">3. VOLLMONDNACHT</div>
+            <div class="step-title">Blut des Opfers</div>
+          </div>
+        </div>
+
+        <div id="ritual-description" class="ritual-desc">
+          Auf der Waldlichtung unter dem klaren Vollmond stehen drei goldene Becher um den ruhenden <strong>Malvorrith-Stein</strong> bereit. Entfache die erste Phase des Rituals mit dem Blut der Hexe.
+        </div>
+
+        <button id="btn-ritual-action" class="btn-action" onclick="advanceRitual()">1. Becher füllen (Hexenblut)</button>
+      </div>
+            <!-- PANEL 2: MAGIE-LABOR -->
+      <div id="panel-lab" class="witch-panel">
+        <div class="spell-selector">
+          
+          <div class="spell-card selected" style="--card-color: var(--samantha-thorns); --card-glow: rgba(46, 204, 113, 0.4);" onclick="selectSpell('samantha', this)">
+            <div class="spell-witch">Samantha Grays</div>
+            <div class="spell-name">Wachstumsmagie</div>
+            <div class="spell-desc">Lässt aus dem Waldboden dornige, lebendige Hexenranken sprießen.</div>
+          </div>
+
+          <div class="spell-card" style="--card-color: var(--amber-gold); --card-glow: rgba(255, 170, 0, 0.4);" onclick="selectSpell('amber', this)">
+            <div class="spell-witch">Amber Park</div>
+            <div class="spell-name">Lichtkugeln</div>
+            <div class="spell-desc">Erzeugt sanft schwebende Lichtkugeln, die deinen Bewegungen folgen.</div>
+          </div>
+
+          <div class="spell-card" style="--card-color: var(--ann-wind); --card-glow: rgba(129, 236, 236, 0.4);" onclick="selectSpell('ann', this)">
+            <div class="spell-witch">Ann Grays</div>
+            <div class="spell-name">Sturmwind</div>
+            <div class="spell-desc">Entfacht stürmische Böen, die Nebel und Blätter über die Lichtung peitschen.</div>
+          </div>
+
+          <div class="spell-card" style="--card-color: var(--caroline-silver); --card-glow: rgba(224, 230, 237, 0.4);" onclick="selectSpell('caroline', this)">
+            <div class="spell-witch">Caroline Blackthorne</div>
+            <div class="spell-name">Levitation & Illusion</div>
+            <div class="spell-desc">Bringt Becher zum Schweben oder lässt sie in Silberschleiern verschwinden.</div>
+          </div>
+
+        </div>
+
+        <div id="lab-hint" class="instruction-hint">
+          Klicke oder tippe irgendwo auf die Lichtung, um Samanthas Hexenranken sprießen zu lassen!
+        </div>
+      </div>
+
+    </div>
+
+    <footer class="interactive">
+      Inoffizielles interaktives Kompendium zu "Witch-Hunt: Kinder der verlorenen Zeit" von Lara Antonia Rösler
+    </footer>
+  </div>
+    <script>
+    // --- CANVAS & GRAPHICS SETUP ---
+    const canvas = document.getElementById('clearing-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Game state & Magic Systems
+    let activeTab = 'ritual';
+    let ritualStep = 0; // 0, 1, 2, 3 (Completed)
+    let activeSpell = 'samantha';
+
+    // Entities
+    let fireflies = [];
+    let particles = [];
+    let vines = [];
+    let amberOrbs = [];
+    let windParticles = [];
+    let floatingObjects = [];
+
+    // Altar Position
+    function getAltarPos() {
+      return { x: width * 0.5, y: height * 0.72 };
+    }
+
+    // Audio Synthesizer (Web Audio API for magic sound effects)
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    let audioCtx = null;
+
+    function playMagicSound(type) {
+      if (!audioCtx) audioCtx = new AudioCtx();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+
+      const now = audioCtx.currentTime;
+
+      if (type === 'fill') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(150, now);
+        osc.frequency.exponentialRampToValueAtTime(400, now + 0.8);
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.linearRampToValueAtTime(0, now + 0.8);
+        osc.start(now);
+        osc.stop(now + 0.8);
+      } else if (type === 'burst') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(100, now);
+        osc.frequency.exponentialRampToValueAtTime(800, now + 1.5);
+        gain.gain.setValueAtTime(0.4, now);
+        gain.gain.linearRampToValueAtTime(0, now + 1.5);
+        osc.start(now);
+        osc.stop(now + 1.5);
+      } else if (type === 'vine') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(80, now);
+        osc.frequency.linearRampToValueAtTime(220, now + 0.5);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.linearRampToValueAtTime(0, now + 0.5);
+        osc.start(now);
+        osc.stop(now + 0.5);
+      } else if (type === 'wind') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(300, now);
+        osc.frequency.linearRampToValueAtTime(120, now + 1.0);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.linearRampToValueAtTime(0, now + 1.0);
+        osc.start(now);
+        osc.stop(now + 1.0);
+      }
+    }
+          // --- INITIALIZE ENTITIES ---
+    for (let i = 0; i < 40; i++) {
+      fireflies.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        radius: Math.random() * 2 + 1,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        alpha: Math.random()
+      });
+    }
+
+    // Floating ritual cups
+    function initFloatingObjects() {
+      const altar = getAltarPos();
+      floatingObjects = [
+        { id: 1, x: altar.x - 70, y: altar.y - 25, origX: altar.x - 70, origY: altar.y - 25, filled: false, color: '#e74c3c', hoverOffsetY: 0, invisible: false },
+        { id: 2, x: altar.x, y: altar.y - 35, origX: altar.x, origY: altar.y - 35, filled: false, color: '#3498db', hoverOffsetY: 0, invisible: false },
+        { id: 3, x: altar.x + 70, y: altar.y - 25, origX: altar.x + 70, origY: altar.y - 25, filled: false, color: '#9b59b6', hoverOffsetY: 0, invisible: false }
+      ];
+    }
+    initFloatingObjects();
+
+    // --- DRAWING FUNCTIONS ---
+
+    // 1. Moon & Sky
+    function drawSkyAndMoon() {
+      // Sky Gradient
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, height);
+      skyGrad.addColorStop(0, '#020508');
+      skyGrad.addColorStop(0.5, '#081410');
+      skyGrad.addColorStop(1, '#030805');
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, width, height);
+
+      // Full Moon
+      const moonX = width * 0.5;
+      const moonY = height * 0.22;
+      const moonRadius = Math.min(width, height) * 0.08;
+
+      // Moon Glow
+      const moonGlow = ctx.createRadialGradient(moonX, moonY, moonRadius * 0.5, moonX, moonY, moonRadius * 4);
+      moonGlow.addColorStop(0, 'rgba(230, 255, 240, 0.4)');
+      moonGlow.addColorStop(0.3, 'rgba(0, 255, 102, 0.12)');
+      moonGlow.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = moonGlow;
+      ctx.beginPath();
+      ctx.arc(moonX, moonY, moonRadius * 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Moon Body
+      const moonBody = ctx.createRadialGradient(moonX - moonRadius*0.3, moonY - moonRadius*0.3, 0, moonX, moonY, moonRadius);
+      moonBody.addColorStop(0, '#ffffff');
+      moonBody.addColorStop(0.85, '#e2f7ed');
+      moonBody.addColorStop(1, '#a3e0c2');
+      ctx.fillStyle = moonBody;
+      ctx.beginPath();
+      ctx.arc(moonX, moonY, moonRadius, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Moon Rays
+      ctx.save();
+      ctx.fillStyle = 'rgba(200, 255, 220, 0.02)';
+      for (let i = -3; i <= 3; i++) {
+        ctx.beginPath();
+        ctx.moveTo(moonX, moonY);
+        ctx.lineTo(moonX + i * 150 - 100, height);
+        ctx.lineTo(moonX + i * 150 + 100, height);
+        ctx.closePath();
+        ctx.fill();
+      }
+      ctx.restore();
+    }
+          // 2. Forest Silhouette
+    function drawForest() {
+      ctx.fillStyle = '#020a05';
+      ctx.beginPath();
+      ctx.moveTo(0, height);
+
+      // Distant Trees
+      for (let i = 0; i <= width; i += 40) {
+        const treeH = 120 + Math.sin(i * 0.01) * 50 + Math.cos(i * 0.03) * 30;
+        ctx.lineTo(i, height * 0.65 - treeH);
+        ctx.lineTo(i + 20, height * 0.65);
+      }
+      ctx.lineTo(width, height);
+      ctx.fill();
+
+      // Ground Clearing
+      const groundGrad = ctx.createLinearGradient(0, height * 0.6, 0, height);
+      groundGrad.addColorStop(0, '#05140a');
+      groundGrad.addColorStop(1, '#020604');
+      ctx.fillStyle = groundGrad;
+      ctx.beginPath();
+      ctx.ellipse(width * 0.5, height * 0.78, width * 0.55, height * 0.25, 0, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // 3. Altar & Malvorrith Stone
+    function drawAltar() {
+      const altar = getAltarPos();
+
+      // Stone Base
+      ctx.save();
+      ctx.fillStyle = '#111815';
+      ctx.strokeStyle = 'rgba(0, 255, 102, 0.2)';
+      ctx.lineWidth = 2;
+
+      ctx.beginPath();
+      ctx.ellipse(altar.x, altar.y, 140, 45, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.ellipse(altar.x, altar.y - 12, 120, 35, 0, 0, Math.PI * 2);
+      ctx.fillStyle = '#1a2420';
+      ctx.fill();
+      ctx.stroke();
+
+      // Runes on Altar
+      ctx.strokeStyle = ritualStep > 0 ? '#00ff66' : '#334155';
+      ctx.shadowBlur = ritualStep > 0 ? 10 : 0;
+      ctx.shadowColor = '#00ff66';
+      ctx.beginPath();
+      ctx.arc(altar.x, altar.y - 12, 85, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+
+      // MALVORRITH (Hexenherz) in Center
+      const stoneY = altar.y - 12;
+      const stoneGlow = ritualStep * 15;
+
+      ctx.save();
+      ctx.shadowBlur = 15 + stoneGlow;
+      ctx.shadowColor = ritualStep === 3 ? '#00ff66' : '#d63031';
+
+      // Stone Gradient
+      const stoneGrad = ctx.createRadialGradient(altar.x, stoneY, 2, altar.x, stoneY, 18);
+      if (ritualStep === 3) {
+        stoneGrad.addColorStop(0, '#ffffff');
+        stoneGrad.addColorStop(0.5, '#00ff66');
+        stoneGrad.addColorStop(1, '#005522');
+      } else {
+        stoneGrad.addColorStop(0, '#ff7675');
+        stoneGrad.addColorStop(0.6, '#d63031');
+        stoneGrad.addColorStop(1, '#2d3436');
+      }
+
+      // Diamond Crystal Shape
+      ctx.fillStyle = stoneGrad;
+      ctx.beginPath();
+      ctx.moveTo(altar.x, stoneY - 22);
+      ctx.lineTo(altar.x + 14, stoneY);
+      ctx.lineTo(altar.x, stoneY + 18);
+      ctx.lineTo(altar.x - 14, stoneY);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+
+      // CUPS (3 Becher)
+      floatingObjects.forEach((obj, idx) => {
+        if (obj.invisible) return;
+
+        const cx = obj.x;
+        const cy = obj.y + obj.hoverOffsetY;
+
+        ctx.save();
+        // Golden Cup Base
+        ctx.fillStyle = '#d4af37';
+        ctx.strokeStyle = '#fff8dc';
+        ctx.lineWidth = 1;
+
+        // Cup stem & base
+        ctx.fillRect(cx - 3, cy + 12, 6, 12);
+        ctx.beginPath();
+        ctx.ellipse(cx, cy + 24, 10, 4, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Cup Bowl
+        ctx.beginPath();
+        ctx.arc(cx, cy, 14, 0, Math.PI);
+        ctx.fill();
+        ctx.stroke();
+
+        // Blood / Magic Fluid inside cup if filled
+        if (obj.filled) {
+          ctx.fillStyle = ritualStep === 3 ? '#00ff66' : '#e74c3c';
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = ritualStep === 3 ? '#00ff66' : '#e74c3c';
+          ctx.beginPath();
+          ctx.ellipse(cx, cy, 12, 4, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.restore();
+      });
+    }
+          // --- SPELL EFFECTS DRAWING & UPDATE ---
+
+    // Samantha's Thorns/Vines
+    function drawVines() {
+      vines.forEach(v => {
+        ctx.save();
+        ctx.strokeStyle = '#2ecc71';
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = '#00ff66';
+        ctx.lineWidth = v.thickness;
+        ctx.lineCap = 'round';
+
+        ctx.beginPath();
+        ctx.moveTo(v.startX, v.startY);
+        
+        let currX = v.startX;
+        let currY = v.startY;
+        for (let i = 0; i < v.points.length; i++) {
+          currX += v.points[i].dx;
+          currY -= v.points[i].dy;
+          ctx.lineTo(currX, currY);
+        }
+        ctx.stroke();
+
+        // Thorns
+        if (v.points.length > 3) {
+          ctx.fillStyle = '#27ae60';
+          v.thorns.forEach(t => {
+            ctx.beginPath();
+            ctx.arc(t.x, t.y, 3, 0, Math.PI * 2);
+            ctx.fill();
+          });
+        }
+
+        ctx.restore();
+
+        // Grow Vine
+        if (v.points.length < v.maxPoints) {
+          const angle = (Math.random() - 0.5) * 0.8 - Math.PI * 0.5;
+          const length = Math.random() * 8 + 4;
+          const dx = Math.cos(angle) * length;
+          const dy = Math.abs(Math.sin(angle) * length);
+          
+          const newPt = { dx, dy };
+          v.points.push(newPt);
+
+          if (Math.random() > 0.6) {
+            v.thorns.push({ x: currX, y: currY });
+          }
+        }
+      });
+    }
+
+    // Amber's Light Orbs
+    function drawAmberOrbs() {
+      amberOrbs.forEach(orb => {
+        ctx.save();
+        ctx.shadowBlur = 20;
+        ctx.shadowColor = '#ffaa00';
+
+        const grad = ctx.createRadialGradient(orb.x, orb.y, 0, orb.x, orb.y, orb.radius);
+        grad.addColorStop(0, '#ffffff');
+        grad.addColorStop(0.4, '#ffdd66');
+        grad.addColorStop(1, 'rgba(255, 170, 0, 0)');
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(orb.x, orb.y, orb.radius * 2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // Physics / Floating
+        orb.x += orb.vx;
+        orb.y += orb.vy;
+        orb.vy += Math.sin(Date.now() * 0.003 + orb.id) * 0.05;
+        orb.radius *= 0.995; // slowly shrink
+      });
+
+      amberOrbs = amberOrbs.filter(o => o.radius > 2);
+    }
+          // Ann's Wind Blast
+    function drawWind() {
+      windParticles.forEach(p => {
+        ctx.save();
+        ctx.strokeStyle = 'rgba(129, 236, 236, ' + p.alpha + ')';
+        ctx.lineWidth = p.size;
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+        ctx.lineTo(p.x - p.vx * 3, p.y - p.vy * 2);
+        ctx.stroke();
+        ctx.restore();
+
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= 0.01;
+      });
+
+      windParticles = windParticles.filter(p => p.alpha > 0);
+    }
+
+    // Particles (Blood, Magic Sparks)
+    function drawParticles() {
+      particles.forEach(p => {
+        ctx.save();
+        ctx.fillStyle = p.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        p.x += p.vx;
+        p.y += p.vy;
+        p.alpha -= p.decay;
+      });
+
+      particles = particles.filter(p => p.alpha > 0);
+    }
+
+    // Fireflies
+    function drawFireflies() {
+      fireflies.forEach(f => {
+        ctx.save();
+        ctx.fillStyle = `rgba(0, 255, 102, ${f.alpha})`;
+        ctx.shadowBlur = 8;
+        ctx.shadowColor = '#00ff66';
+        ctx.beginPath();
+        ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        f.x += f.vx;
+        f.y += f.vy;
+        f.alpha += (Math.random() - 0.5) * 0.05;
+        if (f.alpha < 0.1) f.alpha = 0.1;
+        if (f.alpha > 0.9) f.alpha = 0.9;
+
+        if (f.x < 0 || f.x > width) f.vx *= -1;
+        if (f.y < 0 || f.y > height) f.vy *= -1;
+      });
+    }
+
+    // --- MAIN RENDER LOOP ---
+    function render() {
+      ctx.clearRect(0, 0, width, height);
+
+      drawSkyAndMoon();
+      drawForest();
+      drawAltar();
+
+      drawVines();
+      drawAmberOrbs();
+      drawWind();
+      drawParticles();
+      drawFireflies();
+
+      // Floating cups levitation effect (Caroline or general magic)
+      floatingObjects.forEach((obj, i) => {
+        if (activeSpell === 'caroline' && activeTab === 'lab') {
+          obj.hoverOffsetY = Math.sin(Date.now() * 0.004 + i) * 20 - 15;
+        } else {
+          obj.hoverOffsetY = Math.sin(Date.now() * 0.002 + i) * 4;
+        }
+      });
+
+      requestAnimationFrame(render);
+    }
+    render();
+          // --- INTERACTION LOGIC ---
+
+    // Tab Switcher
+    function switchTab(tab) {
+      activeTab = tab;
+      document.querySelectorAll('.btn-tab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.witch-panel').forEach(p => p.classList.remove('active'));
+
+      if (tab === 'ritual') {
+        event.target.classList.add('active');
+        document.getElementById('panel-ritual').classList.add('active');
+      } else {
+        event.target.classList.add('active');
+        document.getElementById('panel-lab').classList.add('active');
+      }
+    }
+
+    // Advance 3-Becher-Ritual
+    function advanceRitual() {
+      const desc = document.getElementById('ritual-description');
+      const btn = document.getElementById('btn-ritual-action');
+      const altar = getAltarPos();
+
+      if (ritualStep === 0) {
+        // Step 1: Hexenblut
+        ritualStep = 1;
+        floatingObjects[0].filled = true;
+        document.getElementById('step-1').classList.add('completed');
+        document.getElementById('step-2').classList.add('active');
+
+        desc.innerHTML = "Das <strong>Blut der Hexe</strong> liegt schimmernd im ersten goldenen Becher. Nun wird in der zweiten Vollmondnacht das <strong>Blut einer/eines Unschuldigen</strong> benötigt.";
+        btn.innerHTML = "2. Becher füllen (Unschuldigen-Blut)";
+        
+        spawnBloodSparks(floatingObjects[0].x, floatingObjects[0].y);
+        playMagicSound('fill');
+
+      } else if (ritualStep === 1) {
+        // Step 2: Unschuldiges Blut
+        ritualStep = 2;
+        floatingObjects[1].filled = true;
+        document.getElementById('step-2').classList.add('completed');
+        document.getElementById('step-3').classList.add('active');
+
+        desc.innerHTML = "Zwei Becher sind gefüllt. Die finale dritte Vollmondnacht bricht an: Das <strong>Blut des gewählten Opfers</strong> entscheidet über den Austausch der Lebensenergie.";
+        btn.innerHTML = "3. Becher füllen (Opferblut & Vollvollendung)";
+
+        spawnBloodSparks(floatingObjects[1].x, floatingObjects[1].y);
+        playMagicSound('fill');
+
+      } else if (ritualStep === 2) {
+        // Step 3: Opferblut & Malvorrith Eruption
+        ritualStep = 3;
+        floatingObjects[2].filled = true;
+        document.getElementById('step-3').classList.add('completed');
+
+        desc.innerHTML = "✨ <strong>DAS RITUAL IST VOLLENDET!</strong><br>Der Malvorrith-Stein erwacht zum Leben. Der magische Fluss entzieht dem Opfer die Lebensenergie und transferiert sie unter dem Vollmond!";
+        btn.innerHTML = "🔄 Ritual zurücksetzen";
+
+        spawnBloodSparks(floatingObjects[2].x, floatingObjects[2].y);
+        spawnEruption(altar.x, altar.y - 12);
+        playMagicSound('burst');
+
+      } else {
+        // Reset
+        ritualStep = 0;
+        floatingObjects.forEach(o => o.filled = false);
+        document.querySelectorAll('.ritual-step').forEach((s, idx) => {
+          s.classList.remove('completed', 'active');
+          if (idx === 0) s.classList.add('active');
+        });
+
+        desc.innerHTML = "Auf der Waldlichtung unter dem klaren Vollmond stehen drei goldene Becher um den ruhenden <strong>Malvorrith-Stein</strong> bereit. Entfache die erste Phase des Rituals mit dem Blut der Hexe.";
+        btn.innerHTML = "1. Becher füllen (Hexenblut)";
+      }
+    }
+          function spawnBloodSparks(x, y) {
+      for (let i = 0; i < 30; i++) {
+        particles.push({
+          x: x,
+          y: y,
+          vx: (Math.random() - 0.5) * 6,
+          vy: (Math.random() - 0.5) * 6 - 2,
+          color: Math.random() > 0.3 ? '#e74c3c' : '#ff7675',
+          radius: Math.random() * 3 + 1.5,
+          alpha: 1,
+          decay: Math.random() * 0.02 + 0.015
+        });
+      }
+    }
+
+    function spawnEruption(x, y) {
+      for (let i = 0; i < 120; i++) {
+        particles.push({
+          x: x,
+          y: y,
+          vx: (Math.random() - 0.5) * 12,
+          vy: (Math.random() - 0.5) * 12 - 4,
+          color: Math.random() > 0.4 ? '#00ff66' : '#ffffff',
+          radius: Math.random() * 4 + 2,
+          alpha: 1,
+          decay: Math.random() * 0.015 + 0.005
+        });
+      }
+    }
+
+    // Spell Selector in Lab
+    function selectSpell(spell, cardEl) {
+      activeSpell = spell;
+      document.querySelectorAll('.spell-card').forEach(c => c.classList.remove('selected'));
+      cardEl.classList.add('selected');
+
+      const hint = document.getElementById('lab-hint');
+      if (spell === 'samantha') {
+        hint.innerHTML = "Klicke auf die Lichtung, um Samanthas dornige Hexenranken sprießen zu lassen!";
+      } else if (spell === 'amber') {
+        hint.innerHTML = "Klicke oder bewege die Maus, um Ambers leuchtende Lichtkugeln zu erschaffen!";
+      } else if (spell === 'ann') {
+        hint.innerHTML = "Klicke und ziehe, um Anns stürmische Windböen entfesseln!";
+      } else if (spell === 'caroline') {
+        hint.innerHTML = "Klicke auf die Ritualbecher, um sie verschwinden oder schweben zu lassen!";
+      }
+    }
+
+    // Canvas Click Interactions (Magic Casting)
+    canvas.addEventListener('pointerdown', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const clickY = e.clientY - rect.top;
+
+      if (activeTab === 'lab') {
+
+        if (activeSpell === 'samantha') {
+          // Grow Vine
+          vines.push({
+            startX: clickX,
+            startY: clickY,
+            thickness: Math.random() * 3 + 3,
+            points: [],
+            thorns: [],
+            maxPoints: Math.floor(Math.random() * 15 + 15)
+          });
+          playMagicSound('vine');
+
+        } else if (activeSpell === 'amber') {
+          // Light Orbs
+          for (let i = 0; i < 3; i++) {
+            amberOrbs.push({
+              id: Math.random(),
+              x: clickX,
+              y: clickY,
+              vx: (Math.random() - 0.5) * 4,
+              vy: (Math.random() - 0.5) * 4 - 2,
+              radius: Math.random() * 12 + 10
+            });
+          }
+          playMagicSound('fill');
+
+        } else if (activeSpell === 'ann') {
+          // Wind Storm
+          for (let i = 0; i < 40; i++) {
+            windParticles.push({
+              x: clickX + (Math.random() - 0.5) * 40,
+              y: clickY + (Math.random() - 0.5) * 40,
+              vx: Math.random() * 12 + 8,
+              vy: (Math.random() - 0.5) * 6,
+              size: Math.random() * 3 + 1,
+              alpha: 1
+            });
+          }
+          playMagicSound('wind');
+
+        } else if (activeSpell === 'caroline') {
+          // Vanish / Teleport Cup
+          floatingObjects.forEach(obj => {
+            const dist = Math.hypot(obj.x - clickX, (obj.y + obj.hoverOffsetY) - clickY);
+            if (dist < 40) {
+              obj.invisible = true;
+              spawnSilverSparks(obj.x, obj.y);
+              setTimeout(() => {
+                obj.invisible = false;
+                spawnSilverSparks(obj.x, obj.y);
+              }, 1800);
+            }
+          });
+          playMagicSound('fill');
+        }
+
+      }
+    });
+
+    function spawnSilverSparks(x, y) {
+      for (let i = 0; i < 25; i++) {
+        particles.push({
+          x: x,
+          y: y,
+          vx: (Math.random() - 0.5) * 7,
+          vy: (Math.random() - 0.5) * 7,
+          color: '#e0e6ed',
+          radius: Math.random() * 3 + 1,
+          alpha: 1,
+          decay: 0.03
+        });
+      }
+    }
+  </script>
+</body>
+</html>
