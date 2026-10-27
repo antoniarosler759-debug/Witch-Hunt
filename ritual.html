@@ -1,1 +1,488 @@
-657484d168da0d4564d917ef8aec77ad0c54718e
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Witch-Hunt: Das Ritual & Magie</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    body { font-family: 'Georgia', serif; background: #090a10; color: #e0e0e0; overflow: hidden; height: 100vh; width: 100vw; }
+    .screen { display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    .screen.active { display: flex; flex-direction: column; }
+    .btn { background: rgba(20, 25, 45, 0.85); border: 1px solid #4a5d8e; color: #d1d9ec; padding: 12px 24px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.5); }
+    .btn:hover { background: #2a3860; border-color: #8fa3db; color: #fff; box-shadow: 0 0 15px rgba(143, 163, 219, 0.5); transform: translateY(-2px); }
+    #start-screen { background: linear-gradient(to bottom, #050814 0%, #0d152d 60%, #152238 100%); justify-content: center; align-items: center; position: relative; }
+    .moon { position: absolute; top: 10%; width: 140px; height: 140px; border-radius: 50%; background: radial-gradient(circle, #fffdf0 0%, #e0e6ff 60%, #9bb0ff 100%); box-shadow: 0 0 60px #a2b8ff, 0 0 120px rgba(162, 184, 255, 0.4); }
+    .lake { position: absolute; bottom: 0; width: 100%; height: 40%; background: linear-gradient(to bottom, #0d1c33 0%, #050a14 100%); border-top: 1px solid rgba(162, 184, 255, 0.2); }
+    .lake-reflection { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 160px; height: 100%; background: linear-gradient(to bottom, rgba(162, 184, 255, 0.3), transparent); filter: blur(10px); animation: ripple 4s infinite alternate ease-in-out; }
+    @keyframes ripple { 0% { transform: translateX(-50%) scaleX(1); opacity: 0.3; } 100% { transform: translateX(-50%) scaleX(1.4); opacity: 0.6; } }
+    .title { z-index: 10; font-size: 2.8rem; margin-bottom: 40px; color: #e2e8f0; text-shadow: 0 0 20px rgba(162, 184, 255, 0.6); text-align: center; }
+    .menu-buttons { z-index: 10; display: flex; gap: 20px; }
+    .top-bar { position: absolute; top: 15px; left: 15px; right: 15px; display: flex; justify-content: space-between; align-items: center; z-index: 100; pointer-events: none; }
+    .top-bar * { pointer-events: auto; }
+    .select-group { display: flex; gap: 10px; background: rgba(10, 15, 30, 0.8); padding: 8px 15px; border-radius: 8px; border: 1px solid #334155; }
+    .select-group label { align-self: center; font-size: 0.9rem; color: #94a3b8; }
+    select { background: #1e293b; color: #f1f5f9; border: 1px solid #475569; padding: 6px 12px; border-radius: 4px; cursor: pointer; }
+    #stube-canvas-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+    canvas { display: block; width: 100%; height: 100%; }
+    .speech-bubble { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.95); border: 2px solid #3b82f6; color: #f8fafc; padding: 15px 25px; border-radius: 12px; max-width: 80%; text-align: center; font-size: 1.2rem; box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); z-index: 200; display: none; }
+    #ritual-screen { background: radial-gradient(circle at center, #111827 0%, #030712 100%); justify-content: center; align-items: center; }
+    .ritual-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 50; background: rgba(3, 7, 18, 0.85); }
+    .ritual-card { background: #111827; border: 1px solid #374151; padding: 30px 40px; border-radius: 16px; text-align: center; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.8); }
+    .ritual-card h2 { font-size: 2rem; margin-bottom: 15px; color: #f3f4f6; }
+    .ritual-card p { font-size: 1.1rem; color: #9ca3af; margin-bottom: 25px; line-height: 1.5; }
+    .sub-text { font-size: 0.9rem !important; color: #6b7280 !important; margin-top: 5px; }
+  </style>
+</head>
+<body>
+    <!-- START SEITE -->
+  <div id="start-screen" class="screen active">
+    <div class="moon"></div>
+    <div class="lake">
+      <div class="lake-reflection"></div>
+    </div>
+    <h1 class="title">Das Ritual & Magie</h1>
+    <div class="menu-buttons">
+      <button class="btn" onclick="window.location.href='index.html'">Zurück</button>
+      <button class="btn" onclick="showScreen('stube-screen')">Hexenstube</button>
+      <button class="btn" onclick="showScreen('ritual-screen')">Ritual</button>
+    </div>
+  </div>
+
+  <!-- HEXENSTUBE SEITE -->
+  <div id="stube-screen" class="screen">
+    <div class="top-bar">
+      <button class="btn" onclick="showScreen('start-screen')">Zurück</button>
+      <div style="display: flex; gap: 10px;">
+        <div class="select-group">
+          <label>Umgebung:</label>
+          <select id="location-select" onchange="changeLocation(this.value)">
+            <option value="bib">Bibliothek</option>
+            <option value="cave">Die Höhle</option>
+            <option value="garden">Der Garten</option>
+          </select>
+        </div>
+        <div class="select-group">
+          <label>Charakter:</label>
+          <select id="char-select" onchange="changeChar(this.value)">
+            <option value="amber">Amber (Licht)</option>
+            <option value="samantha">Samantha (Pflanzen)</option>
+            <option value="ann">Ann (Wind)</option>
+            <option value="caroline">Caroline (Teleport)</option>
+          </select>
+        </div>
+        <button id="reset-btn" class="btn" style="display:none; background:#881337; border-color:#f43f5e;" onclick="resetEnvironment()">Reset</button>
+      </div>
+    </div>
+
+    <div id="stube-canvas-container">
+      <canvas id="stube-canvas"></canvas>
+    </div>
+    
+    <div id="speech-bubble" class="speech-bubble"></div>
+  </div>
+
+  <!-- RITUAL SEITE -->
+  <div id="ritual-screen" class="screen">
+    <div class="top-bar">
+      <button class="btn" onclick="exitRitual()">Zurück</button>
+    </div>
+    
+    <canvas id="ritual-canvas"></canvas>
+
+    <!-- START OVERLAY -->
+    <div id="ritual-start-overlay" class="ritual-overlay">
+      <div class="ritual-card">
+        <h2>Das Drei-Becher-Ritual</h2>
+        <p>Beschütze den Malvorrithen vor den Blitzen! Halte ihn gedrückt und weiche den drohenden Schatten der Einschläge aus.</p>
+        <div style="display:flex; gap:15px; justify-content:center;">
+          <button class="btn" onclick="startRitualGame()">Start</button>
+          <button class="btn" onclick="exitRitual()">Zurück</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME OVER / WIN OVERLAY -->
+    <div id="ritual-end-overlay" class="ritual-overlay" style="display:none;">
+      <div class="ritual-card">
+        <h2 id="ritual-end-title"></h2>
+        <p id="ritual-end-desc"></p>
+        <p id="ritual-end-sub" class="sub-text"></p>
+        <div style="display:flex; gap:15px; justify-content:center; margin-top:20px;">
+          <button class="btn" onclick="startRitualGame()">Noch einmal</button>
+          <button class="btn" onclick="exitRitual()">Zurück</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <script>
+    function showScreen(id) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      if(id === 'stube-screen') initStube();
+      if(id === 'ritual-screen') initRitualCanvas();
+    }
+
+    let stubeCanvas, stubeCtx;
+    let currentLocation = 'bib';
+    let currentChar = 'amber';
+    let timeOfDay = 0;
+    let torchesLit = true;
+    let malvorrithFloating = false;
+    let malvorrithHover = 0;
+    let malvorrithCovered = false;
+    let malvorrithDestroyed = false;
+    let malvorrithPos = { x: 0, y: 0 };
+    let bookshelfDestroyed = false;
+    let windowsDestroyed = false;
+    let curtainsDestroyed = false;
+    let curtainsOpen = true;
+    let objBounds = {};
+    let particles = [];
+    let lightTrails = [];
+    let drawings = [];
+    let greenRings = [];
+
+    function initStube() {
+      stubeCanvas = document.getElementById('stube-canvas');
+      stubeCtx = stubeCanvas.getContext('2d');
+      resizeCanvas(stubeCanvas);
+      window.addEventListener('resize', () => resizeCanvas(stubeCanvas));
+      setupStubeEvents();
+      requestAnimationFrame(updateStube);
+    }
+
+    function resizeCanvas(c) { c.width = window.innerWidth; c.height = window.innerHeight; }
+    function changeLocation(loc) { currentLocation = loc; resetEnvironment(); }
+    function changeChar(c) { currentChar = c; document.getElementById('reset-btn').style.display = (c === 'ann') ? 'block' : 'none'; }
+
+    function resetEnvironment() {
+      bookshelfDestroyed = false; windowsDestroyed = false; curtainsDestroyed = false;
+      curtainsOpen = true; malvorrithCovered = false; malvorrithDestroyed = false;
+      torchesLit = true; particles = []; lightTrails = []; drawings = []; greenRings = [];
+      hideSpeech();
+    }
+
+    function updateStube(timestamp) {
+      if(!document.getElementById('stube-screen').classList.contains('active')) return;
+      timeOfDay = (timestamp % 600000) / 600000;
+      malvorrithHover = Math.sin(timestamp / 500) * 15;
+      drawStubeScene();
+      updateStubeEffects();
+      requestAnimationFrame(updateStube);
+    }
+
+    function drawStubeScene() {
+      stubeCtx.clearRect(0, 0, stubeCanvas.width, stubeCanvas.height);
+      const w = stubeCanvas.width, h = stubeCanvas.height;
+
+      if(currentLocation === 'bib') {
+        let sunProgress = Math.sin(timeOfDay * Math.PI * 2);
+        let daylight = Math.max(0.1, (sunProgress + 1) / 2);
+        stubeCtx.fillStyle = `rgb(${Math.floor(20*daylight)}, ${Math.floor(25*daylight)}, ${Math.floor(40*daylight)})`;
+        stubeCtx.fillRect(0, 0, w, h);
+
+        objBounds.window1 = { x: w*0.15, y: h*0.15, w: w*0.12, h: h*0.45 };
+        objBounds.window2 = { x: w*0.73, y: h*0.15, w: w*0.12, h: h*0.45 };
+
+        [objBounds.window1, objBounds.window2].forEach(win => {
+          if(!windowsDestroyed) {
+            stubeCtx.fillStyle = `rgb(${Math.floor(135*daylight)}, ${Math.floor(206*daylight)}, ${Math.floor(235*daylight)})`;
+            stubeCtx.fillRect(win.x, win.y, win.w, win.h);
+            stubeCtx.strokeStyle = '#331a00'; stubeCtx.lineWidth = 6; stubeCtx.strokeRect(win.x, win.y, win.w, win.h);
+            if(!curtainsDestroyed) {
+              stubeCtx.fillStyle = '#800020';
+              let curtainW = curtainsOpen ? win.w * 0.25 : win.w * 0.55;
+              stubeCtx.fillRect(win.x, win.y, curtainW, win.h);
+              stubeCtx.fillRect(win.x + win.w - curtainW, win.y, curtainW, win.h);
+            }
+          }
+        });
+
+        objBounds.carpet = { x: w*0.2, y: h*0.7, w: w*0.6, h: h*0.25 };
+        stubeCtx.fillStyle = '#6b1111';
+        stubeCtx.beginPath(); stubeCtx.ellipse(w*0.5, h*0.8, w*0.3, h*0.12, 0, 0, Math.PI*2); stubeCtx.fill();
+        stubeCtx.strokeStyle = '#d4af37'; stubeCtx.lineWidth = 4; stubeCtx.stroke();
+
+        objBounds.bookshelf = { x: w*0.35, y: h*0.2, w: w*0.3, h: h*0.55 };
+        if(!bookshelfDestroyed) {
+          stubeCtx.fillStyle = '#3a1e05'; stubeCtx.fillRect(objBounds.bookshelf.x, objBounds.bookshelf.y, objBounds.bookshelf.w, objBounds.bookshelf.h);
+          for(let i=0; i<4; i++) {
+            let shelfY = objBounds.bookshelf.y + 30 + i*70;
+            stubeCtx.fillStyle = '#221103'; stubeCtx.fillRect(objBounds.bookshelf.x + 10, shelfY, objBounds.bookshelf.w - 20, 10);
+            for(let j=0; j<12; j++) {
+              stubeCtx.fillStyle = ['#991b1b', '#1e3a8a', '#166534', '#854d0e'][j%4];
+              stubeCtx.fillRect(objBounds.bookshelf.x + 20 + j*18, shelfY - 45, 14, 45);
+            }
+          }
+        } else {
+          stubeCtx.fillStyle = '#3a1e05'; stubeCtx.fillRect(objBounds.bookshelf.x - 40, h*0.65, objBounds.bookshelf.w + 80, 40);
+          stubeCtx.fillStyle = '#fef3c7';
+          for(let i=0; i<15; i++) stubeCtx.fillRect(w*0.3 + (i*25)%200, h*0.7 + (i*13)%80, 15, 20);
+        }
+
+        objBounds.candle = { x: w*0.1, y: h*0.6, w: 40, h: 80 };
+        stubeCtx.fillStyle = '#d4af37'; stubeCtx.fillRect(w*0.1, h*0.6, 10, 80); stubeCtx.fillRect(w*0.08, h*0.6, 50, 8);
+        if(torchesLit) {
+          stubeCtx.fillStyle = '#f97316'; stubeCtx.beginPath();
+          stubeCtx.arc(w*0.08, h*0.58, 8, 0, Math.PI*2); stubeCtx.arc(w*0.12, h*0.58, 8, 0, Math.PI*2); stubeCtx.fill();
+        }
+
+      } else if(currentLocation === 'cave') {
+        stubeCtx.fillStyle = '#0b0f19'; stubeCtx.fillRect(0, 0, w, h);
+        objBounds.torch1 = { x: w*0.08, y: h*0.3, w: 30, h: 50 };
+        objBounds.torch2 = { x: w*0.88, y: h*0.3, w: 30, h: 50 };
+        [objBounds.torch1, objBounds.torch2].forEach(t => {
+          stubeCtx.fillStyle = '#475569'; stubeCtx.fillRect(t.x, t.y, t.w, t.h);
+          if(torchesLit) {
+            stubeCtx.fillStyle = '#22c55e'; stubeCtx.beginPath(); stubeCtx.arc(t.x + 15, t.y - 10, 15, 0, Math.PI*2); stubeCtx.fill();
+            stubeCtx.fillStyle = 'rgba(34, 197, 94, 0.15)'; stubeCtx.beginPath(); stubeCtx.arc(t.x + 15, t.y - 10, 50, 0, Math.PI*2); stubeCtx.fill();
+          }
+        });
+
+        stubeCtx.fillStyle = '#1e293b'; stubeCtx.beginPath();
+        let cx = w*0.5, cy = h*0.75, outerR = w*0.25, innerR = w*0.12;
+        for(let i=0; i<10; i++) {
+          let r = (i % 2 === 0) ? outerR : innerR;
+          let angle = (i * Math.PI / 5) - Math.PI/2;
+          let x = cx + Math.cos(angle) * r, y = cy + Math.sin(angle) * (r * 0.4);
+          if(i===0) stubeCtx.moveTo(x,y); else stubeCtx.lineTo(x,y);
+        }
+        stubeCtx.closePath(); stubeCtx.fill(); stubeCtx.strokeStyle = '#334155'; stubeCtx.stroke();
+
+        let altarY = h*0.62;
+        stubeCtx.fillStyle = '#475569'; stubeCtx.beginPath(); stubeCtx.ellipse(w*0.5, altarY, 70, 25, 0, 0, Math.PI*2); stubeCtx.fill();
+
+        if(malvorrithPos.x === 0) malvorrithPos = { x: w*0.5, y: altarY - 30 };
+        objBounds.malvorrith = { x: malvorrithPos.x - 20, y: malvorrithPos.y - 25, w: 40, h: 50 };
+
+        if(!malvorrithDestroyed) {
+          let mY = malvorrithPos.y + (malvorrithFloating ? malvorrithHover : 0);
+          if(malvorrithCovered) {
+            stubeCtx.fillStyle = '#15803d'; stubeCtx.beginPath(); stubeCtx.arc(malvorrithPos.x, mY, 25, 0, Math.PI*2); stubeCtx.fill();
+          } else {
+            stubeCtx.fillStyle = '#eab308'; stubeCtx.beginPath();
+            stubeCtx.moveTo(malvorrithPos.x, mY - 25); stubeCtx.lineTo(malvorrithPos.x + 18, mY);
+            stubeCtx.lineTo(malvorrithPos.x, mY + 25); stubeCtx.lineTo(malvorrithPos.x - 18, mY);
+            stubeCtx.closePath(); stubeCtx.fill();
+          }
+        }
+      } else if(currentLocation === 'garden') {
+        stubeCtx.fillStyle = '#0f172a'; stubeCtx.fillRect(0, 0, w, h);
+        stubeCtx.fillStyle = '#064e3b'; stubeCtx.fillRect(0, h*0.5, w, h*0.5);
+      }
+    }
+
+    function updateStubeEffects() {
+      lightTrails.forEach((p, idx) => {
+        stubeCtx.fillStyle = `rgba(253, 224, 71, ${p.alpha})`;
+        stubeCtx.beginPath(); stubeCtx.arc(p.x, p.y, p.size, 0, Math.PI*2); stubeCtx.fill();
+        p.alpha -= 0.015; if(p.alpha <= 0) lightTrails.splice(idx, 1);
+      });
+      drawings.forEach((d, idx) => {
+        stubeCtx.strokeStyle = `rgba(236, 72, 153, ${d.alpha})`; stubeCtx.lineWidth = 3;
+        stubeCtx.beginPath(); stubeCtx.moveTo(d.x1, d.y1); stubeCtx.lineTo(d.x2, d.y2); stubeCtx.stroke();
+        d.alpha -= 0.003; if(d.alpha <= 0) drawings.splice(idx, 1);
+      });
+      greenRings.forEach((r, idx) => {
+        stubeCtx.strokeStyle = `rgba(34, 197, 94, ${r.alpha})`; stubeCtx.lineWidth = 4;
+        stubeCtx.beginPath(); stubeCtx.arc(r.x, r.y, r.radius, 0, Math.PI*2); stubeCtx.stroke();
+        r.radius += 3; r.alpha -= 0.02; if(r.alpha <= 0) greenRings.splice(idx, 1);
+      });
+      particles.forEach((p, idx) => {
+        stubeCtx.fillStyle = p.color; stubeCtx.fillRect(p.x, p.y, p.size, p.size);
+        p.x += p.vx; p.y += p.vy; p.alpha -= 0.02; if(p.alpha <= 0) particles.splice(idx, 1);
+      });
+    }
+
+    let isMouseDown = false, lastMousePos = { x: 0, y: 0 }, holdTimer = null, holdDuration = 0;
+
+    function setupStubeEvents() {
+      const c = document.getElementById('stube-canvas');
+      c.addEventListener('mousedown', (e) => {
+        isMouseDown = true; lastMousePos = { x: e.clientX, y: e.clientY };
+        handleStubeClick(e.clientX, e.clientY);
+        if(currentChar === 'ann') {
+          holdTimer = setInterval(() => {
+            holdDuration += 100;
+            for(let i=0; i<5; i++) {
+              particles.push({ x: e.clientX + (Math.random()-0.5)*holdDuration*0.5, y: e.clientY + (Math.random()-0.5)*holdDuration*0.5, vx: (Math.random()-0.5)*5, vy: (Math.random()-0.5)*5, color: '#cbd5e1', size: 4, alpha: 1 });
+            }
+          }, 100);
+        }
+      });
+      c.addEventListener('mousemove', (e) => {
+        if(!isMouseDown) return;
+        if(currentChar === 'amber') lightTrails.push({ x: e.clientX, y: e.clientY, size: 8, alpha: 1.0 });
+        if(currentChar === 'samantha' && currentLocation === 'garden') lightTrails.push({ x: e.clientX, y: e.clientY, size: 12, alpha: 1.0 });
+        if(currentChar === 'caroline') drawings.push({ x1: lastMousePos.x, y1: lastMousePos.y, x2: e.clientX, y2: e.clientY, alpha: 1.0 });
+        lastMousePos = { x: e.clientX, y: e.clientY };
+      });
+      c.addEventListener('mouseup', (e) => {
+        isMouseDown = false; if(holdTimer) clearInterval(holdTimer);
+        if(currentChar === 'ann' && holdDuration > 300) {
+          let count = Math.min(100, Math.floor(holdDuration / 10));
+          for(let i=0; i<count; i++) {
+            particles.push({ x: e.clientX, y: e.clientY, vx: (Math.random()-0.5)*10, vy: (Math.random()-0.5)*10, color: '#e2e8f0', size: 6, alpha: 1.0 });
+          }
+        }
+        holdDuration = 0;
+      });
+      c.addEventListener('dblclick', (e) => {
+        if(currentChar === 'samantha' && currentLocation === 'bib') greenRings.push({ x: e.clientX, y: e.clientY, radius: 10, alpha: 1.0 });
+        if(currentChar === 'ann' && currentLocation === 'bib') { curtainsDestroyed = true; windowsDestroyed = true; }
+      });
+    }
+
+    function handleStubeClick(x, y) {
+      if(currentChar === 'amber') {
+        if(isInside(x, y, objBounds.candle) || isInside(x, y, objBounds.torch1) || isInside(x, y, objBounds.torch2)) torchesLit = !torchesLit;
+        if(currentLocation === 'bib' && isInside(x, y, objBounds.bookshelf)) {
+          let quotes = ["Sind das Runen? Damit kann ich nichts anfangen.", "Was für Hex? Ich glaube ich bin noch nicht bereit für diese Buch.", "Hier fehlen Seiten. Nimm ein anderes.", "Hier steht ja gar nichts."];
+          let q = quotes[Math.floor(Math.random() * quotes.length)];
+          showSpeech(q);
+          if(q === "Hier steht ja gar nichts.") window.activeEasterEgg = true;
+        }
+        if(window.activeEasterEgg && isInside(x, y, objBounds.candle)) { showSpeech("Nereths Zorn ist allgegenwärtig"); window.activeEasterEgg = false; }
+        if(currentLocation === 'cave' && isInside(x, y, objBounds.malvorrith)) {
+          malvorrithFloating = !malvorrithFloating;
+          for(let i=0; i<20; i++) particles.push({ x: x, y: y, vx: (Math.random()-0.5)*8, vy: (Math.random()-0.5)*8, color: '#fef08a', size: 6, alpha: 1.0 });
+        }
+      }
+      if(currentChar === 'samantha') {
+        if(currentLocation === 'bib' && isInside(x, y, objBounds.bookshelf)) {
+          let quotes = ["Dieses Buch habe ich schon gelesen.", "Langweilig.", "Schon wieder? Hier erfährst du nichts neues.", "Die Seiten sind total zerfetzt das wird nichts."];
+          showSpeech(quotes[Math.floor(Math.random() * quotes.length)]);
+        }
+        if(currentLocation === 'cave' && isInside(x, y, objBounds.malvorrith)) {
+          if(!malvorrithCovered && !malvorrithDestroyed) malvorrithCovered = true;
+          else if(malvorrithCovered && !malvorrithDestroyed) malvorrithDestroyed = true;
+          else if(malvorrithDestroyed) { malvorrithDestroyed = false; malvorrithCovered = false; }
+        }
+      }
+      if(currentChar === 'ann') {
+        if(currentLocation === 'bib' && isInside(x, y, objBounds.bookshelf) && !bookshelfDestroyed) {
+          showSpeech("Den Mist lese ich nicht."); setTimeout(() => { bookshelfDestroyed = true; }, 1000);
+        }
+        if(currentLocation === 'bib' && (isInside(x, y, objBounds.window1) || isInside(x, y, objBounds.window2))) curtainsOpen = !curtainsOpen;
+        if(currentLocation === 'cave' && isInside(x, y, objBounds.malvorrith)) {
+          malvorrithPos = { x: x + (Math.random()-0.5)*200, y: y - 100 };
+          for(let i=0; i<30; i++) particles.push({ x: x, y: y, vx: (Math.random()-0.5)*12, vy: (Math.random()-0.5)*12, color: '#ef4444', size: 8, alpha: 1.0 });
+        }
+      }
+      if(currentChar === 'caroline') {
+        if(currentLocation === 'bib' && isInside(x, y, objBounds.bookshelf)) {
+          let quotes = ["Ah das selbe habe ich auch Zuhause.", "Das ist nicht das Buch das ich suche liebes.", "Oh bitte. Ist das für Kinder? Wie ungenau.", "Manchmal liegen die besten Dinge genau vor uns....aber das hier ist es nicht."];
+          showSpeech(quotes[Math.floor(Math.random() * quotes.length)]);
+        }
+        if(currentLocation === 'cave') malvorrithPos = { x: x, y: y };
+        if(currentLocation === 'bib' && (isInside(x, y, objBounds.window1) || isInside(x, y, objBounds.window2))) curtainsOpen = !curtainsOpen;
+      }
+    }
+
+    function isInside(x, y, rect) { if(!rect) return false; return x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h; }
+    function showSpeech(text) { const b = document.getElementById('speech-bubble'); b.innerText = text; b.style.display = 'block'; setTimeout(() => { b.style.display = 'none'; }, 4000); }
+    function hideSpeech() { document.getElementById('speech-bubble').style.display = 'none'; }
+
+    // RITUAL GAME LOGIC
+    let ritualCanvas, ritualCtx, gameActive = false, round = 1, bloodCups = 0, malPos = { x: 0, y: 0 }, isDraggingMal = false;
+    let lightnings = [], shadows = [], vines = [], gameLoopId = null, roundTimer = 0;
+
+    function initRitualCanvas() { ritualCanvas = document.getElementById('ritual-canvas'); ritualCtx = ritualCanvas.getContext('2d'); resizeCanvas(ritualCanvas); }
+
+    function startRitualGame() {
+      document.getElementById('ritual-start-overlay').style.display = 'none';
+      document.getElementById('ritual-end-overlay').style.display = 'none';
+      round = 1; bloodCups = 0; gameActive = true;
+      malPos = { x: ritualCanvas.width / 2, y: ritualCanvas.height / 2 };
+      setupRitualEvents(); startRound();
+      if(gameLoopId) cancelAnimationFrame(gameLoopId);
+      gameLoopId = requestAnimationFrame(updateRitualGame);
+    }
+
+    function startRound() { shadows = []; lightnings = []; vines = []; roundTimer = 0; }
+
+    function setupRitualEvents() {
+      ritualCanvas.onmousedown = (e) => { if(Math.hypot(e.clientX - malPos.x, e.clientY - malPos.y) < 30) isDraggingMal = true; };
+      ritualCanvas.onmousemove = (e) => {
+        if(isDraggingMal && gameActive) {
+          let tx = e.clientX, ty = e.clientY;
+          if(round === 3 && vines.length > 0) tx -= (tx - ritualCanvas.width/2) * 0.3;
+          malPos.x = tx; malPos.y = ty;
+        }
+      };
+      ritualCanvas.onmouseup = () => { isDraggingMal = false; };
+    }
+
+    function updateRitualGame() {
+      if(!gameActive) return;
+      ritualCtx.clearRect(0, 0, ritualCanvas.width, ritualCanvas.height);
+      const w = ritualCanvas.width, h = ritualCanvas.height;
+
+      ritualCtx.fillStyle = '#020617'; ritualCtx.fillRect(0, 0, w, h);
+      ritualCtx.fillStyle = '#fef08a'; ritualCtx.beginPath(); ritualCtx.arc(w/2, 100, 50, 0, Math.PI*2); ritualCtx.fill();
+
+      for(let i=0; i<3; i++) {
+        let cx = w/2 - 100 + i*100, cy = h - 80;
+        ritualCtx.fillStyle = '#eab308'; ritualCtx.fillRect(cx - 20, cy - 30, 40, 40);
+        if(i < bloodCups) { ritualCtx.fillStyle = '#dc2626'; ritualCtx.fillRect(cx - 16, cy - 25, 32, 30); }
+      }
+
+      roundTimer++;
+      let spawnRate = Math.max(20, 80 - round * 20);
+      if(roundTimer % spawnRate === 0) {
+        shadows.push({ x: Math.random() * (w - 100) + 50, y: Math.random() * (h - 200) + 100, radius: 30, timer: 40 });
+      }
+
+      shadows.forEach((s, idx) => {
+        ritualCtx.fillStyle = 'rgba(0, 0, 0, 0.6)'; ritualCtx.beginPath(); ritualCtx.arc(s.x, s.y, s.radius, 0, Math.PI*2); ritualCtx.fill();
+        s.timer--;
+        if(s.timer <= 0) {
+          lightnings.push({ x: s.x, y: s.y, duration: 10 });
+          if(Math.hypot(malPos.x - s.x, malPos.y - s.y) < 35) triggerRitualLoss();
+          shadows.splice(idx, 1);
+        }
+      });
+
+      lightnings.forEach((l, idx) => {
+        ritualCtx.strokeStyle = '#38bdf8'; ritualCtx.lineWidth = 6;
+        ritualCtx.beginPath(); ritualCtx.moveTo(l.x, 0); ritualCtx.lineTo(l.x, l.y); ritualCtx.stroke();
+        l.duration--; if(l.duration <= 0) lightnings.splice(idx, 1);
+      });
+
+      ritualCtx.fillStyle = '#eab308'; ritualCtx.beginPath();
+      ritualCtx.moveTo(malPos.x, malPos.y - 20); ritualCtx.lineTo(malPos.x + 15, malPos.y);
+      ritualCtx.lineTo(malPos.x, malPos.y + 20); ritualCtx.lineTo(malPos.x - 15, malPos.y);
+      ritualCtx.closePath(); ritualCtx.fill();
+
+      if(roundTimer > 500) {
+        bloodCups++;
+        if(round < 3) { round++; startRound(); } else { triggerRitualWin(); }
+      }
+      gameLoopId = requestAnimationFrame(updateRitualGame);
+    }
+
+    function triggerRitualWin() {
+      gameActive = false;
+      document.getElementById('ritual-end-title').innerText = "Herzlichen Glückwunsch!";
+      document.getElementById('ritual-end-desc').innerText = "Du hast das Ritual erfolgreich beenden können.";
+      document.getElementById('ritual-end-sub').innerText = "War es das wert?";
+      document.getElementById('ritual-end-overlay').style.display = 'flex';
+    }
+
+    function triggerRitualLoss() {
+      gameActive = false;
+      document.getElementById('ritual-end-title').innerText = "Schade!";
+      document.getElementById('ritual-end-desc').innerText = "Vielleicht beim nächsten Mal.";
+      document.getElementById('ritual-end-sub').innerText = "Lieber nicht.";
+      document.getElementById('ritual-end-overlay').style.display = 'flex';
+    }
+
+    function exitRitual() {
+      gameActive = false;
+      if(gameLoopId) cancelAnimationFrame(gameLoopId);
+      showScreen('start-screen');
+    }
+  </script>
+</body>
+</html>
